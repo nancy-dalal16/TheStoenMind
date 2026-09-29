@@ -1,0 +1,364 @@
+@import "tailwindcss";
+
+/*
+ * ─────────────────────────────────────────────────────────────
+ *  Theme system
+ * ─────────────────────────────────────────────────────────────
+ *  1. Raw palette  → brand colours straight from Figma.
+ *  2. Semantic tokens (--bg, --fg, …) → what components use.
+ *     Light values live on :root, dark values on [data-theme="dark"].
+ *  3. @theme inline → exposes the semantic tokens as Tailwind
+ *     utilities (bg-surface, text-fg, border-divider …).
+ *
+ *  Components never reference raw hex values, so a colour that
+ *  changes between modes only needs updating here. The `dark:`
+ *  variant is reserved for things tokens can't express, such as
+ *  swapping an illustration.
+ * ─────────────────────────────────────────────────────────────
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* Raw palette (Figma styles) */
+  --palette-ink: #241f20; /* "Black" */
+  --palette-earth: #615b51; /* "body text" */
+  --palette-slate: #6e8488; /* Foundation/Blue/blue-700 */
+  --palette-teal: #6e9a9f;
+  --palette-sky: #9bbabf; /* Foundation/Blue/blue-500 */
+  --palette-vanilla: #f4f0e3; /* "Vanilla mist" */
+  --palette-linen: #f1efea;
+  --palette-sand: #e0dcd0;
+  --palette-stone: #dedacf; /* Foundation/Green/green-600 */
+  --palette-night: #041327;
+  --palette-midnight: #082651;
+  --palette-dusk: #1b2f4d;
+  --palette-tide: #205a79;
+  --palette-deep-sea: #03446a;
+  --palette-frost: #a5c5d9;
+  --palette-white: #ffffff;
+  --palette-mist: #f5f8f9; /* Foundation/Blue/blue-50 */
+  --palette-haze: #e0eaeb; /* Foundation/Blue/blue-100 */
+  --palette-rain: #d1dfe2;
+
+  /* Semantic tokens — light */
+  --bg: var(--palette-white);
+  --fg: var(--palette-ink);
+  --fg-muted: var(--palette-earth);
+  --eyebrow: var(--palette-slate);
+  --nav: var(--palette-earth);
+  --primary: var(--palette-teal);
+  --primary-hover: #5d8a8f;
+  --on-primary: var(--palette-white);
+  --card-from: var(--palette-white);
+  --card-to: var(--palette-white);
+  --media-bg: var(--palette-linen);
+  --media-border: var(--palette-sand);
+  --divider: var(--palette-stone);
+  --band: var(--palette-sky);
+  --band-fg: var(--palette-ink);
+  --inverse: var(--palette-white);
+  --inverse-hover: var(--palette-vanilla);
+  --on-inverse: var(--palette-ink);
+  --icon: var(--palette-earth);
+  --icon-blob: var(--palette-vanilla);
+  --icon-halo-opacity: 1;
+  --toggle-bg: var(--palette-ink);
+  --toggle-fg: var(--palette-white);
+  --focus-ring: var(--palette-slate);
+  /* Sticky header (once scrolled) and the slide-in menu */
+  --header-bg: color-mix(in srgb, var(--palette-white) 78%, transparent);
+  --scrim: color-mix(in srgb, var(--palette-ink) 26%, transparent);
+  --drawer-from: var(--palette-white);
+  --drawer-to: var(--palette-white);
+  /* Inner-page surfaces (About / Contact) — Figma Foundation/Blue 50 & 100 */
+  --surface: var(--palette-white);
+  --surface-soft: var(--palette-mist);
+  --surface-tint: var(--palette-haze);
+  --surface-line: var(--palette-rain);
+  --surface-shadow: rgb(102 101 95 / 0.08);
+  --field: var(--palette-white);
+  --field-line: var(--palette-rain);
+  --band-soft: var(--palette-haze);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: var(--palette-deep-sea); /* #03446A — Nancy, Sep 29 */
+  --fg: var(--palette-white);
+  --fg-muted: var(--palette-white);
+  --eyebrow: var(--palette-frost);
+  --nav: var(--palette-frost);
+  /* Surfaces are derived from the deep-sea background: a touch lighter, as in the Figma dark frame */
+  --card-from: color-mix(in srgb, var(--palette-white) 7%, var(--palette-deep-sea));
+  --card-to: var(--palette-deep-sea);
+  --divider: color-mix(in srgb, var(--palette-frost) 40%, var(--palette-deep-sea));
+  --band: var(--palette-tide);
+  --band-fg: var(--palette-white);
+  --icon: var(--palette-deep-sea);
+  --icon-blob: var(--palette-white);
+  --icon-halo-opacity: 0.16;
+  --toggle-bg: var(--palette-white);
+  --toggle-fg: var(--palette-deep-sea);
+  --focus-ring: var(--palette-frost);
+  --header-bg: color-mix(in srgb, var(--palette-deep-sea) 74%, transparent);
+  --scrim: color-mix(in srgb, #000 55%, transparent);
+  --drawer-from: color-mix(in srgb, var(--palette-white) 6%, var(--palette-deep-sea));
+  --drawer-to: var(--palette-deep-sea);
+  --surface: color-mix(in srgb, var(--palette-white) 8%, var(--palette-deep-sea));
+  --surface-soft: color-mix(in srgb, var(--palette-white) 5%, var(--palette-deep-sea));
+  --surface-tint: color-mix(in srgb, var(--palette-white) 11%, var(--palette-deep-sea));
+  --surface-line: color-mix(in srgb, var(--palette-frost) 30%, var(--palette-deep-sea));
+  --surface-shadow: rgb(0 0 0 / 0.22);
+  --field: color-mix(in srgb, #000 16%, var(--palette-deep-sea));
+  --field-line: color-mix(in srgb, var(--palette-frost) 34%, var(--palette-deep-sea));
+  --band-soft: var(--palette-tide);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-eyebrow: var(--eyebrow);
+  --color-nav: var(--nav);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-card-from: var(--card-from);
+  --color-card-to: var(--card-to);
+  --color-media-bg: var(--media-bg);
+  --color-media-border: var(--media-border);
+  --color-divider: var(--divider);
+  --color-band: var(--band);
+  --color-band-fg: var(--band-fg);
+  --color-inverse: var(--inverse);
+  --color-inverse-hover: var(--inverse-hover);
+  --color-on-inverse: var(--on-inverse);
+  --color-icon: var(--icon);
+  --color-icon-blob: var(--icon-blob);
+  --color-toggle-bg: var(--toggle-bg);
+  --color-toggle-fg: var(--toggle-fg);
+  --color-focus-ring: var(--focus-ring);
+  --color-header-bg: var(--header-bg);
+  --color-scrim: var(--scrim);
+  --color-drawer-from: var(--drawer-from);
+  --color-drawer-to: var(--drawer-to);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-tint: var(--surface-tint);
+  --color-surface-line: var(--surface-line);
+  --color-surface-shadow: var(--surface-shadow);
+  --color-field: var(--field);
+  --color-field-line: var(--field-line);
+  --color-band-soft: var(--band-soft);
+
+  --font-serif: var(--font-abhaya), "Abhaya Libre", Georgia, serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  /* Figma type scale — fluid below the 1440 desktop frame */
+  --text-display: clamp(2.5rem, 1.9rem + 2.4vw, 3.75rem); /* 60 */
+  --text-page: clamp(2.375rem, 1.9rem + 1.9vw, 3.5rem); /* 56/62 — inner page titles */
+  --text-page--line-height: 1.107;
+  --text-page--letter-spacing: 0.02em;
+  --text-card: clamp(1.75rem, 1.5rem + 0.9vw, 2.25rem); /* 36 — card titles */
+  --text-card--line-height: 1.17;
+  --text-display--line-height: 0.9334;
+  --text-display--letter-spacing: 0.02em;
+  --text-heading: clamp(2.125rem, 1.8rem + 1.3vw, 3rem); /* 48 */
+  --text-heading--line-height: 1.1875;
+  --text-heading--letter-spacing: 0.02em;
+  --text-lead: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem); /* 24 */
+  --text-lead--line-height: 1.34;
+  --text-title: 1.5rem; /* 24 */
+  --text-title--line-height: 1.1667;
+  --text-body-lg: 1.25rem; /* 20 */
+  --text-body-lg--line-height: 1.3;
+  --text-body: 1rem; /* 16 */
+  --text-body--line-height: 1.375;
+
+  --container-page: 80rem; /* 1280 content width inside the 1440 frame */
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    /* Keep in-page anchors clear of the sticky header */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+  }
+}
+
+/* Theme switch: soft cross-fade where View Transitions are supported */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 350ms;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+@utility page-gutter {
+  padding-inline: clamp(1.25rem, 5.56vw, 5rem); /* 80px at 1440 */
+}
+
+/* Monochrome SVG icon that follows the current text/token colour */
+@utility icon-mask {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  mask: var(--icon-src) center / contain no-repeat;
+  -webkit-mask: var(--icon-src) center / contain no-repeat;
+}
+
+/* Soft fade from transparent into the page background */
+@utility fade-to-bg {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-bg) 0%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 50%, transparent) 45.673%,
+    var(--color-bg) 100%
+  );
+}
+
+/*
+ * ─────────────────────────────────────────────────────────────
+ *  Motion
+ * ─────────────────────────────────────────────────────────────
+ *  Two layers, both skipped for prefers-reduced-motion:
+ *
+ *  1. Entrance — CSS keyframes that play on page load (header + hero).
+ *     Use as `motion-safe:animate-rise-in motion-safe:[animation-delay:…]`.
+ *
+ *  2. Scroll reveal — add `data-reveal` to any block; <RevealObserver />
+ *     adds `.is-revealed` when it enters the viewport.
+ *       data-reveal=""       fade up (default)
+ *       data-reveal="fade" | "left" | "right" | "zoom"
+ *       style={{ "--i": n }} stagger index (110ms steps)
+ *       --reveal-dur         override the duration
+ *     Children can join in with `data-part`:
+ *       "blur"  heading sharpens from a soft blur
+ *       "rise"  small fade-up, staggered by --j (120ms steps)
+ *       "img"   image settles from a gentle zoom
+ *       "bloom" watercolour halo blooms open
+ *       "line"  divider draws from left to right
+ * ─────────────────────────────────────────────────────────────
+ */
+
+@theme {
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-rise-in: rise-in 1s var(--ease-soft) both;
+  --animate-rise-in-blur: rise-in-blur 1.3s var(--ease-soft) both;
+  --animate-drop-in: drop-in 0.9s var(--ease-soft) both;
+  --animate-fade-in: fade-in 2s ease-out both;
+  --animate-land-in: land-in 1.8s var(--ease-soft) both;
+  --animate-cloud-in: cloud-in 2.2s var(--ease-soft) both, cloud-float 14s ease-in-out infinite alternate;
+
+  @keyframes rise-in {
+    from { opacity: 0; translate: 0 18px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes rise-in-blur {
+    from { opacity: 0; translate: 0 14px; filter: blur(8px); }
+    to { opacity: 1; translate: 0 0; filter: blur(0); }
+  }
+  @keyframes drop-in {
+    from { opacity: 0; translate: 0 -10px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes land-in {
+    from { opacity: 0; translate: 0 48px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes cloud-in {
+    from { opacity: 0; translate: 72px 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes cloud-float {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-18px, -6px, 0); }
+  }
+}
+
+@layer base {
+  [data-reveal] {
+    --reveal-delay: calc(var(--i, 0) * 110ms + var(--delay, 0ms));
+    --reveal-dur: 1.1s;
+    transition:
+      opacity calc(var(--reveal-dur) * 0.8) var(--ease-soft) var(--reveal-delay),
+      translate var(--reveal-dur) var(--ease-soft) var(--reveal-delay),
+      scale var(--reveal-dur) var(--ease-soft) var(--reveal-delay);
+  }
+  [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+    translate: var(--reveal-from, 0 28px);
+  }
+  [data-reveal="fade"] { --reveal-from: 0 0; }
+  [data-reveal="left"] { --reveal-from: -48px 0; }
+  [data-reveal="right"] { --reveal-from: 48px 0; }
+  [data-reveal="zoom"] { --reveal-from: 0 20px; }
+  [data-reveal="zoom"]:not(.is-revealed) { scale: 0.97; }
+
+  /* Parts: animate with their revealed ancestor */
+  [data-reveal] [data-part] {
+    transition:
+      opacity 0.9s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
+      translate 1.1s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
+      scale 1.4s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
+      rotate 1.6s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
+      filter 1.2s var(--ease-soft) var(--part-delay, var(--reveal-delay));
+  }
+  [data-reveal]:not(.is-revealed) [data-part="blur"] { filter: blur(6px); }
+  [data-reveal] [data-part="rise"] { --part-delay: calc(var(--reveal-delay) + 150ms + var(--j, 0) * 120ms); }
+  [data-reveal]:not(.is-revealed) [data-part="rise"] { opacity: 0; translate: 0 12px; }
+  [data-reveal] [data-part="img"] { transition-duration: 0.9s, 1.1s, 1.8s, 1.6s, 1.2s; }
+  [data-reveal]:not(.is-revealed) [data-part="img"] { scale: 1.08; }
+  [data-reveal] [data-part="bloom"] { --part-delay: calc(var(--reveal-delay) + 120ms); }
+  [data-reveal]:not(.is-revealed) [data-part="bloom"] { opacity: 0; scale: 0.7; rotate: -12deg; }
+  [data-reveal] [data-part="line"] { transform-origin: left center; --part-delay: calc(var(--reveal-delay) + 200ms); }
+  [data-reveal]:not(.is-revealed) [data-part="line"] { scale: 0 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal],
+    [data-reveal] [data-part] {
+      opacity: 1 !important;
+      translate: none !important;
+      scale: none !important;
+      rotate: none !important;
+      filter: none !important;
+      transition: none !important;
+    }
+  }
+}
