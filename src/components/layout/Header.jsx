@@ -11,7 +11,7 @@ const SWAP = "transition-[opacity,translate,visibility] duration-500 ease-soft m
 /**
  * Sticky header.
  * - At the top of the page (md+): logo + inline links + theme toggle, as in the design.
- * - Once the page scrolls: the bar slims and frosts, the inline links fade out and the
+ * - Once the page scrolls: the bar slims (transparent, with only a soft page-colour fade behind it), the inline links fade out and the
  *   "Menu" button fades in, opening <SiteMenu />, which slides in from the right.
  * - Below md there's no room for inline links, so the Menu button is always shown.
  * Hidden states use `invisible` (not just opacity) so they drop out of the tab order.
@@ -20,11 +20,8 @@ export default function Header() {
   return (
     <StickyHeader>
       <div className="pointer-events-auto relative h-full transition-[height] duration-500 ease-soft group-data-[scrolled]/header:h-16 motion-reduce:transition-none md:group-data-[scrolled]/header:h-[72px]">
-        {/* Frosted background — fades in once scrolled */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 border-b border-divider/60 bg-header-bg opacity-0 shadow-[0_10px_30px_-18px_rgb(0_0_0/0.25)] backdrop-blur-xl backdrop-saturate-150 transition-opacity duration-500 group-data-[scrolled]/header:opacity-100"
-        />
+        {/* Soft fade behind the scrolled header (no bar, no blur) — see .header-fade in globals.css */}
+        <div aria-hidden="true" className="header-fade" />
 
         <div className="page-gutter relative mx-auto flex h-full max-w-[1440px] items-center justify-between motion-safe:animate-drop-in">
           <Logo

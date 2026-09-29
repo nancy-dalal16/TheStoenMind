@@ -17,11 +17,11 @@ export default function Artisans() {
               key={person.name}
               data-reveal=""
               style={{ "--i": index }}
-              className="flex flex-col items-center gap-5 rounded-2xl bg-linear-to-b from-surface to-surface-soft p-6 text-center"
+              className="hover-group hover-card flex flex-col items-center gap-5 rounded-2xl bg-linear-to-b from-surface to-surface-soft p-6 text-center"
             >
               <Artwork
                 data-part="img"
-                className="relative size-40 rounded-full"
+                className="hover-zoom relative size-40 rounded-full"
                 image={person.image}
                 sizes="320px"
               />

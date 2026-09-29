@@ -67,7 +67,6 @@
   --toggle-fg: var(--palette-white);
   --focus-ring: var(--palette-slate);
   /* Sticky header (once scrolled) and the slide-in menu */
-  --header-bg: color-mix(in srgb, var(--palette-white) 78%, transparent);
   --scrim: color-mix(in srgb, var(--palette-ink) 26%, transparent);
   --drawer-from: var(--palette-white);
   --drawer-to: var(--palette-white);
@@ -77,6 +76,7 @@
   --surface-tint: var(--palette-haze);
   --surface-line: var(--palette-rain);
   --surface-shadow: rgb(102 101 95 / 0.08);
+  --hover-shadow: rgb(46 62 72 / 0.16);
   --field: var(--palette-white);
   --field-line: var(--palette-rain);
   --band-soft: var(--palette-haze);
@@ -102,7 +102,6 @@
   --toggle-bg: var(--palette-white);
   --toggle-fg: var(--palette-deep-sea);
   --focus-ring: var(--palette-frost);
-  --header-bg: color-mix(in srgb, var(--palette-deep-sea) 74%, transparent);
   --scrim: color-mix(in srgb, #000 55%, transparent);
   --drawer-from: color-mix(in srgb, var(--palette-white) 6%, var(--palette-deep-sea));
   --drawer-to: var(--palette-deep-sea);
@@ -111,6 +110,7 @@
   --surface-tint: color-mix(in srgb, var(--palette-white) 11%, var(--palette-deep-sea));
   --surface-line: color-mix(in srgb, var(--palette-frost) 30%, var(--palette-deep-sea));
   --surface-shadow: rgb(0 0 0 / 0.22);
+  --hover-shadow: rgb(0 0 0 / 0.34);
   --field: color-mix(in srgb, #000 16%, var(--palette-deep-sea));
   --field-line: color-mix(in srgb, var(--palette-frost) 34%, var(--palette-deep-sea));
   --band-soft: var(--palette-tide);
@@ -142,7 +142,6 @@
   --color-toggle-bg: var(--toggle-bg);
   --color-toggle-fg: var(--toggle-fg);
   --color-focus-ring: var(--focus-ring);
-  --color-header-bg: var(--header-bg);
   --color-scrim: var(--scrim);
   --color-drawer-from: var(--drawer-from);
   --color-drawer-to: var(--drawer-to);
@@ -269,6 +268,10 @@
  *       "img"   image settles from a gentle zoom
  *       "bloom" watercolour halo blooms open
  *       "line"  divider draws from left to right
+ *
+ *  3. Hover — plain classes (see "Hover" below), only on devices with a
+ *     real pointer. They animate `transform`, which the reveal never uses,
+ *     so the two layers don't fight over `translate`/`scale`.
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -319,7 +322,11 @@
     transition:
       opacity calc(var(--reveal-dur) * 0.8) var(--ease-soft) var(--reveal-delay),
       translate var(--reveal-dur) var(--ease-soft) var(--reveal-delay),
-      scale var(--reveal-dur) var(--ease-soft) var(--reveal-delay);
+      scale var(--reveal-dur) var(--ease-soft) var(--reveal-delay),
+      transform 0.6s var(--ease-soft),
+      box-shadow 0.6s var(--ease-soft),
+      background-color 0.4s ease,
+      border-color 0.4s ease;
   }
   [data-reveal]:not(.is-revealed) {
     opacity: 0;
@@ -338,7 +345,8 @@
       translate 1.1s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
       scale 1.4s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
       rotate 1.6s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
-      filter 1.2s var(--ease-soft) var(--part-delay, var(--reveal-delay));
+      filter 1.2s var(--ease-soft) var(--part-delay, var(--reveal-delay)),
+      transform 0.7s var(--ease-soft);
   }
   [data-reveal]:not(.is-revealed) [data-part="blur"] { filter: blur(6px); }
   [data-reveal] [data-part="rise"] { --part-delay: calc(var(--reveal-delay) + 150ms + var(--j, 0) * 120ms); }
@@ -360,5 +368,157 @@
       filter: none !important;
       transition: none !important;
     }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Hover
+ * ─────────────────────────────────────────────────────────────
+ *  Quiet, slow and small: things rise a few pixels, shadows deepen,
+ *  watercolour halos drift. Pointer devices only; transforms are
+ *  dropped for reduced motion (colour and shadow changes stay).
+ *
+ *    .hover-card     lifts with a soft shadow (cards with a surface)
+ *    .hover-lift     lifts without a shadow (open items on the page)
+ *    .hover-group    triggers children (halo, glyph, zoom, frame, badge)
+ *      .halo-bg      watercolour halo turns and swells
+ *      .halo-glyph   icon floats up
+ *      .hover-zoom   image inside a clipped frame eases in
+ *      .hover-frame  image frame lifts with a shadow
+ *      .hover-rise   small lift, keeps its own shadow
+ *      .hover-float  floats higher than its card (badges)
+ *      .hover-nudge  slides right (list titles)
+ *    .hover-pill     small lift for chips
+ *    .hover-outline  border warms toward the brand colour (FAQ rows)
+ *    .link-draw      underline draws in from the left
+ *    .logo-float     logo drifts up and tilts
+ *    .toggle-spin    theme-toggle glyph turns
+ * ───────────────────────────────────────────────────────────── */
+
+@layer components {
+  .hover-card:not([data-reveal]),
+  .hover-lift:not([data-reveal]),
+  .hover-frame,
+  .hover-rise,
+  .hover-float:not([data-part]) {
+    transition:
+      transform 0.6s var(--ease-soft),
+      box-shadow 0.6s var(--ease-soft);
+  }
+  .halo-bg { transition: transform 1.4s var(--ease-soft), opacity 0.6s ease; }
+  .halo-glyph,
+  .hover-nudge { transition: transform 0.6s var(--ease-soft), color 0.4s ease; }
+  .hover-zoom > div { transition: transform 1.2s var(--ease-soft); }
+  .hover-pill {
+    transition:
+      transform 0.4s var(--ease-soft),
+      box-shadow 0.4s var(--ease-soft),
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+  .hover-outline {
+    transition:
+      border-color 0.4s ease,
+      box-shadow 0.5s var(--ease-soft);
+  }
+  .logo-float img { transition: transform 0.8s var(--ease-soft); }
+  .toggle-spin .icon-mask { transition: transform 0.7s var(--ease-soft); }
+
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    padding-bottom: 2px;
+    transition:
+      background-size 0.45s var(--ease-soft),
+      color 0.3s ease;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Header fade
+ * ─────────────────────────────────────────────────────────────
+ *  Once the page scrolls, a gradient from the page colour to
+ *  transparent sits behind the header, so content dissolves as it
+ *  passes under the logo and buttons. It has no edge and no blur,
+ *  and extends a little below the bar so the fall-off is gentle.
+ *  The stops are eased rather than linear, which avoids a visible band.
+ * ───────────────────────────────────────────────────────────── */
+@layer components {
+  .header-fade {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: calc(100% + 36px);
+    pointer-events: none;
+    opacity: 0;
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 92%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 86%, transparent) 22%,
+      color-mix(in srgb, var(--bg) 70%, transparent) 42%,
+      color-mix(in srgb, var(--bg) 46%, transparent) 60%,
+      color-mix(in srgb, var(--bg) 22%, transparent) 78%,
+      color-mix(in srgb, var(--bg) 6%, transparent) 92%,
+      transparent 100%
+    );
+    transition: opacity 0.6s var(--ease-soft);
+  }
+  [data-scrolled] .header-fade { opacity: 1; }
+}
+
+/* Hide on scroll down, show on scroll up (state from StickyHeader.jsx).
+   Moves past its own height plus the fade that hangs below it. */
+@layer components {
+  .site-header { transition: translate 0.6s var(--ease-soft); }
+  .site-header[data-hidden] { translate: 0 calc(-100% - 40px); }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header { transition: none; }
+  }
+}
+
+/* Hover states sit outside the layers so they win over the resting utility
+   colours, borders and shadows while hovered. */
+@media (hover: hover) and (pointer: fine) {
+  .hover-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 44px -26px var(--hover-shadow), 0 10px 18px -14px var(--hover-shadow);
+  }
+  .hover-lift:hover { transform: translateY(-4px); }
+
+  .hover-group:hover .halo-bg { transform: rotate(9deg) scale(1.08); }
+  .hover-group:hover .halo-glyph { transform: translateY(-3px); }
+  .hover-group:hover .hover-zoom > div { transform: scale(1.06); }
+  .hover-group:hover .hover-frame {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 36px -24px var(--hover-shadow);
+  }
+  .hover-group:hover .hover-rise { transform: translateY(-3px); }
+  .hover-group:hover .hover-float { transform: translateY(-7px); }
+  .hover-group:hover .hover-nudge { transform: translateX(6px); }
+
+  .hover-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px -12px var(--hover-shadow);
+  }
+  .hover-outline:hover {
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--surface-line));
+    box-shadow: 0 14px 28px -22px var(--hover-shadow);
+  }
+  .link-draw:hover { background-size: 100% 1px; }
+  .logo-float:hover img { transform: translateY(-2px) rotate(-4deg); }
+  .toggle-spin:hover .icon-mask { transform: rotate(24deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-card:hover,
+  .hover-lift:hover,
+  .hover-group:hover :is(.halo-bg, .halo-glyph, .hover-frame, .hover-rise, .hover-float, .hover-nudge),
+  .hover-group:hover .hover-zoom > div,
+  .hover-pill:hover,
+  .logo-float:hover img,
+  .toggle-spin:hover .icon-mask {
+    transform: none;
   }
 }

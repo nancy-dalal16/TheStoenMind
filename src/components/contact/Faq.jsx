@@ -36,7 +36,7 @@ export default function Faq() {
                 key={item.question}
                 data-part="rise"
                 style={{ "--j": index }}
-                className="rounded-lg border border-surface-line bg-surface transition-shadow duration-300 has-[button[aria-expanded=true]]:shadow-[0_12px_28px_-18px_var(--color-surface-shadow)]"
+                className="hover-outline rounded-lg border border-surface-line bg-surface has-[button[aria-expanded=true]]:shadow-[0_12px_28px_-18px_var(--color-surface-shadow)]"
               >
                 <h3>
                   <button

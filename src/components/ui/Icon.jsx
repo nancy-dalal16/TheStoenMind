@@ -18,10 +18,14 @@ const ICONS = {
   "arrow-right": { src: "/images/icons/arrow-right.svg", width: 24, height: 24 },
   "caret-down": { src: "/images/icons/caret-down.svg", width: 24, height: 24 },
   check: { src: "/images/icons/check.svg", width: 24, height: 24 },
-  mail: { src: "/images/icons/mail.svg", width: 48, height: 48 },
-  "book-open": { src: "/images/icons/book-open.svg", width: 48, height: 48 },
-  "shopping-bag": { src: "/images/icons/shopping-bag.svg", width: 48, height: 48 },
-  "map-pin": { src: "/images/icons/map-pin.svg", width: 48, height: 48 },
+  mail: { src: "/images/icons/mail.svg", width: 40, height: 40 },
+  "book-open": { src: "/images/icons/book-open.svg", width: 40, height: 40 },
+  "shopping-bag": { src: "/images/icons/shopping-bag.svg", width: 40, height: 40 },
+  "map-pin": { src: "/images/icons/map-pin.svg", width: 40, height: 40 },
+  "mail-blob": { src: "/images/icons/mail-blob.svg", width: 40, height: 40 },
+  "book-open-blob": { src: "/images/icons/book-open-blob.svg", width: 40, height: 40 },
+  "shopping-bag-blob": { src: "/images/icons/shopping-bag-blob.svg", width: 40, height: 40 },
+  "map-pin-blob": { src: "/images/icons/map-pin-blob.svg", width: 40, height: 40 },
   wordmark: { src: "/images/shared/wordmark.svg", width: 187, height: 26 },
 };
 

@@ -47,7 +47,7 @@ export default function Features() {
               key={`${feature.title}-${index}`}
               data-reveal=""
               style={{ "--i": index % 2, "--delay": `${Math.floor(index / 2) * 160}ms` }}
-              className="flex flex-col items-center px-0 text-center sm:px-6"
+              className="hover-group hover-lift flex flex-col items-center px-0 text-center sm:px-6"
             >
               <IconHalo icon={feature.icon} blob={feature.blob} />
               <div className="flex flex-col items-center gap-2 text-fg">

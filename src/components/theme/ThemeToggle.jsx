@@ -14,7 +14,7 @@ export default function ThemeToggle({ className = "" }) {
     <button
       type="button"
       onClick={toggleTheme}
-      className={`inline-flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-toggle-bg text-toggle-fg transition-transform duration-200 hover:scale-105 active:scale-95 ${className}`}
+      className={`toggle-spin inline-flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-toggle-bg text-toggle-fg transition-transform duration-200 hover:scale-105 active:scale-95 ${className}`}
     >
       <span className="flex dark:hidden">
         <Icon name="moon" />

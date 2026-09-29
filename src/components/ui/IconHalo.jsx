@@ -5,6 +5,7 @@ import Icon from "./Icon";
  * Watercolour halo with a line icon — the Figma "image 16/17" + icon group used on
  * the home Features, About Pillars and Contact cards.
  * `blob` (optional) is the soft shape behind the glyph, positioned inside the 48px box.
+ * Inside a `.hover-group`, the halo turns and swells and the glyph floats up on hover.
  */
 export default function IconHalo({ icon, blob, iconSize, className = "" }) {
   return (
@@ -14,7 +15,7 @@ export default function IconHalo({ icon, blob, iconSize, className = "" }) {
         alt=""
         fill
         sizes="100px"
-        className="object-cover opacity-(--icon-halo-opacity) dark:hidden"
+        className="halo-bg object-cover opacity-(--icon-halo-opacity) dark:hidden"
       />
       <Image
         src="/images/dark/icon-bg.png"
@@ -23,10 +24,10 @@ export default function IconHalo({ icon, blob, iconSize, className = "" }) {
         sizes="100px"
         // Without a blob behind the glyph (Contact cards) the halo is the icon's only
         // backdrop, so it's a little stronger in dark mode.
-        className={`hidden object-cover dark:block ${blob ? "opacity-(--icon-halo-opacity)" : "opacity-40"}`}
+        className={`halo-bg hidden object-cover dark:block ${blob ? "opacity-(--icon-halo-opacity)" : "opacity-40"}`}
       />
 
-      <div className="absolute top-[26px] left-[26px] size-12">
+      <div className="halo-glyph absolute top-[26px] left-[26px] size-12">
         {blob ? (
           blob.shape ? (
             <Icon

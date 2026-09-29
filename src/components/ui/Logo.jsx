@@ -14,7 +14,7 @@ import Artwork from "./Artwork";
 export default function Logo({ variant = "full", className = "" }) {
   if (variant === "cloud") {
     return (
-      <Link href="/" aria-label="the STOEN mind — home" className={`block shrink-0 ${className}`}>
+      <Link href="/" aria-label="the STOEN mind — home" className={`logo-float block shrink-0 ${className}`}>
         <Image
           src="/images/shared/logo-cloud.svg"
           alt=""

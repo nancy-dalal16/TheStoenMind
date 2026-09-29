@@ -50,7 +50,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-fg underline-offset-4 transition-colors hover:text-eyebrow hover:underline"
+                      className="link-draw text-fg hover:text-eyebrow"
                     >
                       {link.label}
                     </Link>
@@ -75,7 +75,7 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline-offset-4 hover:underline"
+                  className="link-draw"
                 >
                   {link.label}
                 </a>

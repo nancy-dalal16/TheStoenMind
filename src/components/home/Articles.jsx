@@ -42,14 +42,14 @@ export default function Articles() {
               key={article.href}
               data-reveal="right"
               style={{ "--i": index, "--delay": "250ms" }}
-              className="relative flex items-center gap-4 py-6 first:pt-0 last:pb-0"
+              className="hover-group relative flex items-center gap-4 py-6 first:pt-0 last:pb-0"
             >
               {/* Divider draws in from the left */}
               {index > 0 ? (
                 <span data-part="line" aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-divider" />
               ) : null}
               <div className="flex min-w-0 flex-1 flex-col gap-2 text-fg">
-                <h3 className="text-title">{article.title}</h3>
+                <h3 className="hover-nudge text-title">{article.title}</h3>
                 <p className="text-body">{article.description}</p>
               </div>
               <Button href={article.href} size="sm" aria-label={`Read: ${article.title}`}>

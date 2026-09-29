@@ -10,8 +10,8 @@ export default function Story() {
     <section id="our-story" className="py-24 md:py-40">
       <Container className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:gap-20">
         {/* Sanctuary card + floating badge */}
-        <div data-reveal="left" className="relative w-full max-w-[516px] shrink-0 pb-6 lg:w-[516px]">
-          <div className="rounded-[20px] bg-surface p-3 shadow-[0_20px_24px_-6px_var(--color-surface-shadow)]">
+        <div data-reveal="left" className="hover-group relative w-full max-w-[516px] shrink-0 pb-6 lg:w-[516px]">
+          <div className="hover-rise rounded-[20px] bg-surface p-3 shadow-[0_20px_24px_-6px_var(--color-surface-shadow)]">
             <div className="flex flex-col items-center justify-center gap-5 overflow-clip rounded-2xl border border-surface-line bg-linear-to-b from-surface-soft to-surface px-6 py-16 text-center sm:py-[100px]">
               <div data-part="bloom" className="flex size-[180px] items-center justify-center rounded-full bg-surface-tint">
                 <SanctuaryMark />
@@ -26,7 +26,7 @@ export default function Story() {
           <div
             data-part="rise"
             style={{ "--j": 3 }}
-            className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-2xl bg-surface p-4 whitespace-nowrap shadow-[0_4px_6px_rgb(0_0_0/0.16)] sm:right-[49px] sm:left-auto sm:translate-x-0"
+            className="hover-float absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-2xl bg-surface p-4 whitespace-nowrap shadow-[0_4px_6px_rgb(0_0_0/0.16)] sm:right-[49px] sm:left-auto sm:translate-x-0"
           >
             <span className="flex size-9 items-center justify-center rounded-full bg-surface-tint text-primary">
               <Icon name="check" />

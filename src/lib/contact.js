@@ -9,29 +9,37 @@ export const contactHero = {
   intro: "Whether you have an order question, want custom monograms, or just wish to share a thought—we are here.",
 };
 
+/**
+ * `blob` fills each icon's outline (the same treatment as the home Features and About Pillars),
+ * so the white shape follows the glyph instead of cropping it.
+ */
 export const contactChannels = [
   {
     title: "General Inquiries",
     description: "For everyday questions about our journal collections and store policies.",
     icon: "mail",
+    blob: { shape: "mail-blob", left: 4, top: 4, width: 40, height: 40 },
     link: { label: "hello@thestoenmind.com", href: "mailto:hello@thestoenmind.com" },
   },
   {
     title: "Bespoke & Gifting",
     description: "Custom foil debossing, corporate editions, and wedding stationery.",
     icon: "book-open",
+    blob: { shape: "book-open-blob", left: 4, top: 4, width: 40, height: 40 },
     link: { label: "hello@thestoenmind.com", href: "mailto:hello@thestoenmind.com?subject=Bespoke%20%26%20gifting" },
   },
   {
     title: "Order Support",
     description: "Tracking, deliveries, returns, and journal care inquiries.",
     icon: "shopping-bag",
+    blob: { shape: "shopping-bag-blob", left: 4, top: 4, width: 40, height: 40 },
     link: { label: "care@thestoenmind.com", href: "mailto:care@thestoenmind.com" },
   },
   {
     title: "Studio Quarters",
     description: "Kyoto Artisan Quarter & London Paper Binding Studio.",
     icon: "map-pin",
+    blob: { shape: "map-pin-blob", left: 4, top: 4, width: 40, height: 40 },
     note: "By appointment only",
   },
 ];

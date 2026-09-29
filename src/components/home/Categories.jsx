@@ -23,8 +23,8 @@ export default function Categories() {
 
         <ul className="grid w-full grid-cols-1 gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category, index) => (
-            <li key={category.title} data-reveal="" style={{ "--i": index }} className="group flex flex-col gap-6">
-              <div className="relative aspect-square overflow-hidden rounded-2xl border border-media-border bg-media-bg">
+            <li key={category.title} data-reveal="" style={{ "--i": index }} className="group hover-group flex flex-col gap-6">
+              <div className="hover-frame relative aspect-square overflow-hidden rounded-2xl border border-media-border bg-media-bg">
                 {/* Settles from a gentle zoom on reveal; the photo itself eases in on hover */}
                 <div data-part="img" className="absolute inset-0">
                   <Image

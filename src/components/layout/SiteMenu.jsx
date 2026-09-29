@@ -17,7 +17,7 @@ const useIsClient = () => useSyncExternalStore(subscribe, () => true, () => fals
  * Hamburger trigger + slide-in navigation panel (right → left).
  *
  * - Rendered through a portal on <body>, so no transformed/filtered ancestor
- *   (the header animates and frosts) can trap the fixed panel.
+ *   (the header animates) can trap the fixed panel.
  * - Accessible modal dialog: focus moves in and is trapped, Escape or the scrim
  *   closes it, focus returns to the trigger, and the page behind stops scrolling.
  * - The closed panel is `inert`, so it stays out of the tab order and screen readers
@@ -88,7 +88,7 @@ export default function SiteMenu({ items, tagline, social = [] }) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen(true)}
-        className="group/menu inline-flex h-12 shrink-0 cursor-pointer items-center justify-center gap-3 rounded-full border border-fg/15 bg-bg/40 text-fg backdrop-blur-sm transition-[border-color,background-color,transform] duration-300 hover:border-fg/35 hover:bg-fg/[0.04] active:scale-[0.97] max-sm:w-12 sm:pr-4 sm:pl-5"
+        className="group/menu inline-flex h-12 shrink-0 cursor-pointer items-center justify-center gap-3 rounded-full border border-fg/15 bg-bg text-fg shadow-[0_6px_20px_-12px_rgb(0_0_0/0.35)] transition-[border-color,background-color,transform] duration-300 hover:border-fg/35 active:scale-[0.97] max-sm:w-12 sm:pr-4 sm:pl-5"
       >
         <span className="hidden font-sans text-xs font-medium tracking-[0.22em] uppercase sm:inline">Menu</span>
         <span aria-hidden="true" className="flex h-2.5 w-[22px] flex-col items-end justify-between">

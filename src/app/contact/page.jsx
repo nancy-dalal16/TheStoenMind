@@ -16,7 +16,7 @@ export default function ContactPage() {
     <>
       <ContactHero />
       <section className="py-24 md:py-40">
-        <Container className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[625fr_575fr] lg:gap-20">
+        <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[625fr_575fr] lg:gap-20">
           <ContactForm />
           <StudioInfo />
         </Container>

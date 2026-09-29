@@ -27,8 +27,9 @@ export default function AboutHero() {
         "lg:[--hdr:clamp(88px,15svh,110px)]",
         // Copy centred in the sky between the header and the bridge arch (arch top = painting top
         // + 0.2876 × width; painting top = max(0, 100svh − hdr − 16px − 0.401 × width) on short
-        // screens). Capped at Figma's 120px on tall screens.
-        "lg:[--hero-pt:clamp(40px,calc((max(0px,100svh-var(--hdr)-16px-var(--art-w)*0.401)+var(--art-w)*0.2876-24px-214px-2*var(--hero-gap))/2),120px)]",
+        // screens). On tall screens the painting sits in normal flow, where the gap under the button
+        // is a fixed 0.1182 × width − 24px, so padding matches that to stay centred.
+        "lg:[--hero-pt:clamp(40px,min(calc((max(0px,100svh-var(--hdr)-16px-var(--art-w)*0.401)+var(--art-w)*0.2876-24px-214px-2*var(--hero-gap))/2),calc(var(--art-w)*0.1182-24px)),180px)]",
         "lg:[--hero-gap:clamp(20px,4svh,32px)] lg:[--text-h:calc(var(--hero-pt)+214px+2*var(--hero-gap))]",
       ].join(" ")}
     >
