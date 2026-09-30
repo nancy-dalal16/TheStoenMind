@@ -59,14 +59,14 @@ export default function AboutHero() {
         <Artwork
           className="absolute inset-0 motion-safe:animate-land-in motion-safe:[animation-delay:250ms]"
           light={{ src: "/images/about/bridge.png", crop: [100, 143.65, 0, -12.63] }}
-          dark={{ src: "/images/about/bridge-night.png", crop: [100, 143.65, 0, -12.63] }}
+          dark={{ src: "/images/about/bridge-night.png", crop: [100, 143.65, 0, -12.63], brightness: 1.15 }}
           sizes="max(105vw, 760px)"
           important
         />
         <Artwork
           className="absolute top-[19.83%] left-[53.48%] aspect-[701/212] w-[46.39%] motion-safe:animate-cloud-in motion-safe:[animation-delay:700ms]"
           light={{ src: "/images/about/cloud-drift.png" }}
-          dark={{ src: "/images/about/cloud-drift-night.png" }}
+          dark={{ src: "/images/about/cloud-drift-night.png", brightness: 1.15 }}
           sizes="50vw"
         />
       </div>

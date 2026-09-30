@@ -7,9 +7,9 @@ export default function Articles() {
     <section className="@container relative overflow-x-clip py-24 md:py-40">
       <Artwork
         flip
-        className="absolute bottom-0 left-0 aspect-[1440/503] w-[max(100cqw,720px)] dark:[mask-image:linear-gradient(to_bottom,transparent,black_24%)]"
+        className="articles-mist absolute bottom-0 left-0 aspect-[1440/503] w-[max(100cqw,720px)] dark:[mask-image:linear-gradient(to_bottom,transparent,black_24%)]"
         light={{ src: "/images/light/mist-b.png", crop: [100, 190.85, 0, -90.85], opacity: 0.42 }}
-        dark={{ src: "/images/dark/night-mist-bank.png", crop: [100, 190.85, 0, -90.85], opacity: 0.42 }}
+        dark={{ src: "/images/dark/night-mist-bank.png", crop: [100, 190.85, 0, -90.85], opacity: 0.58 }}
         data-reveal="fade"
         style={{ "--reveal-dur": "2s" }}
       />

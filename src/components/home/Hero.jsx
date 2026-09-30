@@ -56,7 +56,10 @@ export default function Hero() {
         <Artwork
           className="absolute inset-0 motion-safe:animate-land-in motion-safe:[animation-delay:250ms]"
           light={{ src: "/images/light/hero-landscape.png", position: "bottom" }}
-          dark={{ src: "/images/dark/hero-landscape-deepsea.png" }}
+          // "TSM Night Mode Image- 1" with the cloud cut out (its right-hand hills are widened 30%
+          // so the painting still reaches the edge). Drawn at 90% so the tree and carriage match the
+          // light painting's size and spot, and toned down so the hero copy leads.
+          dark={{ src: "/images/dark/night-hero-landscape.png", crop: [94.69, 134.19, 0.905, -34.67], opacity: 0.72 }}
           sizes="max(116vw, 820px)"
           important
         />
@@ -66,12 +69,46 @@ export default function Hero() {
       <Artwork
         className="absolute top-[calc(var(--land-top)+var(--land-w)*0.0036)] left-[37.71cqw] aspect-[914/168] w-[63.47cqw] motion-safe:animate-cloud-in motion-safe:[animation-delay:700ms]"
         light={{ src: "/images/light/hero-landscape.png", crop: [100, 362.57, 0, -22.19] }}
-        dark={{ src: "/images/dark/hero-strip-deepsea.png" }}
+        dark={null}
         sizes="64vw"
         important
       />
 
+      {/* Night cloud (from "TSM Night Mode Image- 1"). It has a moonlit glow, so it needs a
+          taller frame than the light strip; centred on the light cloud's spot at a matching size. */}
+      <Artwork
+        className="absolute motion-safe:animate-cloud-in motion-safe:[animation-delay:700ms]"
+        style={{
+          top: "calc(var(--land-top) + var(--land-w) * 0.0036 + 0.655cqw)",
+          left: "65.42cqw",
+          width: "32.69cqw",
+          aspectRatio: "989 / 331",
+        }}
+        light={null}
+        dark={{ src: "/images/dark/night-hero-cloud.png", opacity: 0.85 }}
+        sizes="33vw"
+        important
+      />
+
       <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[clamp(20px,4svh,32px)] pt-12 pb-(--hero-pb) text-center md:pt-[146px] lg:pt-[calc(var(--hero-pt)+var(--hero-shift))]">
+        {/* Night only: a soft deep-sea pool behind the copy so it reads over the brighter night art. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute hidden dark:block"
+          style={{
+            // The element IS the ellipse (closest-side), so the glow always reaches full
+            // transparency inside its own box — no hard edge where a box would clip it.
+            zIndex: -1,
+            left: "50%",
+            top: "calc(50% - var(--hero-pb) / 2 + 24px)",
+            width: "min(1100px, 76%)",
+            height: "calc(100% - var(--hero-pb) + 220px)",
+            transform: "translate(-50%, -50%)",
+            background:
+              "radial-gradient(closest-side, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 74%, transparent) 45%, color-mix(in srgb, var(--bg) 30%, transparent) 75%, transparent 100%)",
+          }}
+        />
+
         {/* Brand wordmark, identical to the logo's lettering. Real text stays for screen readers and SEO. */}
         <p className="text-eyebrow motion-safe:animate-rise-in motion-safe:[animation-delay:80ms]">
           <span className="sr-only">the STOEN mind</span>

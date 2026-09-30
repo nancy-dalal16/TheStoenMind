@@ -132,7 +132,7 @@ export default function SiteMenu({ items, tagline, social = [] }) {
                     open ? "translate-x-0" : "translate-x-16 opacity-0"
                   }`}
                   light={{ src: "/images/light/mist-b.png", crop: [159.12, 238.21, -59.12, -31.51] }}
-                  dark={{ src: "/images/dark/night-cloud-curl.png", crop: [116.58, 174.52, -20.47, -5.23] }}
+                  dark={{ src: "/images/dark/night-cloud-curl.png", crop: [116.58, 174.52, -20.47, -5.23], brightness: 1.12 }}
                   sizes="640px"
                 />
 

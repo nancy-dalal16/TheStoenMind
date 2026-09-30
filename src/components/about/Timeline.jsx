@@ -40,7 +40,7 @@ export default function Timeline() {
             flip
             className="absolute bottom-0 left-0 -z-10 aspect-[1280/447] w-full min-w-[720px] dark:[mask-image:linear-gradient(to_bottom,transparent,black_40%)]"
             light={{ src: "/images/light/mist-b.png", crop: [100, 190.85, 0, -90.85] }}
-            dark={{ src: "/images/dark/night-mist-bank.png", crop: [100, 190.85, 0, -90.85], opacity: 0.38 }}
+            dark={{ src: "/images/dark/night-mist-bank.png", crop: [100, 190.85, 0, -90.85], opacity: 0.54 }}
             data-reveal="fade"
             style={{ "--reveal-dur": "2s" }}
           />

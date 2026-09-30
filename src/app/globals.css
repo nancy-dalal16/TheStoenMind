@@ -522,3 +522,16 @@
     transform: none;
   }
 }
+
+/* ── Night art readability ───────────────────────────────────────────────
+   The night art was brightened (Sep 30). Where text sits on top of it, the
+   fade-in reaches full strength lower down, so the art stays bright below the
+   copy but soft behind it. Unlayered, so it beats the dark: mask utility. */
+[data-theme="dark"] .articles-mist {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, rgb(0 0 0 / 0.45) 38%, black 72%);
+  mask-image: linear-gradient(to bottom, transparent, rgb(0 0 0 / 0.45) 38%, black 72%);
+}
+[data-theme="dark"] .footer-range {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 4%, rgb(0 0 0 / 0.4) 30%, black 58%);
+  mask-image: linear-gradient(to bottom, transparent 4%, rgb(0 0 0 / 0.4) 30%, black 58%);
+}

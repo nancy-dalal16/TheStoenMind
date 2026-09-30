@@ -16,13 +16,13 @@ export default function ContactHero() {
       <Artwork
         className="absolute top-[66px] left-[-32.78cqw] aspect-[701/212] w-[max(48.68cqw,320px)] motion-safe:animate-cloud-in motion-safe:[animation-delay:600ms] max-md:hidden"
         light={{ src: "/images/about/cloud-drift.png" }}
-        dark={{ src: "/images/about/cloud-drift-night.png" }}
+        dark={{ src: "/images/about/cloud-drift-night.png", brightness: 1.15 }}
         sizes="50vw"
       />
       <Artwork
         className="absolute top-[203px] left-[60.56cqw] aspect-[701/212] w-[max(48.68cqw,320px)] motion-safe:animate-cloud-in motion-safe:[animation-delay:800ms] max-md:hidden"
         light={{ src: "/images/about/cloud-drift.png" }}
-        dark={{ src: "/images/about/cloud-drift-night.png" }}
+        dark={{ src: "/images/about/cloud-drift-night.png", brightness: 1.15 }}
         sizes="50vw"
       />
 
@@ -77,7 +77,7 @@ export default function ContactHero() {
         <Artwork
           className="absolute inset-0"
           light={{ src: "/images/about/landscape-sailboat.png" }}
-          dark={{ src: "/images/about/landscape-sailboat-night.png" }}
+          dark={{ src: "/images/about/landscape-sailboat-night.png", brightness: 1.15 }}
           sizes="max(100vw, 640px)"
           data-reveal="fade"
           style={{ "--reveal-dur": "2.2s" }}

@@ -7,7 +7,7 @@ import Image from "next/image";
  */
 export default function Glow({ src, className = "" }) {
   return (
-    <div aria-hidden="true" className={`pointer-events-none absolute -z-10 hidden dark:block ${className}`}>
+    <div aria-hidden="true" data-theme-art="dark" className={`pointer-events-none absolute -z-10 hidden dark:block ${className}`}>
       <Image src={src} alt="" fill unoptimized className="object-contain" />
     </div>
   );

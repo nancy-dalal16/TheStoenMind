@@ -18,7 +18,7 @@ export default function Faq() {
         flip
         className="absolute top-[114px] left-0 aspect-[1440/503] w-[max(100cqw,720px)] dark:[mask-image:linear-gradient(to_bottom,transparent,black_40%)]"
         light={{ src: "/images/light/mist-b.png", crop: [100, 190.85, 0, -90.85] }}
-        dark={{ src: "/images/dark/night-mist-bank.png", crop: [100, 190.85, 0, -90.85], opacity: 0.4 }}
+        dark={{ src: "/images/dark/night-mist-bank.png", crop: [100, 190.85, 0, -90.85], opacity: 0.56 }}
         data-reveal="fade"
         style={{ "--reveal-dur": "2s" }}
       />

@@ -12,6 +12,8 @@ import Image from "next/image";
  *              Omit for `object-cover`.
  *   - position object-position when not cropping (default "center")
  *   - opacity  0–1
+ *   - brightness CSS brightness() multiplier (e.g. 1.12); lifts night art
+ *              without changing its colours
  *
  * `important` raises fetch priority for above-the-fold art that can be the LCP
  * element (the hero). Images stay lazy on purpose: eager loading would also
@@ -45,8 +47,8 @@ export default function Artwork({
         <Layer variant={light} sizes={sizes} important={important} />
       ) : (
         <>
-          {light ? <Layer variant={light} sizes={sizes} important={important} className="dark:hidden" /> : null}
-          {dark ? <Layer variant={dark} sizes={sizes} important={important} className="hidden dark:block" /> : null}
+          {light ? <Layer variant={light} sizes={sizes} important={important} theme="light" className="dark:hidden" /> : null}
+          {dark ? <Layer variant={dark} sizes={sizes} important={important} theme="dark" className="hidden dark:block" /> : null}
         </>
       )}
       </div>
@@ -54,16 +56,24 @@ export default function Artwork({
   );
 }
 
-function Layer({ variant, sizes, important, className = "" }) {
-  const { src, crop, position = "center", opacity } = variant;
-  const layerStyle = opacity == null ? undefined : { opacity };
+// `theme` marks theme-only art (data-theme-art) so the theme store can load and
+// decode it before a switch, instead of letting it pop in afterwards.
+function Layer({ variant, sizes, important, theme, className = "" }) {
+  const { src, crop, position = "center", opacity, brightness } = variant;
+  const layerStyle =
+    opacity == null && brightness == null
+      ? undefined
+      : {
+          ...(opacity == null ? {} : { opacity }),
+          ...(brightness == null ? {} : { filter: `brightness(${brightness})` }),
+        };
   const priority = important ? { fetchPriority: "high" } : {};
 
   if (crop) {
     // Oversized, offset box (same aspect as the image) clipped by the frame.
     const [width, height, left, top] = crop;
     return (
-      <div className={`absolute inset-0 ${className}`} style={layerStyle}>
+      <div className={`absolute inset-0 ${className}`} style={layerStyle} data-theme-art={theme}>
         <div
           className="absolute"
           style={{ width: `${width}%`, height: `${height}%`, left: `${left}%`, top: `${top}%` }}
@@ -75,7 +85,7 @@ function Layer({ variant, sizes, important, className = "" }) {
   }
 
   return (
-    <div className={`absolute inset-0 ${className}`} style={layerStyle}>
+    <div className={`absolute inset-0 ${className}`} style={layerStyle} data-theme-art={theme}>
       <Image
         src={src}
         alt=""

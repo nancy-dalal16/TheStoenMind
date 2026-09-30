@@ -15,6 +15,7 @@ export default function IconHalo({ icon, blob, iconSize, className = "" }) {
         alt=""
         fill
         sizes="100px"
+        data-theme-art="light"
         className="halo-bg object-cover opacity-(--icon-halo-opacity) dark:hidden"
       />
       <Image
@@ -22,6 +23,7 @@ export default function IconHalo({ icon, blob, iconSize, className = "" }) {
         alt=""
         fill
         sizes="100px"
+        data-theme-art="dark"
         // Without a blob behind the glyph (Contact cards) the halo is the icon's only
         // backdrop, so it's a little stronger in dark mode.
         className={`halo-bg hidden object-cover dark:block ${blob ? "opacity-(--icon-halo-opacity)" : "opacity-40"}`}

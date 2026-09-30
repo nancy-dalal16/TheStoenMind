@@ -11,9 +11,9 @@ export default function Footer() {
       {/* Misty range — bottom-anchored, mirrored as in the design */}
       <Artwork
         flip
-        className="absolute right-0 bottom-0 aspect-[1440/596] w-[max(100cqw,900px)] dark:[mask-image:linear-gradient(to_bottom,transparent,black_36%)]"
+        className="footer-range absolute right-0 bottom-0 aspect-[1440/596] w-[max(100cqw,900px)] dark:[mask-image:linear-gradient(to_bottom,transparent,black_36%)]"
         light={{ src: "/images/light/footer-landscape.png", crop: [100, 161.01, 0, -61.01], opacity: 0.9 }}
-        dark={{ src: "/images/dark/night-range.png", crop: [100, 161.01, 0, -61.01], opacity: 0.51 }}
+        dark={{ src: "/images/dark/night-range.png", crop: [100, 161.01, 0, -61.01], opacity: 0.68 }}
         data-reveal="fade"
         style={{ "--reveal-dur": "2.2s" }}
       />
@@ -21,7 +21,7 @@ export default function Footer() {
       <Artwork
         className="absolute bottom-0 left-0 h-[clamp(140px,14.93cqw,215px)] aspect-[198/215]"
         light={{ src: "/images/light/mist-a.png", crop: [444.73, 580.54, -218.57, -355.25] }}
-        dark={{ src: "/images/dark/night-bear.png", crop: [261.44, 341.27, -145.19, -210.58] }}
+        dark={{ src: "/images/dark/night-bear.png", crop: [261.44, 341.27, -145.19, -210.58], brightness: 1.12 }}
         sizes="(min-width: 1440px) 880px, 60vw"
         data-reveal="left"
         style={{ "--reveal-dur": "2s", "--delay": "400ms" }}

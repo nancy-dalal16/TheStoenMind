@@ -13,7 +13,7 @@ export default function Pillars() {
       <Artwork
         className="absolute top-0 left-[-23.33cqw] aspect-[671/299] w-[max(46.6cqw,300px)]"
         light={{ src: "/images/light/mist-b.png", crop: [159.12, 238.21, -59.12, -31.51] }}
-        dark={{ src: "/images/dark/night-cloud-wave.png", crop: [122.25, 183.01, -24.25, 1.87] }}
+        dark={{ src: "/images/dark/night-cloud-wave.png", crop: [122.25, 183.01, -24.25, 1.87], brightness: 1.12 }}
         sizes="(min-width: 640px) 75vw, 480px"
         data-reveal="left"
         style={{ "--reveal-dur": "1.8s" }}
@@ -45,7 +45,7 @@ export default function Pillars() {
         <Artwork
           className="absolute inset-0"
           light={{ src: "/images/about/landscape-sailboat.png" }}
-          dark={{ src: "/images/about/landscape-sailboat-night.png" }}
+          dark={{ src: "/images/about/landscape-sailboat-night.png", brightness: 1.15 }}
           sizes="max(100vw, 640px)"
           data-reveal="fade"
           style={{ "--reveal-dur": "2.2s" }}

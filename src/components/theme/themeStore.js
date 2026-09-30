@@ -55,6 +55,73 @@ function applyTheme(theme, { animate = false } = {}) {
   }
 }
 
+/* ---- theme art preloading ----
+ * Theme-only illustrations are lazy and `display: none` while their theme is
+ * inactive, so they'd only start downloading after a switch and pop in late.
+ * Before switching we load + decode the incoming theme's art: images on or near
+ * the screen are awaited (capped by ART_WAIT_MS so a slow network never blocks
+ * the switch for long); the rest keep loading in the background.
+ */
+
+const ART_WAIT_MS = 1200;
+const NEAR_SCREEN_PX = 300;
+const artSelector = (theme) => `[data-theme-art="${theme}"] img, img[data-theme-art="${theme}"]`;
+
+function loadAndDecode(img) {
+  // Lazy images that aren't rendered never load; eager ones load even while hidden.
+  if (img.loading !== "eager") img.loading = "eager";
+  const loaded =
+    img.complete && img.naturalWidth
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        });
+  return loaded.then(() => (img.naturalWidth ? img.decode().catch(() => {}) : undefined));
+}
+
+/** The nearest box that is actually laid out (the theme layer itself is display: none). */
+function layoutBox(el) {
+  for (let node = el; node && node !== document.body; node = node.parentElement) {
+    const rect = node.getBoundingClientRect();
+    if (rect.width || rect.height) return rect;
+  }
+  return null;
+}
+
+/** Load and decode `theme`'s art; resolves once everything near the screen is ready. */
+function prepareThemeArt(theme) {
+  if (typeof document === "undefined") return Promise.resolve();
+  const viewport = window.innerHeight;
+  const nearScreen = [];
+  document.querySelectorAll(artSelector(theme)).forEach((img) => {
+    const ready = loadAndDecode(img);
+    const box = layoutBox(img);
+    if (box && box.bottom > -NEAR_SCREEN_PX && box.top < viewport + NEAR_SCREEN_PX) nearScreen.push(ready);
+  });
+  return Promise.all(nearScreen);
+}
+
+const otherTheme = () => (document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+
+/** Warm the theme the toggle would switch to (called on hover / focus / press). */
+export function prepareOtherTheme() {
+  prepareThemeArt(otherTheme());
+}
+
+let switchTicket = 0;
+
+/** Switch once the incoming art is ready (or ART_WAIT_MS has passed). Latest request wins. */
+function switchTheme(theme, options) {
+  const ticket = ++switchTicket;
+  const timeout = new Promise((resolve) => setTimeout(resolve, ART_WAIT_MS));
+  Promise.race([prepareThemeArt(theme), timeout]).then(() => {
+    if (ticket !== switchTicket) return;
+    applyTheme(theme, options);
+    emit();
+  });
+}
+
 /* ---- useSyncExternalStore API ---- */
 
 export function subscribe(listener) {
@@ -64,11 +131,11 @@ export function subscribe(listener) {
     const query = systemQuery();
     // Follow the OS only while the visitor hasn't picked a theme.
     const onSystemChange = () => {
-      if (!readStoredTheme()) applyTheme(systemTheme());
+      if (!readStoredTheme()) switchTheme(systemTheme());
     };
     // Another tab changed (or cleared) the stored choice.
     const onStorage = (event) => {
-      if (event.key === THEME_STORAGE_KEY || event.key === null) applyTheme(resolveTheme());
+      if (event.key === THEME_STORAGE_KEY || event.key === null) switchTheme(resolveTheme());
       emit();
     };
     query.addEventListener("change", onSystemChange);
@@ -101,8 +168,7 @@ export function getServerSnapshot() {
 
 export function setTheme(theme) {
   writeStoredTheme(theme);
-  applyTheme(theme, { animate: true });
-  emit();
+  switchTheme(theme, { animate: true });
 }
 
 export function toggleTheme() {
@@ -126,6 +192,6 @@ export function syncTheme() {
 /** Forget the explicit choice and follow the OS again. */
 export function resetTheme() {
   writeStoredTheme(null);
-  applyTheme(systemTheme(), { animate: true });
+  switchTheme(systemTheme(), { animate: true });
   emit();
 }
