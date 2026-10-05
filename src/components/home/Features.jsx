@@ -1,5 +1,4 @@
 import Artwork from "@/components/ui/Artwork";
-import IconHalo from "@/components/ui/IconHalo";
 import SectionHeading from "./SectionHeading";
 import { features } from "@/lib/content";
 
@@ -39,17 +38,36 @@ export default function Features() {
       />
 
       <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[60px]">
-        <SectionHeading title="Every page has been considered" />
+        <SectionHeading
+          title="What makes these pages feel a little different?"
+          description={
+            <>
+              Every page is considered to give you something lovely to find, somewhere to pause,{" "}
+              <br className="hidden lg:block" />
+              and enough room to make the rest your own.
+            </>
+          }
+        />
 
-        <ul className="grid w-full max-w-[844px] grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2">
+        {/* Three across on lg+. The width is capped at 63cqw so the third column always ends
+            before the bonsai on the right (it starts at 80.4cqw). */}
+        <ul className="grid w-full max-w-[560px] grid-cols-1 gap-y-10 lg:max-w-[min(1040px,63cqw)] lg:grid-cols-3 lg:gap-x-8">
           {features.map((feature, index) => (
             <li
-              key={`${feature.title}-${index}`}
+              key={feature.title}
               data-reveal=""
-              style={{ "--i": index % 2, "--delay": `${Math.floor(index / 2) * 160}ms` }}
-              className="hover-group hover-lift flex flex-col items-center px-0 text-center sm:px-6"
+              style={{ "--i": index }}
+              className="hover-group hover-lift flex flex-col items-center gap-6 px-0 text-center sm:px-6"
             >
-              <IconHalo icon={feature.icon} blob={feature.blob} />
+              {/* Watercolour medallion: blooms in with the reveal, tilts and lifts on hover (globals.css → "Feature medallions") */}
+              <div data-part="bloom" className="medallion">
+                <Artwork
+                  className="medallion-art absolute inset-0"
+                  light={{ src: feature.art.light }}
+                  dark={{ src: feature.art.dark }}
+                  sizes="(min-width: 1024px) 150px, 132px"
+                />
+              </div>
               <div className="flex flex-col items-center gap-2 text-fg">
                 <h3 className="text-title">{feature.title}</h3>
                 <p className="text-body">{feature.description}</p>

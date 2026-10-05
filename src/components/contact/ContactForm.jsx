@@ -18,7 +18,7 @@ function validate(values) {
 }
 
 const FIELD =
-  "w-full rounded-lg border border-field-line bg-field px-4 font-sans text-base text-fg placeholder:text-fg/45 transition-[border-color,box-shadow] duration-200 outline-none focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-primary)_22%,transparent)] aria-[invalid=true]:border-[#b4534b]";
+  "w-full rounded-ui border border-field-line bg-field px-4 font-sans text-base text-fg placeholder:text-fg/45 transition-[border-color,box-shadow] duration-200 outline-none focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-primary)_22%,transparent)] aria-[invalid=true]:border-[#b4534b]";
 
 function Field({ id, label, required, error, children }) {
   return (
@@ -85,18 +85,18 @@ export default function ContactForm() {
   const invalid = (name) => Boolean(errors[name] && touched[name]);
 
   return (
-    <div data-reveal="left" className="flex flex-col gap-10 rounded-[20px] bg-surface-soft p-6 sm:p-12">
-      <div className="flex flex-col text-fg">
+    <div data-reveal="left" className="flex flex-col gap-10 rounded-ui bg-surface-soft p-6 sm:p-12">
+      <div className="flex flex-col gap-2 text-fg">
         <h2 className="text-card">{contactForm.title}</h2>
         <p className="text-body-lg leading-[26px]">{contactForm.subtitle}</p>
       </div>
 
       {status === "sent" ? (
-        <div role="status" className="flex flex-col items-start gap-4 rounded-2xl bg-surface p-8 text-fg motion-safe:animate-rise-in">
+        <div role="status" className="flex flex-col items-start gap-4 rounded-ui bg-surface p-8 text-fg motion-safe:animate-rise-in">
           <span className="flex size-10 items-center justify-center rounded-full bg-surface-tint text-primary">
             <Icon name="check" />
           </span>
-          <p className="text-title">Thank you — your note is on its way.</p>
+          <p className="text-title text-fg">Thank you — your note is on its way.</p>
           <p className="text-body">We read every message by hand and will write back within 24–48 unhurried hours.</p>
           <Button onClick={() => setStatus("idle")} variant="inverse" size="sm" className="mt-2 border border-surface-line">
             Send another message

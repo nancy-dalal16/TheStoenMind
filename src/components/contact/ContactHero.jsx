@@ -1,17 +1,14 @@
 import Artwork from "@/components/ui/Artwork";
 import Container from "@/components/ui/Container";
-import Glow from "@/components/ui/Glow";
 import IconHalo from "@/components/ui/IconHalo";
 import { contactChannels, contactHero } from "@/lib/contact";
 
-/** Title, the four ways to reach us, then the sailboat landscape. */
+/** Telephone + title, the four ways to reach us, then the sailboat landscape. */
 export default function ContactHero() {
   const { eyebrow, title, intro } = contactHero;
 
   return (
     <section className="@container relative overflow-x-clip">
-      <Glow src="/images/dark/glow-hero.svg" className="top-[-495px] left-1/2 size-[1660px] -translate-x-1/2" />
-
       {/* Clouds drifting at either edge */}
       <Artwork
         className="absolute top-[66px] left-[-32.78cqw] aspect-[701/212] w-[max(48.68cqw,320px)] motion-safe:animate-cloud-in motion-safe:[animation-delay:600ms] max-md:hidden"
@@ -26,28 +23,41 @@ export default function ContactHero() {
         sizes="50vw"
       />
 
-      <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-8 pt-12 text-center md:pt-[120px]">
-        <p className="font-serif text-2xl leading-5 tracking-[0.06em] text-eyebrow motion-safe:animate-rise-in motion-safe:[animation-delay:80ms]">
-          {eyebrow}
-        </p>
-        <div className="flex flex-col items-center gap-3">
-          <h1 className="max-w-[698px] text-page text-fg motion-safe:animate-rise-in-blur motion-safe:[animation-delay:180ms]">
-            {title}
-          </h1>
-          <p className="max-w-[610px] text-lead leading-[1.34] text-fg motion-safe:animate-rise-in motion-safe:[animation-delay:360ms]">
-            {intro}
+      <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[clamp(24px,4svh,32px)] pt-12 text-center md:gap-[clamp(40px,7svh,64px)] md:pt-[120px] lg:gap-[clamp(40px,11svh,88px)]">
+        {/* Telephone above the eyebrow at every size (globals.css → "Contact telephone") */}
+        <div className="contact-stack">
+          <div aria-hidden="true" className="contact-phone motion-safe:animate-rise-in motion-safe:[animation-delay:600ms]">
+            <div className="phone-ringer absolute inset-0">
+              <Artwork
+                className="phone-art absolute inset-0"
+                light={{ src: "/images/contact/telephone.png", position: "center" }}
+                dark={{ src: "/images/contact/telephone-night.png", position: "center", brightness: 1.08 }}
+                sizes="(min-width: 1024px) 210px, 150px"
+              />
+            </div>
+          </div>
+          <p className="font-serif text-2xl leading-5 tracking-[0.06em] text-eyebrow motion-safe:animate-rise-in motion-safe:[animation-delay:80ms]">
+            {eyebrow}
           </p>
+          <div className="flex flex-col items-center gap-[clamp(16px,2.6svh,20px)]">
+            <h1 className="max-w-[698px] text-page text-fg motion-safe:animate-rise-in-blur motion-safe:[animation-delay:180ms]">
+              {title}
+            </h1>
+            <p className="max-w-[610px] text-lead leading-[1.34] motion-safe:animate-rise-in motion-safe:[animation-delay:360ms]">
+              {intro}
+            </p>
+          </div>
         </div>
       </div>
 
-      <Container className="relative z-10 mt-[60px]">
+      <Container className="relative z-10 mt-[clamp(48px,11svh,88px)]">
         <ul className="grid grid-cols-1 gap-[30px] sm:grid-cols-2 lg:grid-cols-4">
           {contactChannels.map((channel, index) => (
             <li
               key={channel.title}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-group hover-card flex flex-col items-center gap-5 rounded-2xl bg-linear-to-b from-surface to-surface-soft p-6 text-center"
+              className="hover-group hover-card flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-surface to-surface-soft p-6 text-center"
             >
               <IconHalo icon={channel.icon} blob={channel.blob} />
               <div className="flex w-full flex-1 flex-col items-center gap-4">

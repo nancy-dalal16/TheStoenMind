@@ -28,7 +28,7 @@ export default function Pillars() {
               key={item.title}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-group hover-lift flex flex-col items-center gap-5 rounded-2xl p-6 text-center text-fg"
+              className="hover-group hover-lift flex flex-col items-center gap-5 rounded-ui p-6 text-center text-fg"
             >
               <IconHalo icon={item.icon} blob={item.blob} />
               <div className="flex flex-col items-center gap-2">

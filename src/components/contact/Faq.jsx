@@ -36,7 +36,7 @@ export default function Faq() {
                 key={item.question}
                 data-part="rise"
                 style={{ "--j": index }}
-                className="hover-outline rounded-lg border border-surface-line bg-surface has-[button[aria-expanded=true]]:shadow-[0_12px_28px_-18px_var(--color-surface-shadow)]"
+                className="hover-outline rounded-ui border border-surface-line bg-surface has-[button[aria-expanded=true]]:shadow-[0_12px_28px_-18px_var(--color-surface-shadow)]"
               >
                 <h3>
                   <button
@@ -64,7 +64,7 @@ export default function Faq() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-6 pb-5 text-body text-fg-muted">{item.answer}</p>
+                    <p className="px-6 pb-5 text-body">{item.answer}</p>
                   </div>
                 </div>
               </li>

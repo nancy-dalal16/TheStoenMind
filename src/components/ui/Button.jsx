@@ -13,7 +13,7 @@ const SIZES = {
 };
 
 /**
- * Figma button: Inter 16/20, 0.04em tracking, 8px radius.
+ * Figma button: Inter 16/20, 0.04em tracking; 4px radius (site-wide --radius-ui).
  * `icon` sits before the label, `iconEnd` after it (e.g. "arrow-right").
  * Renders a Next.js <Link> when `href` is given, otherwise a <button>.
  */
@@ -29,7 +29,7 @@ export default function Button({
   ...props
 }) {
   const classes = [
-    "group/btn inline-flex items-center justify-center gap-2 rounded-lg font-sans text-base leading-5 tracking-[0.04em] whitespace-nowrap",
+    "group/btn inline-flex items-center justify-center gap-2 rounded-ui font-sans text-base leading-5 tracking-[0.04em] whitespace-nowrap",
     "transition-[color,background-color,border-color,box-shadow,translate] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0",
     VARIANTS[variant],
     SIZES[size],

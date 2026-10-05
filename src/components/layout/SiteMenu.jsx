@@ -88,7 +88,7 @@ export default function SiteMenu({ items, tagline, social = [] }) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen(true)}
-        className="group/menu inline-flex h-12 shrink-0 cursor-pointer items-center justify-center gap-3 rounded-full border border-fg/15 bg-bg text-fg shadow-[0_6px_20px_-12px_rgb(0_0_0/0.35)] transition-[border-color,background-color,transform] duration-300 hover:border-fg/35 active:scale-[0.97] max-sm:w-12 sm:pr-4 sm:pl-5"
+        className="group/menu inline-flex h-12 shrink-0 cursor-pointer items-center justify-center gap-3 rounded-ui border border-fg/15 bg-bg text-fg shadow-[0_6px_20px_-12px_rgb(0_0_0/0.35)] transition-[border-color,background-color,transform] duration-300 hover:border-fg/35 active:scale-[0.97] max-sm:w-12 sm:pr-4 sm:pl-5"
       >
         <span className="hidden font-sans text-xs font-medium tracking-[0.22em] uppercase sm:inline">Menu</span>
         <span aria-hidden="true" className="flex h-2.5 w-[22px] flex-col items-end justify-between">
@@ -145,7 +145,7 @@ export default function SiteMenu({ items, tagline, social = [] }) {
                     ref={closeRef}
                     type="button"
                     onClick={close}
-                    className="group/close inline-flex h-12 cursor-pointer items-center gap-3 rounded-full border border-fg/15 pr-4 pl-5 transition-[border-color,background-color] duration-300 hover:border-fg/35 hover:bg-fg/[0.04]"
+                    className="group/close inline-flex h-12 cursor-pointer items-center gap-3 rounded-ui border border-fg/15 pr-4 pl-5 transition-[border-color,background-color] duration-300 hover:border-fg/35 hover:bg-fg/[0.04]"
                   >
                     <span className="font-sans text-xs font-medium tracking-[0.22em] uppercase">Close</span>
                     <span aria-hidden="true" className="relative size-4 transition-transform duration-500 group-hover/close:rotate-90">
@@ -201,7 +201,7 @@ export default function SiteMenu({ items, tagline, social = [] }) {
                   }`}
                 >
                   <div className="border-t border-divider pt-6">
-                    {tagline ? <p className="max-w-[30ch] text-body text-fg-muted">{tagline}</p> : null}
+                    {tagline ? <p className="max-w-[30ch] text-body">{tagline}</p> : null}
                     {social.length ? (
                       <ul className="mt-5 flex gap-6 font-sans text-xs font-medium tracking-[0.18em] uppercase">
                         {social.map((link) => (

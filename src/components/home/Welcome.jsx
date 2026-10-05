@@ -1,15 +1,9 @@
 import Artwork from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
+import AboutPrompter from "@/components/home/AboutPrompter";
+import { aboutStory } from "@/lib/content";
 
-const lines = [
-  "The thoughts that passed too quickly.",
-  "The feelings that evaporated before they were seen.",
-  "The parts of you that you taught to stay quiet.",
-  "They are not gone.",
-  "They are simply…waiting to be witnessed.",
-];
-
-/** Welcome letter card resting on the hero landscape. */
+/** About card resting on the hero landscape: "A Small Story" as a lens teleprompter. */
 export default function Welcome() {
   return (
     // Top padding leaves room for the whole hero landscape before the card:
@@ -19,10 +13,11 @@ export default function Welcome() {
     // Only the faded fog at the painting's foot sits behind the card.
     <section
       className={[
-        "@container relative [--land-w:max(115.56cqw,560px)]",
+        "@container hero-fit relative [--land-w:max(115.56cqw,560px)]",
         "pt-[calc(var(--land-w)*0.41-4rem)] md:pt-[calc(var(--land-w)*0.41-5rem)]",
-        "lg:pt-[calc(var(--land-w)*0.3211-clamp(88px,10.14cqw,146px)-5rem-var(--hero-shift))]",
-        // Mirrors Hero's --hero-shift (the hero copy moved down on short screens, the landscape didn't).
+        "lg:pt-[calc(var(--land-w)*0.3211-clamp(88px,10.14cqw,146px)-5rem-var(--hero-shift)-var(--land-lift))]",
+        // Mirrors Hero's --hero-shift (the hero copy moved down on short screens, the landscape didn't)
+        // and --land-lift (the landscape moved up to keep the carriage on the first screen).
         "[--hero-pt:clamp(24px,calc(100svh-498px-var(--land-w)*0.1162),146px)]",
         "[--hero-shift:0px] lg:[--hero-shift:clamp(0px,calc(146px-var(--hero-pt)),64px)]",
       ].join(" ")}
@@ -48,32 +43,22 @@ export default function Welcome() {
 
         <div
           data-reveal="zoom"
-          className="relative z-10 mx-auto flex max-w-[626px] flex-col items-center gap-8 rounded-2xl bg-linear-to-b from-card-from to-card-to px-6 py-10 backdrop-blur-[4px] sm:p-12"
+          className="relative z-10 mx-auto flex flex-col items-center gap-6 rounded-ui bg-linear-to-b from-card-from to-card-to px-6 py-10 backdrop-blur-[4px] sm:p-12"
+          style={{ maxWidth: 720 }}
         >
-          <div className="flex max-w-[516px] flex-col gap-5 text-center text-body-lg leading-[26px] text-fg">
-            <p data-part="rise" style={{ "--j": 0 }}>
-              What a wonderful moment for you to have arrived. <br className="hidden sm:block" />
-              There is an undisturbed world, waiting exactly where you are.
-            </p>
-            <p data-part="rise" style={{ "--j": 1 }}>
-              You&rsquo;ve probably been moving through a world that fills the space around you before
-              you&rsquo;ve had the chance to meet yourself within it.
-            </p>
-            <p data-part="rise" style={{ "--j": 2 }}>
-              Here, in this unperturbed world, you are not required to react. <br className="hidden sm:block" />
-              You are invited to notice.
-            </p>
-            <p data-part="rise" style={{ "--j": 3 }}>
-              {lines.map((line, index) => (
-                <span key={line}>
-                  {line}
-                  {index < lines.length - 1 ? <br /> : null}
-                </span>
-              ))}
-            </p>
+          <p
+            data-part="rise"
+            style={{ "--j": 0 }}
+            className="font-sans text-sm font-medium tracking-[0.08em] text-eyebrow uppercase"
+          >
+            {aboutStory.label}
+          </p>
+
+          <div data-part="rise" style={{ "--j": 1 }} className="w-full">
+            <AboutPrompter blocks={aboutStory.blocks} label="About the Stoen Mind: a small story" />
           </div>
 
-          <div data-part="rise" style={{ "--j": 4 }}>
+          <div data-part="rise" style={{ "--j": 2 }}>
             <Button href="/about">Know more about us</Button>
           </div>
         </div>

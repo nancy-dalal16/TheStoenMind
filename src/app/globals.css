@@ -21,8 +21,9 @@
 
 :root {
   /* Raw palette (Figma styles) */
-  --palette-ink: #241f20; /* "Black" */
+  --palette-ink: #333333; /* "Black" */
   --palette-earth: #615b51; /* "body text" */
+  --palette-graphite: #4d4d4d; /* paragraph copy (light) — Nancy, Oct 2 */
   --palette-slate: #6e8488; /* Foundation/Blue/blue-700 */
   --palette-teal: #6e9a9f;
   --palette-sky: #9bbabf; /* Foundation/Blue/blue-500 */
@@ -45,6 +46,7 @@
   --bg: var(--palette-white);
   --fg: var(--palette-ink);
   --fg-muted: var(--palette-earth);
+  --fg-body: var(--palette-graphite);
   --eyebrow: var(--palette-slate);
   --nav: var(--palette-earth);
   --primary: var(--palette-teal);
@@ -76,6 +78,8 @@
   --surface-tint: var(--palette-haze);
   --surface-line: var(--palette-rain);
   --surface-shadow: rgb(102 101 95 / 0.08);
+  /* Home "Ways to wander" product cards — a soft warm paper box on the plain page (Oct 4) */
+  --shelf: #f6f5f1;
   --hover-shadow: rgb(46 62 72 / 0.16);
   --field: var(--palette-white);
   --field-line: var(--palette-rain);
@@ -88,6 +92,7 @@
   --bg: var(--palette-deep-sea); /* #03446A — Nancy, Sep 29 */
   --fg: var(--palette-white);
   --fg-muted: var(--palette-white);
+  --fg-body: var(--palette-white);
   --eyebrow: var(--palette-frost);
   --nav: var(--palette-frost);
   /* Surfaces are derived from the deep-sea background: a touch lighter, as in the Figma dark frame */
@@ -110,6 +115,7 @@
   --surface-tint: color-mix(in srgb, var(--palette-white) 11%, var(--palette-deep-sea));
   --surface-line: color-mix(in srgb, var(--palette-frost) 30%, var(--palette-deep-sea));
   --surface-shadow: rgb(0 0 0 / 0.22);
+  --shelf: color-mix(in srgb, var(--palette-white) 6%, var(--palette-deep-sea));
   --hover-shadow: rgb(0 0 0 / 0.34);
   --field: color-mix(in srgb, #000 16%, var(--palette-deep-sea));
   --field-line: color-mix(in srgb, var(--palette-frost) 34%, var(--palette-deep-sea));
@@ -122,6 +128,7 @@
   --color-bg: var(--bg);
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
+  --color-fg-body: var(--fg-body);
   --color-eyebrow: var(--eyebrow);
   --color-nav: var(--nav);
   --color-primary: var(--primary);
@@ -150,6 +157,7 @@
   --color-surface-tint: var(--surface-tint);
   --color-surface-line: var(--surface-line);
   --color-surface-shadow: var(--surface-shadow);
+  --color-shelf: var(--shelf);
   --color-field: var(--field);
   --color-field-line: var(--field-line);
   --color-band-soft: var(--band-soft);
@@ -159,28 +167,34 @@
 }
 
 @theme {
-  /* Figma type scale — fluid below the 1440 desktop frame */
-  --text-display: clamp(2.5rem, 1.9rem + 2.4vw, 3.75rem); /* 60 */
-  --text-page: clamp(2.375rem, 1.9rem + 1.9vw, 3.5rem); /* 56/62 — inner page titles */
+  /* Type scale — fluid below the 1440 desktop frame.
+     Oct 2: stepped down from the Figma sizes at Nancy's request (her hero mock-up:
+     title 60→48, intro 24→20); the rest of the scale follows the same ratio. */
+  --text-display: clamp(2.25rem, 1.75rem + 1.6vw, 2.75rem); /* 48 (was 60) */
+  --text-page: clamp(2.25rem, 1.75rem + 1.6vw, 3rem); /* 48 (was 56) — inner page titles */
   --text-page--line-height: 1.107;
   --text-page--letter-spacing: 0.02em;
-  --text-card: clamp(1.75rem, 1.5rem + 0.9vw, 2.25rem); /* 36 — card titles */
+  --text-card: clamp(1.5rem, 1.35rem + 0.6vw, 1.875rem); /* 30 (was 36) — card titles */
   --text-card--line-height: 1.17;
   --text-display--line-height: 0.9334;
   --text-display--letter-spacing: 0.02em;
-  --text-heading: clamp(2.125rem, 1.8rem + 1.3vw, 3rem); /* 48 */
+  --text-heading: clamp(1.875rem, 1.6rem + 1vw, 2.5rem); /* 40 (was 48) — section titles */
   --text-heading--line-height: 1.1875;
   --text-heading--letter-spacing: 0.02em;
-  --text-lead: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem); /* 24 */
+  --text-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem); /* 20 (was 24) — hero intros */
   --text-lead--line-height: 1.34;
-  --text-title: 1.5rem; /* 24 */
+  --text-title: 1.375rem; /* 22 (was 24) */
   --text-title--line-height: 1.1667;
-  --text-body-lg: 1.25rem; /* 20 */
+  --text-body-lg: 1.125rem; /* 18 (was 20) */
   --text-body-lg--line-height: 1.3;
   --text-body: 1rem; /* 16 */
   --text-body--line-height: 1.375;
 
   --container-page: 80rem; /* 1280 content width inside the 1440 frame */
+
+  /* One corner radius for buttons, images, cards and fields (Oct 2, Nancy: 4px everywhere).
+     Circles (theme toggle, avatars, icon discs) stay rounded-full. */
+  --radius-ui: 0.25rem; /* 4 */
 }
 
 @layer base {
@@ -199,6 +213,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Paragraph copy. Base layer, so a colour utility on a <p> (eyebrows, errors) still wins. */
+  p {
+    color: var(--color-fg-body);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 3px;
@@ -207,6 +226,83 @@
 
   ::selection {
     background-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+  }
+}
+
+/*
+ * Home hero fit (lg+), shared by <Hero /> and <Welcome />.
+ * Nancy (Oct 2): the tree, carriage, horse and a strip of field below them must be on the
+ * first screen. The landscape is anchored under the hero copy, so on short laptop screens
+ * (e.g. 1528×732) the carriage fell below the fold. --land-lift raises the landscape just
+ * enough that 0.79 of the painting (the grass under the wheels) sits 12px above the fold;
+ * Welcome subtracts the same amount so the gap before the card doesn't grow.
+ *   field line = header + --hero-pt + copy block + 0.1461 × --land-w
+ *   (0.1461 = 0.79 × 0.6667 painting height − 0.2196 cover crop − 0.161 tuck)
+ * --hero-copy-h must match the copy: eyebrow 26 + 2-line title + 2-line intro + button 58.
+ */
+.hero-fit {
+  --land-lift: 0px;
+}
+
+@media (width >= 64rem) {
+  .hero-fit {
+    --hdr: clamp(88px, 15svh, 110px);
+    --hero-gap: clamp(40px, 11svh, 88px);
+    --hero-gap-in: clamp(16px, 2.6svh, 20px);
+    --hero-copy-h: calc(
+      26px + 2 * 0.9334 * var(--text-display) + 2 * 1.34 * var(--text-lead) + 58px + 2 * var(--hero-gap) +
+        var(--hero-gap-in)
+    );
+    --land-lift: clamp(
+      0px,
+      calc(var(--hdr) + var(--hero-pt) + var(--hero-copy-h) + var(--land-w) * 0.1461 + 12px - 100svh),
+      140px
+    );
+  }
+}
+
+/*
+ * About hero fit (lg+), used by <AboutHero />.
+ * Nancy (Oct 2): the painting sits higher so the sailboats and a band of water under them
+ * are on the first screen. The "boat line" is 0.78 of the painting image, i.e. 0.4613 × width
+ * below the painting frame's top (0.78 × 0.6667 image height − 0.0586 crop).
+ *   --art-top  painting top relative to the section, lowest of:
+ *                • Figma overlap: copy block, then tucked 0.1694 × width up behind it
+ *                • short screens: boat line 16px above the fold
+ *              never more than 40px above the page top.
+ *   --hero-pt  copy centred between the header and the arch top (art-top + 0.2876 × width, −24px).
+ * On short screens the painting's top (the tree's crown, the night clouds) runs up behind the
+ * header, so it fades in from transparent until 32px below the header.
+ */
+.about-hero-fit {
+  --art-w: max(104.93cqw, 760px);
+}
+
+@media (width >= 64rem) {
+  .about-hero-fit {
+    --hdr: clamp(88px, 15svh, 110px);
+    --hero-gap: clamp(24px, calc(16svh - 72px), 88px);
+    --copy-h: calc(164px + clamp(16px, 2.6svh, 20px) + var(--hero-gap)); /* title 53 + intro 54 + button 57 */
+    --art-fold: calc(100svh - var(--hdr) - 16px - var(--art-w) * 0.4613);
+    --hero-pt: clamp(
+      24px,
+      min(
+        calc((var(--art-fold) + var(--art-w) * 0.2876 - 24px - var(--copy-h)) / 2),
+        calc(var(--art-w) * 0.1182 - 24px)
+      ),
+      180px
+    );
+    --text-h: calc(var(--hero-pt) + var(--copy-h));
+    --art-top: max(
+      calc(-1 * var(--hdr) - 40px),
+      min(calc(var(--text-h) - var(--art-w) * 0.1694), var(--art-fold))
+    );
+    --art-fade: max(0px, calc(32px - var(--art-top)));
+  }
+
+  .about-hero-art {
+    margin-top: calc(var(--art-top) - var(--text-h));
+    mask-image: linear-gradient(to bottom, transparent max(0px, calc(var(--art-fade) - 96px)), #000 var(--art-fade));
   }
 }
 
@@ -257,7 +353,9 @@
  *     Use as `motion-safe:animate-rise-in motion-safe:[animation-delay:…]`.
  *
  *  2. Scroll reveal — add `data-reveal` to any block; <RevealObserver />
- *     adds `.is-revealed` when it enters the viewport.
+ *     adds `.is-revealed` when it enters the viewport, and resets it once it
+ *     is fully off screen, so it replays on every visit (Oct 4). The entrance
+ *     keyframes in 1. are rewound and replayed the same way.
  *       data-reveal=""       fade up (default)
  *       data-reveal="fade" | "left" | "right" | "zoom"
  *       style={{ "--i": n }} stagger index (110ms steps)
@@ -357,6 +455,11 @@
   [data-reveal]:not(.is-revealed) [data-part="bloom"] { opacity: 0; scale: 0.7; rotate: -12deg; }
   [data-reveal] [data-part="line"] { transform-origin: left center; --part-delay: calc(var(--reveal-delay) + 200ms); }
   [data-reveal]:not(.is-revealed) [data-part="line"] { scale: 0 1; }
+
+  /* Off screen, between visits: snap back to the "before" state without animating
+     (RevealObserver), so the reveal plays afresh next time the section comes into view. */
+  [data-reveal].reveal-reset,
+  [data-reveal].reveal-reset [data-part] { transition: none !important; }
 
   @media (prefers-reduced-motion: reduce) {
     [data-reveal],
@@ -534,4 +637,392 @@
 [data-theme="dark"] .footer-range {
   -webkit-mask-image: linear-gradient(to bottom, transparent 4%, rgb(0 0 0 / 0.4) 30%, black 58%);
   mask-image: linear-gradient(to bottom, transparent 4%, rgb(0 0 0 / 0.4) 30%, black 58%);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  About teleprompter (home → <AboutPrompter />)
+ * ─────────────────────────────────────────────────────────────
+ *  The copy rises through a lens-shaped window. JS projects each
+ *  block onto a convex surface (scale + opacity + compression),
+ *  so the copy itself forms the lens (Nancy, Oct 3: no glass band
+ *  or rim lines in either theme). This file draws the window,
+ *  the progress rail and the type.
+ *  Plain classes, because Nancy's dev server can miss brand-new
+ *  Tailwind utilities until it restarts.
+ *
+ *  Without JS the window is simply a scrollable box.
+ * ───────────────────────────────────────────────────────────── */
+:root {
+  --about-sky: #2f6b98;
+  --about-present: #8b8178;
+  --about-cloud: #7ea4ab;
+  --lens-tint: var(--palette-slate);
+}
+[data-theme="dark"] {
+  --about-sky: var(--palette-frost);
+  --about-present: color-mix(in srgb, var(--palette-white) 62%, var(--palette-deep-sea));
+  --about-cloud: #bcd5da;
+  --lens-tint: var(--palette-frost);
+}
+
+@layer components {
+  .prompter-wrap {
+    --prompter-h: clamp(340px, 60svh, 480px);
+    width: 100%;
+  }
+
+  .prompter-frame {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Window: tall on desktop, still generous on phones; edges dissolve top and bottom */
+  .prompter {
+    position: relative;
+    height: var(--prompter-h);
+    overflow-y: auto; /* no-JS fallback */
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    touch-action: pan-y;
+    border-radius: 4px;
+    outline-offset: 10px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 80%, transparent 100%);
+  }
+  .prompter::-webkit-scrollbar {
+    display: none;
+  }
+  .prompter[data-enhanced] {
+    overflow: hidden;
+    cursor: grab;
+  }
+  .prompter[data-dragging] {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .prompter-track {
+    position: relative;
+    margin-inline: auto;
+    max-width: 34.5rem; /* ~560px: about 60 characters at the lens centre */
+    padding-block: calc(var(--prompter-h) * 0.32);
+  }
+  .prompter[data-enhanced] .prompter-track {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    padding-block: 0;
+    will-change: transform;
+    transition: opacity 0.65s ease; /* FADE_MS in AboutPrompter.jsx */
+  }
+  .prompter[data-fading] .prompter-track {
+    opacity: 0;
+  }
+
+  /* Scaled around the column centre, so the text's left edge bows into a lens */
+  .prompter[data-enhanced] .prompter-item {
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
+    visibility: hidden; /* until the first projection */
+  }
+
+  /* Type — from the copy deck: serif body, generous paragraph spacing */
+  .about-copy {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem); /* 19 → 22 at the lens centre */
+    line-height: 1.5;
+    text-align: left;
+    text-wrap: pretty;
+  }
+  .about-copy .prompter-item {
+    color: var(--fg-body);
+  }
+  .about-copy .prompter-item + .prompter-item {
+    margin-top: 0.85em;
+  }
+  .about-copy .prompter-item[data-gap="lg"] {
+    margin-top: 2.2em;
+  }
+  .about-title {
+    color: var(--fg) !important;
+    font-weight: 700;
+    font-style: italic;
+  }
+  .about-closing {
+    font-style: italic;
+    letter-spacing: 0.12em;
+  }
+  .about-names {
+    letter-spacing: 0.08em;
+  }
+  .about-expansive {
+    letter-spacing: 0.14em;
+  }
+  .about-sky {
+    color: var(--about-sky);
+  }
+  .about-present {
+    color: var(--about-present);
+  }
+  .about-cloud {
+    color: var(--about-cloud);
+  }
+
+  /* Progress rail on the right: shows where you are and hints that it can be scrubbed */
+  .prompter-rail {
+    display: none;
+    position: absolute;
+    top: 24%;
+    bottom: 24%;
+    right: -1.5rem;
+    width: 1px;
+    background: color-mix(in srgb, var(--lens-tint) 28%, transparent);
+    pointer-events: none;
+  }
+  .prompter-dot {
+    --progress: 0;
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--lens-tint);
+    translate: 0 calc(var(--progress) * (var(--prompter-h) * 0.52 - 5px));
+  }
+  @media (width >= 40rem) {
+    .prompter-rail {
+      display: block;
+    }
+  }
+
+  .prompter-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .prompter-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    border: 1px solid var(--divider);
+    color: var(--fg);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease,
+      transform 0.4s var(--ease-soft);
+  }
+  .prompter-hint {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: var(--fg-muted);
+    opacity: 0.85;
+  }
+  .prompter-hint--coarse {
+    display: none;
+  }
+  @media (pointer: coarse) {
+    .prompter-hint--fine {
+      display: none;
+    }
+    .prompter-hint--coarse {
+      display: inline;
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .prompter-toggle:hover {
+    border-color: var(--primary);
+    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+    transform: translateY(-1px);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Contact telephone (ContactHero)
+ *  The watercolour telephone from the site copy (TSM Website Pdf,
+ *  p.7), centred above "Across the silence" at every size. It
+ *  gives a small "ring" once it has appeared, and rings again on
+ *  hover (pointer devices).
+ *
+ *    .contact-stack   phone + eyebrow + title + intro; owns --stack-gap
+ *    .contact-phone   sizes the art (--phone-w)
+ *    .phone-ringer    hover ring (rotate)
+ *    .phone-art       entrance ring (rotate), on the Artwork root
+ * ───────────────────────────────────────────────────────────── */
+
+.contact-stack {
+  --stack-gap: clamp(24px, 4svh, 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--stack-gap);
+}
+@media (min-width: 48rem) {
+  .contact-stack { --stack-gap: clamp(40px, 7svh, 64px); }
+}
+@media (min-width: 64rem) {
+  .contact-stack { --stack-gap: clamp(40px, 11svh, 88px); }
+}
+
+.contact-phone {
+  --phone-w: clamp(112px, 30vw, 150px);
+  position: relative;
+  width: var(--phone-w);
+  aspect-ratio: 856 / 573;
+  /* Pulls the eyebrow back up: the stack gap is sized for text-to-text. */
+  margin-bottom: calc(-0.4 * var(--stack-gap));
+}
+@media (min-width: 64rem) {
+  .contact-phone {
+    --phone-w: clamp(172px, 13vw, 210px);
+    margin-bottom: calc(-0.6 * var(--stack-gap));
+  }
+}
+
+.phone-ringer,
+.phone-art {
+  transform-origin: 50% 88%;
+}
+
+@keyframes phone-ring {
+  0%, 72%, 100% { rotate: 0deg; }
+  8% { rotate: -4deg; }
+  16% { rotate: 3.5deg; }
+  24% { rotate: -3deg; }
+  32% { rotate: 2.5deg; }
+  40% { rotate: -1.75deg; }
+  48% { rotate: 1deg; }
+  56% { rotate: -0.5deg; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .phone-art {
+    animation: phone-ring 1.2s ease-in-out 1.7s both;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .contact-phone:hover .phone-ringer {
+    animation: phone-ring 1s ease-in-out;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Feature medallions (home → Features)
+ *  Nancy's three watercolour roundels replace the line icons.
+ *  Light: transparent PNGs, so the ring floats on the page and the
+ *  mist behind it. Dark: the same art on a cool paper disc
+ *  (#EEF4F7), echoing the white icon blobs, with a soft shadow.
+ *  The wrapper blooms in via [data-part="bloom"]; on hover the art
+ *  tilts and lifts (transform, so it never fights the reveal's
+ *  scale/rotate).
+ * ───────────────────────────────────────────────────────────── */
+
+.medallion {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(120px, 34vw, 132px);
+  aspect-ratio: 1;
+}
+@media (min-width: 64rem) {
+  .medallion { width: clamp(132px, 10cqw, 150px); }
+}
+.medallion-art {
+  transition: transform 1.1s var(--ease-soft), filter 0.8s ease;
+}
+[data-theme="dark"] .medallion-art {
+  filter: drop-shadow(0 14px 22px rgb(0 18 34 / 0.32));
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hover-group:hover .medallion-art {
+    transform: translateY(-4px) rotate(-3deg) scale(1.035);
+  }
+  [data-theme="dark"] .hover-group:hover .medallion-art {
+    filter: drop-shadow(0 20px 28px rgb(0 18 34 / 0.38));
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Product carousel (home → "Ways to wander", <ProductCarousel />)
+ *  Native horizontal scroll with snap: touch and trackpad swipe for free;
+ *  mouse drag is added in JS (it turns snapping off while dragging).
+ * ───────────────────────────────────────────────────────────── */
+@layer components {
+  .carousel-track {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track > * { scroll-snap-align: center; scroll-snap-stop: always; }
+  .carousel-track[data-draggable] { cursor: grab; }
+  .carousel-track[data-dragging] { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+  .carousel-track img { -webkit-user-drag: none; user-select: none; }
+
+  /* Arrows rest hidden on pointer devices and show on hover / keyboard focus */
+  @media (hover: hover) and (pointer: fine) {
+    .carousel-arrow { opacity: 0; transition: opacity 0.35s ease, background-color 0.3s ease, translate 0.35s var(--ease-soft); }
+    .carousel:hover .carousel-arrow,
+    .carousel:focus-within .carousel-arrow { opacity: 1; }
+    .carousel-arrow:disabled { opacity: 0 !important; pointer-events: none; }
+  }
+  .carousel-dot { transition: width 0.4s var(--ease-soft), background-color 0.3s ease; }
+}
+
+/* Touch screens swipe; the arrows are for mouse users. Outside the layers so it beats the
+   buttons' own `flex` utility. */
+@media not ((hover: hover) and (pointer: fine)) {
+  .carousel-arrow { display: none; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ *  Theme transition (themeFx.js) — watercolour bloom + sun/moon arc
+ *  html[data-theme-fx="bloom"] is set only while the view transition
+ *  runs. The new theme is masked by a ragged watercolour blot (SVG:
+ *  fractal-noise displacement + a soft blur) that JS grows from the
+ *  toggle. The toggle's icons share one transition name, so the old
+ *  icon sets along an arc while the new one rises.
+ *  Reduced motion / no View Transitions: the theme simply swaps.
+ * ───────────────────────────────────────────────────────────── */
+
+html[data-theme-fx]::view-transition-old(root),
+html[data-theme-fx]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+html[data-theme-fx="bloom"]::view-transition-new(root) {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='w' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='3' seed='11'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='28' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='1.4'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='68' fill='white' filter='url%28%23w%29'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-size: 0 0;
+}
+
+::view-transition-group(theme-toggle-icon) { animation: none; }
+::view-transition-old(theme-toggle-icon) {
+  animation: theme-icon-set 800ms cubic-bezier(0.5, 0, 0.5, 1) both;
+}
+::view-transition-new(theme-toggle-icon) {
+  animation: theme-icon-rise 800ms cubic-bezier(0.3, 0.6, 0.4, 1) 120ms both;
+}
+@keyframes theme-icon-set {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  50% { transform: translate(9px, 3px) rotate(28deg); opacity: 0.7; }
+  100% { transform: translate(15px, 17px) rotate(55deg); opacity: 0; }
+}
+@keyframes theme-icon-rise {
+  0% { transform: translate(-15px, 17px) rotate(-55deg); opacity: 0; }
+  50% { transform: translate(-9px, 3px) rotate(-28deg); opacity: 0.7; }
+  100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
 }

@@ -1,5 +1,6 @@
 import AboutHero from "@/components/about/AboutHero";
-import Story from "@/components/about/Story";
+import AboutStory from "@/components/about/AboutStory";
+// import Story from "@/components/about/Story";
 import Timeline from "@/components/about/Timeline";
 import Pillars from "@/components/about/Pillars";
 import Artisans from "@/components/about/Artisans";
@@ -15,7 +16,9 @@ export default function AboutPage() {
   return (
     <>
       <AboutHero />
-      <Story />
+      <AboutStory />
+      {/* Replaced by <AboutStory /> (the home page's "A Small Story" card). Kept for reference. */}
+      {/* <Story /> */}
       <Timeline />
       <Pillars />
       <Artisans />

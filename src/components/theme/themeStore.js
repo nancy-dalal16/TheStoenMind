@@ -1,4 +1,5 @@
 import { THEME_STORAGE_KEY } from "@/lib/theme";
+import { runThemeTransition } from "./themeFx";
 
 /**
  * The theme lives outside React: `data-theme` on <html> (set before paint by
@@ -37,7 +38,7 @@ function emit() {
   listeners.forEach((listener) => listener());
 }
 
-function applyTheme(theme, { animate = false } = {}) {
+function applyTheme(theme, { animate = false, origin = null } = {}) {
   const root = document.documentElement;
   if (root.dataset.theme === theme) return;
 
@@ -49,7 +50,8 @@ function applyTheme(theme, { animate = false } = {}) {
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (animate && document.startViewTransition && !reduceMotion) {
-    document.startViewTransition(commit);
+    // Watercolour bloom from the toggle + sun/moon arc (themeFx.js).
+    runThemeTransition(commit, { origin });
   } else {
     commit();
   }
@@ -166,13 +168,14 @@ export function getServerSnapshot() {
 
 /* ---- actions ---- */
 
-export function setTheme(theme) {
+/** `origin` is the element that started the switch (the toggle); effects radiate from it. */
+export function setTheme(theme, origin = null) {
   writeStoredTheme(theme);
-  switchTheme(theme, { animate: true });
+  switchTheme(theme, { animate: true, origin: origin instanceof Element ? origin : null });
 }
 
-export function toggleTheme() {
-  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+export function toggleTheme(origin = null) {
+  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", origin);
 }
 
 /**

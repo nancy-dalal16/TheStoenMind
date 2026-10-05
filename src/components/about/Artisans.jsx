@@ -17,7 +17,7 @@ export default function Artisans() {
               key={person.name}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-group hover-card flex flex-col items-center gap-5 rounded-2xl bg-linear-to-b from-surface to-surface-soft p-6 text-center"
+              className="hover-group hover-card flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-surface to-surface-soft p-6 text-center"
             >
               <Artwork
                 data-part="img"
@@ -27,7 +27,7 @@ export default function Artisans() {
               />
               <div className="flex flex-col items-center gap-3">
                 <div className="flex flex-col items-center gap-1">
-                  <h3 className="font-serif text-2xl text-fg">{person.name}</h3>
+                  <h3 className="font-serif text-title text-fg">{person.name}</h3>
                   <p className="font-sans text-xs font-medium tracking-[0.08em] text-eyebrow uppercase">{person.role}</p>
                 </div>
                 <blockquote className="text-body text-fg">&ldquo;{person.quote}&rdquo;</blockquote>

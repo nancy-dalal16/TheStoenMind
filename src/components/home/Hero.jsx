@@ -1,6 +1,5 @@
 import Artwork from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
-import Glow from "@/components/ui/Glow";
 import Icon from "@/components/ui/Icon";
 import ParallaxLayer from "@/components/ui/ParallaxLayer";
 
@@ -29,12 +28,14 @@ export default function Hero() {
   return (
     <section
       className={[
-        "@container relative",
+        "@container hero-fit relative",
         "[--land-w:max(115.56cqw,560px)] [--hero-pb:clamp(88px,10.14cqw,146px)]",
         // Below lg: start just under the button (Figma: 120px above the hero's bottom at 1440).
         "[--land-top:calc(100%-var(--land-w)*0.0721)]",
         // lg+: tuck the empty-sky top 36% of the painting (0.161 × width) up behind the copy.
-        "lg:[--land-top:calc(100%-var(--hero-pb)-var(--land-w)*0.161-var(--hero-shift))]",
+        "lg:[--land-top:calc(100%-var(--hero-pb)-var(--land-w)*0.161-var(--hero-shift)-var(--land-lift))]",
+        // …and --land-lift (globals.css, "Home hero fit") raises it further on short screens so the
+        // tree, carriage and the field under them stay on the first screen.
         // lg+ short screens (e.g. 1536×730 laptops): the top padding is squeezed so the carriage
         // fits, which pushed the copy up against the header. --hero-shift gives up to 64px of that
         // space back to the copy only; the landscape is pulled up by the same amount, so it stays put.
@@ -43,11 +44,6 @@ export default function Hero() {
         "[--hero-shift:0px] lg:[--hero-shift:clamp(0px,calc(146px-var(--hero-pt)),64px)]",
       ].join(" ")}
     >
-      <Glow
-        src="/images/dark/glow-hero.svg"
-        className="top-[-495px] left-1/2 size-[1660px] -translate-x-1/2 motion-safe:animate-fade-in"
-      />
-
       <ParallaxLayer
         speed={0.3}
         maxShift={0.179} // 0.08 × width, expressed as a fraction of its height (0.08 / 0.4471)
@@ -55,11 +51,18 @@ export default function Hero() {
       >
         <Artwork
           className="absolute inset-0 motion-safe:animate-land-in motion-safe:[animation-delay:250ms]"
-          light={{ src: "/images/light/hero-landscape.png", position: "bottom" }}
+          light={{
+            src: "/images/light/hero-landscape.png",
+            position: "bottom",
+          }}
           // "TSM Night Mode Image- 1" with the cloud cut out (its right-hand hills are widened 30%
           // so the painting still reaches the edge). Drawn at 90% so the tree and carriage match the
           // light painting's size and spot, and toned down so the hero copy leads.
-          dark={{ src: "/images/dark/night-hero-landscape.png", crop: [94.69, 134.19, 0.905, -34.67], opacity: 0.72 }}
+          dark={{
+            src: "/images/dark/night-hero-landscape.png",
+            crop: [94.69, 134.19, 0.905, -34.67],
+            opacity: 0.72,
+          }}
           sizes="max(116vw, 820px)"
           important
         />
@@ -68,7 +71,10 @@ export default function Hero() {
       {/* Drifting cloud, top-right of the landscape (scrolls at normal speed, in front of it) */}
       <Artwork
         className="absolute top-[calc(var(--land-top)+var(--land-w)*0.0036)] left-[37.71cqw] aspect-[914/168] w-[63.47cqw] motion-safe:animate-cloud-in motion-safe:[animation-delay:700ms]"
-        light={{ src: "/images/light/hero-landscape.png", crop: [100, 362.57, 0, -22.19] }}
+        light={{
+          src: "/images/light/hero-landscape.png",
+          crop: [100, 362.57, 0, -22.19],
+        }}
         dark={null}
         sizes="64vw"
         important
@@ -90,25 +96,7 @@ export default function Hero() {
         important
       />
 
-      <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[clamp(20px,4svh,32px)] pt-12 pb-(--hero-pb) text-center md:pt-[146px] lg:pt-[calc(var(--hero-pt)+var(--hero-shift))]">
-        {/* Night only: a soft deep-sea pool behind the copy so it reads over the brighter night art. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute hidden dark:block"
-          style={{
-            // The element IS the ellipse (closest-side), so the glow always reaches full
-            // transparency inside its own box — no hard edge where a box would clip it.
-            zIndex: -1,
-            left: "50%",
-            top: "calc(50% - var(--hero-pb) / 2 + 24px)",
-            width: "min(1100px, 76%)",
-            height: "calc(100% - var(--hero-pb) + 220px)",
-            transform: "translate(-50%, -50%)",
-            background:
-              "radial-gradient(closest-side, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 74%, transparent) 45%, color-mix(in srgb, var(--bg) 30%, transparent) 75%, transparent 100%)",
-          }}
-        />
-
+      <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[clamp(24px,4svh,32px)] pt-12 pb-(--hero-pb) text-center md:gap-[clamp(40px,7svh,64px)] md:pt-[146px] lg:gap-(--hero-gap) lg:pt-[calc(var(--hero-pt)+var(--hero-shift))]">
         {/* Brand wordmark, identical to the logo's lettering. Real text stays for screen readers and SEO. */}
         <p className="text-eyebrow motion-safe:animate-rise-in motion-safe:[animation-delay:80ms]">
           <span className="sr-only">the STOEN mind</span>
@@ -121,14 +109,14 @@ export default function Hero() {
           />
         </p>
 
-        <div className="flex flex-col items-center gap-[clamp(16px,3svh,24px)]">
+        <div className="flex flex-col items-center gap-[clamp(16px,2.6svh,20px)]">
           <h1 className="text-display text-fg motion-safe:animate-rise-in-blur motion-safe:[animation-delay:180ms]">
             Drift with me through <br className="hidden sm:block" />
             your inner skies.
           </h1>
-          <p className="max-w-[35.75rem] text-lead text-fg motion-safe:animate-rise-in motion-safe:[animation-delay:360ms]">
-            Journals, workbooks and diaries for the mind that wants to wander slowly — no deadlines, no
-            self-improvement checklist. Just space.
+          <p className="max-w-[35.75rem] text-lead motion-safe:animate-rise-in motion-safe:[animation-delay:360ms]">
+            JOURNALS, WORKBOOKS and DIARIES for the mind that wants to wander
+            slowly. A space with no deadlines or checklists.
           </p>
         </div>
 

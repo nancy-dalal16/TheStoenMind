@@ -11,81 +11,93 @@ export const mainNav = [
   { label: "Shop", href: "/shop" },
 ];
 
+/**
+ * Home "Ways to wander". `images` are swipeable in the card (web copies of Nancy's
+ * public/images/products uploads, made Oct 4). No prices yet: add a `price` here when ready.
+ */
 export const categories = [
   {
-    title: "Journals",
-    description: "Story-led worlds to sink into, chapter by chapter, at whatever pace feels right.",
+    title: "JOURNALS",
+    description: `Little story worlds to step into, slow down and stay awhile, with space to reflect and discover what your mind has been quietly waiting to say. A familiar character wanders with you, and may just become a friend.`,
     href: "/shop/journals",
-    image: "/images/shared/journals.png",
+    images: [
+      { src: "/images/products/web/journal-night-carnival.jpg", alt: "Night journal artwork: a starlit carnival with a Ferris wheel and Nebula Tea stall", width: 1536, height: 1024 },
+    ],
   },
   {
-    title: "Workbooks",
-    description: "Nuanced prompts and reflections, gently tied to a theme you choose to sit with.",
+    title: "WORKBOOKS",
+    description: `Story worlds with a character beside you from beginning to end. Each chapter brings things to notice, ideas to sit with, little exercises to try and space for your own reflections, at whatever pace feels right.`,
     href: "/shop/workbooks",
-    image: "/images/shared/workbooks.png",
+    images: [
+      { src: "/images/products/web/workbook-life-i-am-creating.jpg", alt: "The Life I Am Creating workbook with a watercolour cover, beside a gold pen", width: 1516, height: 1600 },
+      { src: "/images/products/web/workbook-life-i-am-creating-basket.jpg", alt: "The Life I Am Creating workbook tucked into a woven basket", width: 1200, height: 1600 },
+    ],
   },
   {
-    title: "Diaries",
-    description: "An unhurried place to keep time — for the days worth remembering quietly.",
+    title: "DIARIES",
+    description: `Mostly blank pages, with one small surprise tucked inside: a whimsical, wise or simply wandering character with a tiny story to tell, before leaving the rest of the pages, and all their possibility, to you.`,
     href: "/shop/diaries",
-    image: "/images/shared/diaries.png",
+    images: [
+      { src: "/images/products/web/diary-goose.jpg", alt: "Diary cover: a goose in a coat leaning on a field fence, in rose ink", width: 1054, height: 1492 },
+      { src: "/images/products/web/diary-horse.jpg", alt: "Diary cover: a horse before a chateau, in plum ink", width: 1054, height: 1492 },
+      { src: "/images/products/web/diary-aviators.jpg", alt: "Diary cover: two aviators beside a vintage plane, in sepia ink", width: 1054, height: 1492 },
+      { src: "/images/products/web/diary-pagoda.jpg", alt: "Diary cover: a pagoda on a misty lake, in soft blue ink", width: 1054, height: 1492 },
+    ],
   },
   {
-    title: "Books",
-    description: "For the pleasure of a real book in your hands — to read, keep, and return to.",
+    title: "NOTEBOOKS",
+    description: `Little blank spaces made to come along with you: light, easy to carry, and ready for notes, lists, passing thoughts, sudden ideas, little squiggles and whatever else happens to find you along the way.`,
     href: "/shop/books",
-    image: "/images/shared/books.png",
+    images: [
+      { src: "/images/products/web/notebook-thoughts-olive.jpg", alt: "Thoughts notebook, olive cover with a stone bridge sketch", width: 400, height: 600 },
+      { src: "/images/products/web/notebook-thoughts-umber.jpg", alt: "Thoughts notebook, deep umber cover with a greyhound sketch", width: 400, height: 600 },
+      { src: "/images/products/web/notebook-thoughts-slate.jpg", alt: "Thoughts notebook, slate cover with an elephant sketch", width: 400, height: 600 },
+    ],
   },
 ];
 
-/** `blob` is the soft shape behind each icon, positioned inside the 48px icon box. */
+/**
+ * Home "What makes these pages feel a little different?".
+ * `art` is a watercolour medallion: transparent in light mode, on a cool paper disc in dark mode
+ * (made by design/content-source/feature-medallions-cutout.py from Nancy's three uploads).
+ */
 export const features = [
   {
     title: "Short stories",
     description:
-      "Each book carries you into its own imaginary world — with a new concept, cast and pace, unfolding gently from one chapter to the next.",
-    icon: "notebook",
-    blob: { left: 8, top: 4, width: 35, height: 40, radius: "9px" },
+      "Sometimes it is nice to be taken somewhere before you have to find the words yourself. So there are little stories and worlds for you to disappear into, smile at, think about, or simply enjoy for what they are.",
+    art: { light: "/images/features/short-stories.png", dark: "/images/features/short-stories-night.png" },
   },
   {
     title: "A quiet companion",
     description:
-      "A recurring character meets you in every book, offering a little clarity when you want it. Beyond that, each prompt is yours to wander through.",
-    icon: "user",
-    blob: { left: 5, top: 5, width: 38, height: 38, radius: "10px" },
+      "You do not have to wander these pages alone. Meet Rahi, your constant companion - a little like you, and a little like all of us. He has travelled these lands before, and now he is extending a hand so you can wander them together.",
+    art: { light: "/images/features/companion.png", dark: "/images/features/companion-night.png" },
   },
   {
     title: "Space to wander",
     description:
-      "Spacious pages to write, doodle, make lists, or simply leave blank. There's no mandate to reflect, improve, or arrive anywhere.",
-    icon: "file",
-    blob: { left: 7, top: 4, width: 34, height: 40, radius: "9px 9px 14px 9px" },
-  },
-  {
-    // NOTE: duplicated title/copy is as supplied in the Figma file — replace when final copy lands.
-    title: "Short stories",
-    description:
-      "Each book carries you into its own imaginary world — with a new concept, cast and pace, unfolding gently from one chapter to the next.",
-    icon: "cookie",
-    blob: { left: 4.1, top: 3.7, width: 38.81, height: 40.15, shape: "cookie-blob" },
+      "There is plenty of space for you. For everything you know, everything you are still figuring out, and the thoughts that arrive without needing to become anything at all. Write, wonder, doodle, linger, or simply let your mind explore.",
+    art: { light: "/images/features/wander.png", dark: "/images/features/wander-night.png" },
   },
 ];
 
-export const articles = [
+/** "Is this for me?" — the three kinds of wanderer in the Articles section. */
+export const audiences = [
   {
-    title: "On keeping a book that has no rules",
-    description: "Why a Stoen journal is never late, never behind, and never needs finishing.",
-    href: "/explore/a-book-with-no-rules",
+    title: "If you’ve journalled for years",
+    description:
+      "There is plenty here to sink into. Layered ideas, thoughtful reflections and little worlds that give your already-familiar practice somewhere new to journey.",
   },
   {
-    title: "The companions who live in the margins",
-    description: "Meet the recurring characters who quietly walk beside every Stoen story.",
-    href: "/explore/companions-in-the-margins",
+    title: "If you’ve never journalled before",
+    description:
+      "Lovely. You don’t need to know how. The stories and characters give you somewhere to begin, and the pages gently make room for whatever comes next.",
   },
   {
-    title: "A short audio for slow evenings",
-    description: "Ten unhurried minutes to sit with, whenever your day needs a softer close.",
-    href: "/explore/audio-for-slow-evenings",
+    title: "If you’re not quite sure",
+    description:
+      "You might be a wonderfully curious kind of wanderer. Read the stories, meet the characters, scribble a thought or leave a page untouched. There are no rules here, only plenty of lovely ways to make the book your own.",
   },
 ];
 
@@ -120,9 +132,86 @@ export const footerColumns = [
 ];
 
 export const brandTagline =
-  "A quiet companion for the inner world — journals, workbooks and diaries, made to be returned to.";
+  "A quiet companion for the inner world - journals, workbooks and diaries, made to be returned to.";
 
 export const socialLinks = [
   { label: "Instagram", href: "https://instagram.com" },
   { label: "Facebook", href: "https://facebook.com" },
 ];
+
+/**
+ * Home → About teleprompter ("A Small Story").
+ * Source: TSM Website Pdf.pdf (Drive › Website Copy), ABOUT section, Oct 3 2026.
+ * Each entry is one block of the prompter. A string is plain copy; an array mixes plain
+ * strings with styled runs `{ text, tone }`, matching the emphasis in the PDF:
+ *   names     letter-spaced ("Esha & Prachi")
+ *   sky       deep sky blue
+ *   present   soft warm grey
+ *   expansive widely letter-spaced
+ *   cloud     misty blue
+ * `kind`: "title" (bold italic), "closing" (italic, letter-spaced), `gap: "lg"` adds a pause before it.
+ */
+export const aboutStory = {
+  label: "About",
+  blocks: [
+    { kind: "title", content: "A Small Story" },
+    { content: "Hello." },
+    {
+      content: [
+        "We are ",
+        { text: "Esha & Prachi", tone: "names" },
+        ", two people who have, in our own curious ways, tried to explore life and the mind’s play in it. And we found so many surprises along the way that we could not stop exploring.",
+      ],
+    },
+    { content: "The Stoen Mind began with our love for imagination and stories." },
+    {
+      content:
+        "Stories in books, stories people carry, stories we tell ourselves, stories we outgrow, and stories that somehow find us at just the right time.",
+    },
+    {
+      content:
+        "Along the way, we found ourselves wandering into philosophy, reflection, curiosity, and all the strange and wonderful places the mind likes to go.",
+    },
+    { content: "And the more we explored, the more we realised that the mind is not really a thing to be solved." },
+    {
+      content: [
+        "It is more like a ",
+        { text: "sky", tone: "sky" },
+        ". Always ",
+        { text: "present", tone: "present" },
+        " and ",
+        { text: "expansive", tone: "expansive" },
+        ".",
+      ],
+    },
+    {
+      content: [
+        "And somewhere within it drifts a ",
+        { text: "cloud", tone: "cloud" },
+        ". A cloud of thoughts, feelings, imaginings, questions, and countless other things that pass through us.",
+      ],
+    },
+    { content: "Sometimes light and playful." },
+    { content: "Sometimes vast and mysterious." },
+    { content: "Sometimes full of questions." },
+    { content: "Sometimes carrying a storm." },
+    { content: "Sometimes taking shapes that seem to mean something." },
+    { content: "Sometimes simply floating by." },
+    { content: "The Stoen Mind is a space for that cloud." },
+    { content: "A place where you can sit beside it for a while." },
+    { content: "Observe it." },
+    { content: "Wonder about it." },
+    { content: "Rest beside it." },
+    { content: "Follow where it leads." },
+    { content: "Shape it if you wish." },
+    { content: "Or let it shape itself." },
+    { content: "Or simply rest and let it all be." },
+    { kind: "closing", content: "…Now we want you to come along with us." },
+    { gap: "lg", content: "So, we created small portals for you to travel into that space." },
+    {
+      content:
+        "Through stories, journals, workbooks, reflections, and other thoughtful things that invite you to explore your own Stoen Mind.",
+    },
+    { content: "Things that add a little lightness and spaciousness, and somehow become difficult to part with." },
+  ],
+};

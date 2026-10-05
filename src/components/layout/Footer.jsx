@@ -31,7 +31,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div data-reveal="" className="flex flex-col gap-6">
             <Logo />
-            <p className="text-body text-fg">
+            <p className="text-body">
               {brandTagline}
             </p>
           </div>

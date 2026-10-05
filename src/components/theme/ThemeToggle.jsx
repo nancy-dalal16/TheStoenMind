@@ -17,16 +17,17 @@ export default function ThemeToggle({ className = "" }) {
   return (
     <button
       type="button"
-      onClick={toggleTheme}
+      onClick={(event) => toggleTheme(event.currentTarget)}
+      data-theme-toggle=""
       onPointerEnter={warm}
       onFocus={warm}
       onPointerDown={warm}
       className={`toggle-spin inline-flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-toggle-bg text-toggle-fg transition-transform duration-200 hover:scale-105 active:scale-95 ${className}`}
     >
-      <span className="flex dark:hidden">
+      <span data-toggle-icon="" className="flex dark:hidden">
         <Icon name="moon" />
       </span>
-      <span className="hidden dark:flex">
+      <span data-toggle-icon="" className="hidden dark:flex">
         <Icon name="sun" />
       </span>
       <span className="sr-only">
