@@ -7,8 +7,9 @@ import { categories } from "@/lib/content";
 /**
  * "Ways to wander": one tall, spacious box per category, with the swipeable product images
  * floating in the upper part and the copy and button resting at the foot of the same box
- * (layout after Nancy's postcard-shelf reference, Oct 4). The section itself has no background;
- * only the boxes carry a soft paper tone (--shelf). Prices: none yet (add `price` in content.js).
+ * (layout after Nancy's postcard-shelf reference, Oct 4). The section itself has no background.
+ * Light: each box is just a soft grey hairline (Oct 5); dark: a tinted box (.shelf-card in globals.css).
+ * Prices: none yet (add `price` in content.js).
  */
 export default function Categories() {
   return (
@@ -31,7 +32,7 @@ export default function Categories() {
               key={category.title}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-card flex flex-col rounded-ui bg-shelf"
+              className="hover-card shelf-card flex flex-col rounded-ui"
             >
               <div data-part="img" className="px-3 pt-3 sm:px-4 sm:pt-4">
                 <ProductCarousel
@@ -46,7 +47,9 @@ export default function Categories() {
                   <h3 className="text-title">{category.title}</h3>
                   <p className="text-body">{category.description}</p>
                   {category.price ? (
-                    <p className="mt-1 font-sans text-base tracking-[0.04em] text-fg-muted">{category.price}</p>
+                    <p className="mt-1 font-sans text-base tracking-[0.04em] text-fg-muted">
+                      {category.price}
+                    </p>
                   ) : null}
                 </div>
                 <Button href={category.href} fullWidth>

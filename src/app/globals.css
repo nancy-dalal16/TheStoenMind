@@ -78,8 +78,9 @@
   --surface-tint: var(--palette-haze);
   --surface-line: var(--palette-rain);
   --surface-shadow: rgb(102 101 95 / 0.08);
-  /* Home "Ways to wander" product cards — a soft warm paper box on the plain page (Oct 4) */
-  --shelf: #f6f5f1;
+  /* Home "Ways to wander" product cards — light: no fill, a soft grey hairline (Nancy, Oct 5) */
+  --shelf: transparent;
+  --shelf-line: #e4e3df;
   --hover-shadow: rgb(46 62 72 / 0.16);
   --field: var(--palette-white);
   --field-line: var(--palette-rain);
@@ -116,6 +117,7 @@
   --surface-line: color-mix(in srgb, var(--palette-frost) 30%, var(--palette-deep-sea));
   --surface-shadow: rgb(0 0 0 / 0.22);
   --shelf: color-mix(in srgb, var(--palette-white) 6%, var(--palette-deep-sea));
+  --shelf-line: transparent; /* dark keeps its tinted box, no outline */
   --hover-shadow: rgb(0 0 0 / 0.34);
   --field: color-mix(in srgb, #000 16%, var(--palette-deep-sea));
   --field-line: color-mix(in srgb, var(--palette-frost) 34%, var(--palette-deep-sea));
@@ -1025,4 +1027,11 @@ html[data-theme-fx="bloom"]::view-transition-new(root) {
   0% { transform: translate(-15px, 17px) rotate(-55deg); opacity: 0; }
   50% { transform: translate(-9px, 3px) rotate(-28deg); opacity: 0.7; }
   100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+}
+
+/* Home "Ways to wander" product card: theme box (--shelf fill / --shelf-line hairline).
+   A plain class rather than new Tailwind utilities, which Nancy's dev server can miss. */
+.shelf-card {
+  background-color: var(--shelf);
+  border: 1px solid var(--shelf-line);
 }
