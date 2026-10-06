@@ -14,7 +14,7 @@ import Artwork from "./Artwork";
 export default function Logo({ variant = "full", className = "" }) {
   if (variant === "cloud") {
     return (
-      <Link href="/" aria-label="the STOEN mind — home" className={`logo-float block shrink-0 ${className}`}>
+      <Link href="/" aria-label="the STOEN mind - home" className={`logo-float block shrink-0 ${className}`}>
         <Image
           src="/images/shared/logo-cloud.svg"
           alt=""
@@ -30,7 +30,7 @@ export default function Logo({ variant = "full", className = "" }) {
   }
 
   return (
-    <Link href="/" aria-label="the STOEN mind — home" className={`relative block h-[62px] w-[140px] shrink-0 ${className}`}>
+    <Link href="/" aria-label="the STOEN mind - home" className={`relative block h-[62px] w-[140px] shrink-0 ${className}`}>
       <Artwork
         className="absolute inset-0"
         image={{ src: "/images/shared/logo.png", crop: [192.6, 316.11, -47.51, -82.52] }}

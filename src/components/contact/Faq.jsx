@@ -7,7 +7,7 @@ import Icon from "@/components/ui/Icon";
 import SectionHeading from "@/components/home/SectionHeading";
 import { faq } from "@/lib/contact";
 
-/** Accordion — one answer open at a time; height eases via the grid-rows 0fr→1fr technique. */
+/** Accordion - one answer open at a time; height eases via the grid-rows 0fr→1fr technique. */
 export default function Faq() {
   const [open, setOpen] = useState(-1);
   const baseId = useId();

@@ -1,12 +1,12 @@
 /**
  * Contact page copy (Figma: "Contact page - Light", 316:149).
- * FAQ answers are placeholder copy — Figma designs the questions only.
+ * FAQ answers are placeholder copy - Figma designs the questions only.
  */
 
 export const contactHero = {
   eyebrow: "Across the silence",
   title: "Connect With Us",
-  intro: "Whether you have an order question, want custom monograms, or just wish to share a thought—we are here.",
+  intro: "Whether you have an order question, want custom monograms, or just wish to share a thought - we are here.",
 };
 
 /**
@@ -54,7 +54,7 @@ export const inquiryTopics = [
 
 export const contactForm = {
   title: "Send a Message",
-  subtitle: "We respond within 24–48 unhurried hours",
+  subtitle: "We respond within 24-48 unhurried hours",
 };
 
 export const studio = {
@@ -66,8 +66,8 @@ export const studio = {
   },
   hours: {
     title: "Atelier Hours",
-    days: "Monday – Friday",
-    time: "09:00 AM – 17:00 PM (JST / GMT)",
+    days: "Monday - Friday",
+    time: "09:00 AM - 17:00 PM (JST / GMT)",
   },
   communities: {
     title: "Quiet Communities",
@@ -87,17 +87,17 @@ export const faq = {
     {
       question: "Is your journal paper fountain pen friendly and bleed-resistant?",
       answer:
-        "Yes. Our 120gsm cotton-rag paper is sized for fountain pens, dip pens and fine liners — ink rests on the surface and dries without feathering or bleeding through. Very wet, broad nibs may leave a gentle shadow on the reverse.",
+        "Yes. Our 120gsm cotton-rag paper is sized for fountain pens, dip pens and fine liners - ink rests on the surface and dries without feathering or bleeding through. Very wet, broad nibs may leave a gentle shadow on the reverse.",
     },
     {
       question: "How does custom monogramming and bespoke debossing work?",
       answer:
-        "Choose monogramming at checkout and add up to three initials or a short word. We foil-deboss it by hand in the studio and email you a proof before anything is stamped. Bespoke orders usually leave us within 7–10 days.",
+        "Choose monogramming at checkout and add up to three initials or a short word. We foil-deboss it by hand in the studio and email you a proof before anything is stamped. Bespoke orders usually leave us within 7-10 days.",
     },
     {
       question: "What are your international shipping timeframes?",
       answer:
-        "We ship worldwide from our Kyoto and London studios. Most parcels arrive within 3–5 working days in the UK and Japan, 5–8 across Europe and North America, and 7–14 elsewhere. Every parcel is tracked.",
+        "We ship worldwide from our Kyoto and London studios. Most parcels arrive within 3-5 working days in the UK and Japan, 5-8 across Europe and North America, and 7-14 elsewhere. Every parcel is tracked.",
     },
     {
       question: "What is STOEN's commitment to environmental sustainability?",

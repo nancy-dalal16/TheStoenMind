@@ -19,7 +19,7 @@ export default function Categories() {
           title="Ways to wander"
           // description={
           //   <>
-          //     Different objects for different moods — a book you follow start to
+          //     Different objects for different moods - a book you follow start to
           //     finish, <br className="hidden lg:block" />a companion for daily
           //     pages, or a diary that simply keeps time with you.
           //   </>
@@ -37,7 +37,7 @@ export default function Categories() {
               <div data-part="img" className="px-3 pt-3 sm:px-4 sm:pt-4">
                 <ProductCarousel
                   images={category.images}
-                  label={`${category.title.charAt(0)}${category.title.slice(1).toLowerCase()}`}
+                  label={category.label ?? `${category.title.charAt(0)}${category.title.slice(1).toLowerCase()}`}
                   sizes="(min-width: 1024px) 230px, (min-width: 640px) 40vw, 80vw"
                 />
               </div>
@@ -45,7 +45,9 @@ export default function Categories() {
               <div className="flex flex-1 flex-col gap-6 px-6 pt-4 pb-6 sm:px-7 sm:pb-7">
                 <div className="flex flex-1 flex-col gap-2 text-fg">
                   <h3 className="text-title">{category.title}</h3>
-                  <p className="text-body">{category.description}</p>
+                  <p className="text-body text-justify">
+                    {category.description}
+                  </p>
                   {category.price ? (
                     <p className="mt-1 font-sans text-base tracking-[0.04em] text-fg-muted">
                       {category.price}
@@ -53,7 +55,7 @@ export default function Categories() {
                   ) : null}
                 </div>
                 <Button href={category.href} fullWidth>
-                  Explore {category.title}
+                  {category.cta ?? `Explore ${category.title}`}
                 </Button>
               </div>
             </li>

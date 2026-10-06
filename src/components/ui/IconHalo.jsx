@@ -2,7 +2,7 @@ import Image from "next/image";
 import Icon from "./Icon";
 
 /**
- * Watercolour halo with a line icon — the Figma "image 16/17" + icon group used on
+ * Watercolour halo with a line icon - the Figma "image 16/17" + icon group used on
  * the home Features, About Pillars and Contact cards.
  * `blob` (optional) is the soft shape behind the glyph, positioned inside the 48px box.
  * Inside a `.hover-group`, the halo turns and swells and the glyph floats up on hover.

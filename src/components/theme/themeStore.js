@@ -1,5 +1,4 @@
 import { THEME_STORAGE_KEY } from "@/lib/theme";
-import { runThemeTransition } from "./themeFx";
 
 /**
  * The theme lives outside React: `data-theme` on <html> (set before paint by
@@ -38,7 +37,7 @@ function emit() {
   listeners.forEach((listener) => listener());
 }
 
-function applyTheme(theme, { animate = false, origin = null } = {}) {
+function applyTheme(theme, { animate = false } = {}) {
   const root = document.documentElement;
   if (root.dataset.theme === theme) return;
 
@@ -50,8 +49,7 @@ function applyTheme(theme, { animate = false, origin = null } = {}) {
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (animate && document.startViewTransition && !reduceMotion) {
-    // Watercolour bloom from the toggle + sun/moon arc (themeFx.js).
-    runThemeTransition(commit, { origin });
+    document.startViewTransition(commit);
   } else {
     commit();
   }
@@ -155,7 +153,7 @@ export function subscribe(listener) {
   };
 }
 
-/** Snapshot string: "<theme>:<explicit|system>" — primitive, so it's stable between reads. */
+/** Snapshot string: "<theme>:<explicit|system>" - primitive, so it's stable between reads. */
 export function getSnapshot() {
   const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
   return `${theme}:${readStoredTheme() ? "explicit" : "system"}`;
@@ -168,14 +166,13 @@ export function getServerSnapshot() {
 
 /* ---- actions ---- */
 
-/** `origin` is the element that started the switch (the toggle); effects radiate from it. */
-export function setTheme(theme, origin = null) {
+export function setTheme(theme) {
   writeStoredTheme(theme);
-  switchTheme(theme, { animate: true, origin: origin instanceof Element ? origin : null });
+  switchTheme(theme, { animate: true });
 }
 
-export function toggleTheme(origin = null) {
-  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", origin);
+export function toggleTheme() {
+  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 }
 
 /**

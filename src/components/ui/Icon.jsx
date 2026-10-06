@@ -1,6 +1,6 @@
 /**
  * Monochrome icons exported from Figma, rendered as CSS masks so they take
- * `currentColor`. One SVG file therefore serves every theme — set the colour
+ * `currentColor`. One SVG file therefore serves every theme - set the colour
  * with a text utility (e.g. `text-icon`) on the icon or any parent.
  */
 const ICONS = {

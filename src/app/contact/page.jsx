@@ -8,7 +8,7 @@ import GiftBand from "@/components/home/GiftBand";
 export const metadata = {
   title: "Contact",
   description:
-    "Order questions, custom monograms, studio visits or simply a thought to share — connect with the STOEN mind.",
+    "Order questions, custom monograms, studio visits or simply a thought to share - connect with the STOEN mind.",
 };
 
 export default function ContactPage() {

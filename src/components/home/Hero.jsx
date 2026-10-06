@@ -33,7 +33,9 @@ export default function Hero() {
         // Below lg: start just under the button (Figma: 120px above the hero's bottom at 1440).
         "[--land-top:calc(100%-var(--land-w)*0.0721)]",
         // lg+: tuck the empty-sky top 36% of the painting (0.161 × width) up behind the copy.
-        "lg:[--land-top:calc(100%-var(--hero-pb)-var(--land-w)*0.161-var(--hero-shift)-var(--land-lift))]",
+        "lg:[--land-top:calc(100%-var(--hero-pb)-var(--land-w)*0.161-var(--hero-shift)-var(--land-lift)+var(--hero-up))]",
+        // --hero-up (globals.css, "Home hero fit") lifts only the copy: the section gets that much
+        // shorter, so it is added back here to keep the landscape exactly where it was.
         // …and --land-lift (globals.css, "Home hero fit") raises it further on short screens so the
         // tree, carriage and the field under them stay on the first screen.
         // lg+ short screens (e.g. 1536×730 laptops): the top padding is squeezed so the carriage
@@ -96,7 +98,7 @@ export default function Hero() {
         important
       />
 
-      <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[clamp(24px,4svh,32px)] pt-12 pb-(--hero-pb) text-center md:gap-[clamp(40px,7svh,64px)] md:pt-[146px] lg:gap-(--hero-gap) lg:pt-[calc(var(--hero-pt)+var(--hero-shift))]">
+      <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[clamp(24px,4svh,32px)] pt-12 pb-(--hero-pb) text-center md:gap-[clamp(40px,7svh,64px)] md:pt-[calc(146px-var(--hero-up))] lg:gap-(--hero-gap) lg:pt-[calc(var(--hero-pt)+var(--hero-shift)-var(--hero-up))]">
         {/* Brand wordmark, identical to the logo's lettering. Real text stays for screen readers and SEO. */}
         <p className="text-eyebrow motion-safe:animate-rise-in motion-safe:[animation-delay:80ms]">
           <span className="sr-only">the STOEN mind</span>

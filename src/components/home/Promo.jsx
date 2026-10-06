@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 
-/** Seasonal campaign banner — swap `image`/`href`/`alt` per campaign. */
+/** Seasonal campaign banner - swap `image`/`href`/`alt` per campaign. */
 const campaign = {
   href: "/shop",
   image: "/images/shared/promo-banner.png",
-  alt: "Happy Ganesh Chaturthi — up to 25% off on all books. Read, learn, grow. Shop now.",
+  alt: "Happy Ganesh Chaturthi - up to 25% off on all books. Read, learn, grow. Shop now.",
 };
 
 export default function Promo() {

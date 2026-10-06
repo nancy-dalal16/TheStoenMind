@@ -1,13 +1,13 @@
 /**
  * About page copy (Figma: "About page - Light", 247:122).
- * Timeline entries after 2021 are placeholder copy — Figma only designs the 2021 panel.
+ * Timeline entries after 2021 are placeholder copy - Figma only designs the 2021 panel.
  */
 
 export const aboutHero = {
   eyebrow: "Our Philosophy & Sanctuary",
   title: "Our Philosophy & Sanctuary",
   intro:
-    "In an increasingly noisy digital world, STOEN offers an invitation to pause and reconnect with yourself.",
+    "In an increasingly noisy world, STOEN offers a space to rest and reconnect with yourself.",
   cta: { label: "Explore our journey", href: "#about-story" },
 };
 
@@ -16,7 +16,7 @@ export const aboutStory = {
   paragraphs: [
     "What began as a humble bookbinding workbench in a sunlit corner studio has bloomed into a dedicated atelier for mindfulness practitioners, writers, and dreamers around the world.",
     "At Inner Skies, we believe that ink flowing across cotton paper creates a sacred sanctuary. In an era dominated by temporary notifications and glowing screens, holding a physical journal anchor us back to the present moment.",
-    "Every item in our collection—from our foil-embossed hardcover diaries to our watercolor sketch journals—is created with intentional weight, tactile elegance, and lay-flat functionality to honor your personal journey.",
+    "Every item in our collection - from our foil-embossed hardcover diaries to our watercolor sketch journals - is created with intentional weight, tactile elegance, and lay-flat functionality to honor your personal journey.",
   ],
   stats: [
     { value: "100%", label: "Sustainably Sourced" },
@@ -57,7 +57,7 @@ export const timeline = {
       year: "2024",
       label: "Botanical Collection",
       title: "Pressed Leaves & Watercolour Covers",
-      body: "Our first seasonal series paired archival cotton paper with covers painted from pressed botanicals — each one quietly different from the next.",
+      body: "Our first seasonal series paired archival cotton paper with covers painted from pressed botanicals - each one quietly different from the next.",
     },
     {
       id: "present",
@@ -65,7 +65,7 @@ export const timeline = {
       year: "Today",
       label: "Global Sanctuary",
       title: "A Quiet Sanctuary, Everywhere",
-      body: "Stoen journals now travel to writers and wanderers around the world — still bound in small batches, still made to be returned to.",
+      body: "Stoen journals now travel to writers and wanderers around the world - still bound in small batches, still made to be returned to.",
     },
   ],
 };

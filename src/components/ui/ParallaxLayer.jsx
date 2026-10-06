@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 /**
  * Moves its content at a slower rate than the page scroll ("background scroll").
  *
- * - `speed`    0–1. The fraction of scroll distance the layer drifts *down*
+ * - `speed`    0-1. The fraction of scroll distance the layer drifts *down*
  *              relative to the page (0 = normal scrolling, 0.3 = the background
  *              moves 30% slower than the content).
  * - `maxShift` cap on the drift, as a fraction of the layer's own height, so

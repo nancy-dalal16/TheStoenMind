@@ -136,7 +136,7 @@ export default function SiteMenu({ items, tagline, social = [] }) {
                   sizes="640px"
                 />
 
-                {/* Top row — lines up with the header */}
+                {/* Top row - lines up with the header */}
                 <div className="relative flex h-[88px] shrink-0 items-center justify-between px-6 sm:px-10 md:h-[110px]">
                   <p id={titleId} className="font-sans text-xs font-medium tracking-[0.22em] text-eyebrow uppercase">
                     Menu

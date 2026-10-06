@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import InlineScript from "@/components/theme/InlineScript";
 import RevealObserver from "@/components/motion/RevealObserver";
+import AmbientSound from "@/components/sound/AmbientSound";
 import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
@@ -31,11 +32,11 @@ const inter = localFont({
 export const metadata = {
   metadataBase: new URL("https://thestoenmind.com"),
   title: {
-    default: "the STOEN mind — journals, workbooks & diaries",
+    default: "the STOEN mind - journals, workbooks & diaries",
     template: "%s · the STOEN mind",
   },
   description:
-    "Journals, workbooks and diaries for the mind that wants to wander slowly — no deadlines, no self-improvement checklist. Just space.",
+    "Journals, workbooks and diaries for the mind that wants to wander slowly - no deadlines, no self-improvement checklist. Just space.",
 };
 
 export const viewport = {
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
           </main>
           <Footer />
           <RevealObserver />
+          <AmbientSound />
         </ThemeProvider>
       </body>
     </html>

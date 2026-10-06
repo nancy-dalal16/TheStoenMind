@@ -23,9 +23,8 @@ const getReduceServer = () => false;
  * Control:
  *   • plays on its own once the card is on screen (slower while hovered)
  *   • press and drag (mouse/pen) to scrub, with a little inertia on release
- *   • mouse wheel / trackpad over the window scrubs too. The page never gets trapped: a wheel
- *     gesture that starts while the page is still scrolling passes straight through, and at
- *     either end of the story the wheel hands back to the page
+ *   • the mouse wheel / trackpad always scrolls the page, never the story (Nancy, Oct 6: the
+ *     page got stuck when the cursor rested over the window mid-scroll)
  *   • keyboard on the focused window: ↑/↓, Page Up/Down, Home/End, Space to pause
  *   • play/pause button (WCAG 2.2.2); reduced motion starts paused
  *   • it resumes ~1.8s after the last interaction; at the end it rests, fades and starts again
@@ -52,6 +51,23 @@ const TONES = {
   present: "about-present",
   expansive: "about-expansive",
   cloud: "about-cloud",
+  // Home welcome (copy deck → HOME): playful size/position shifts on single words
+  small: "about-small",
+  large: "about-large",
+  raised: "about-raised",
+  narrow: "about-narrow",
+};
+
+// Block kinds → classes. title: bold italic; lead: bold; italic; aside: indented and
+// letter-spaced; indent: indented; muted: soft grey; closing: italic, letter-spaced.
+const KINDS = {
+  title: "about-title",
+  closing: "about-closing",
+  lead: "about-lead",
+  italic: "about-italic",
+  aside: "about-aside",
+  indent: "about-indent",
+  muted: "about-muted",
 };
 
 function Rich({ content }) {
@@ -116,9 +132,6 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
     let inView = false;
     let raf = 0;
     let last = 0;
-    let lastPageScroll = -Infinity;
-    let gestureEnd = 0;
-    let capturing = false;
 
     const clamp = (v) => Math.min(pMax, Math.max(pMin, v));
 
@@ -247,33 +260,6 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
       cancelEnding();
     };
 
-    /* ── Wheel / trackpad ─────────────────────────────────────────────── */
-    const onPageScroll = () => {
-      lastPageScroll = performance.now();
-    };
-    const onWheel = (e) => {
-      if (e.ctrlKey) return; // pinch-zoom
-      const unit = e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? H : 1;
-      const dy = e.deltaY * unit;
-      if (Math.abs(e.deltaX * unit) > Math.abs(dy)) return;
-      const now = performance.now();
-      const newGesture = now > gestureEnd;
-      gestureEnd = now + 220;
-      // A gesture that starts while the page is still moving belongs to the page.
-      if (newGesture) capturing = now - lastPageScroll > 260;
-      if (!capturing) return;
-      const goal = p + wheelLeft;
-      if ((dy > 0 && goal >= pMax - 0.5) || (dy < 0 && goal <= pMin + 0.5)) {
-        capturing = false; // hand the rest of this gesture back to the page
-        return;
-      }
-      e.preventDefault();
-      vel = 0;
-      wheelLeft = clamp(goal + dy) - p;
-      interacted();
-      start();
-    };
-
     /* ── Press and drag (mouse / pen; touch keeps native page scrolling) ─ */
     const onPointerDown = (e) => {
       if (e.pointerType === "touch" || e.button !== 0) return;
@@ -382,7 +368,6 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
     ro.observe(view);
     ro.observe(track);
     io.observe(view);
-    view.addEventListener("wheel", onWheel, { passive: false });
     view.addEventListener("pointerdown", onPointerDown);
     view.addEventListener("pointermove", onPointerMove);
     view.addEventListener("pointerup", onPointerUp);
@@ -392,14 +377,12 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
     view.addEventListener("keydown", onKeyDown);
     view.addEventListener("focus", onFocus);
     view.addEventListener("blur", onBlur);
-    window.addEventListener("scroll", onPageScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
       stop();
       io.disconnect();
       ro.disconnect();
-      view.removeEventListener("wheel", onWheel);
       view.removeEventListener("pointerdown", onPointerDown);
       view.removeEventListener("pointermove", onPointerMove);
       view.removeEventListener("pointerup", onPointerUp);
@@ -409,7 +392,6 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
       view.removeEventListener("keydown", onKeyDown);
       view.removeEventListener("focus", onFocus);
       view.removeEventListener("blur", onBlur);
-      window.removeEventListener("scroll", onPageScroll);
       document.removeEventListener("visibilitychange", onVisibility);
       delete view.dataset.enhanced;
       delete view.dataset.fading;
@@ -438,11 +420,7 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
             {blocks.map((block, i) => (
               <p
                 key={i}
-                className={[
-                  "prompter-item",
-                  block.kind === "title" ? "about-title" : "",
-                  block.kind === "closing" ? "about-closing" : "",
-                ].join(" ")}
+                className={["prompter-item", KINDS[block.kind] ?? ""].join(" ")}
                 data-gap={block.gap}
               >
                 <Rich content={block.content} />
@@ -475,7 +453,7 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
             </svg>
           )}
         </button>
-        <span className="prompter-hint prompter-hint--fine">Scroll or drag to read at your own pace</span>
+        <span className="prompter-hint prompter-hint--fine">Drag to read at your own pace</span>
         <span className="prompter-hint prompter-hint--coarse">Pause anytime to read at your own pace</span>
       </div>
     </div>

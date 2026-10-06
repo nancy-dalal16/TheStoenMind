@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <footer className="@container relative overflow-hidden">
-      {/* Misty range — bottom-anchored, mirrored as in the design */}
+      {/* Misty range - bottom-anchored, mirrored as in the design */}
       <Artwork
         flip
         className="footer-range absolute right-0 bottom-0 aspect-[1440/596] w-[max(100cqw,900px)] dark:[mask-image:linear-gradient(to_bottom,transparent,black_36%)]"

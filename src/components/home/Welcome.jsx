@@ -1,9 +1,9 @@
 import Artwork from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import AboutPrompter from "@/components/home/AboutPrompter";
-import { aboutStory } from "@/lib/content";
+import { homeWelcome } from "@/lib/content";
 
-/** About card resting on the hero landscape: "A Small Story" as a lens teleprompter. */
+/** Welcome card resting on the hero landscape: the copy deck's HOME text as a lens teleprompter. */
 export default function Welcome() {
   return (
     // Top padding leaves room for the whole hero landscape before the card:
@@ -14,10 +14,14 @@ export default function Welcome() {
     <section
       className={[
         "@container hero-fit relative [--land-w:max(115.56cqw,560px)]",
-        "pt-[calc(var(--land-w)*0.41-4rem)] md:pt-[calc(var(--land-w)*0.41-5rem)]",
-        "lg:pt-[calc(var(--land-w)*0.3211-clamp(88px,10.14cqw,146px)-5rem-var(--hero-shift)-var(--land-lift))]",
+        "pt-[calc(var(--land-w)*0.41-4rem-var(--card-lift))] md:pt-[calc(var(--land-w)*0.41-5rem-var(--card-lift))]",
+        "lg:pt-[calc(var(--land-w)*0.3211-clamp(88px,10.14cqw,146px)-5rem-var(--hero-shift)-var(--land-lift)+var(--hero-up)-var(--card-lift))]",
+        // Nancy (Oct 6): --card-lift raises the About card up over the foot of the landscape so it
+        // shows after a short scroll. Only the card moves; the landscape stays put.
+        "[--card-lift:12px] md:[--card-lift:60px] lg:[--card-lift:calc(var(--land-w)*0.065)]",
         // Mirrors Hero's --hero-shift (the hero copy moved down on short screens, the landscape didn't)
         // and --land-lift (the landscape moved up to keep the carriage on the first screen).
+        // +--hero-up: the hero is that much shorter (copy lifted), the landscape didn't move.
         "[--hero-pt:clamp(24px,calc(100svh-498px-var(--land-w)*0.1162),146px)]",
         "[--hero-shift:0px] lg:[--hero-shift:clamp(0px,calc(146px-var(--hero-pt)),64px)]",
       ].join(" ")}
@@ -43,22 +47,14 @@ export default function Welcome() {
 
         <div
           data-reveal="zoom"
-          className="relative z-10 mx-auto flex flex-col items-center gap-6 rounded-ui bg-linear-to-b from-card-from to-card-to px-6 py-10 backdrop-blur-[4px] sm:p-12"
-          style={{ maxWidth: 720 }}
+          className="prompter-card relative z-10 mx-auto flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-card-from to-card-to px-6 py-8 backdrop-blur-[4px] sm:px-10 sm:py-9"
+          style={{ maxWidth: 600 }}
         >
-          <p
-            data-part="rise"
-            style={{ "--j": 0 }}
-            className="font-sans text-sm font-medium tracking-[0.08em] text-eyebrow uppercase"
-          >
-            {aboutStory.label}
-          </p>
-
-          <div data-part="rise" style={{ "--j": 1 }} className="w-full">
-            <AboutPrompter blocks={aboutStory.blocks} label="About the Stoen Mind: a small story" />
+          <div data-part="rise" style={{ "--j": 0 }} className="w-full">
+            <AboutPrompter blocks={homeWelcome.blocks} label="Welcome to the Stoen Mind" />
           </div>
 
-          <div data-part="rise" style={{ "--j": 2 }}>
+          <div data-part="rise" style={{ "--j": 1 }}>
             <Button href="/about">Know more about us</Button>
           </div>
         </div>

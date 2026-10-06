@@ -7,11 +7,11 @@ import Image from "next/image";
  * `light` and `dark` describe what fills it in each theme; pass `image`
  * instead when both themes share one asset. Each variant accepts:
  *   - src      path under /public
- *   - crop     [width%, height%, left%, top%] — reproduces a Figma image crop
+ *   - crop     [width%, height%, left%, top%] - reproduces a Figma image crop
  *              (the image is oversized inside the frame and offset).
  *              Omit for `object-cover`.
  *   - position object-position when not cropping (default "center")
- *   - opacity  0–1
+ *   - opacity  0-1
  *   - brightness CSS brightness() multiplier (e.g. 1.12); lifts night art
  *              without changing its colours
  *
@@ -20,7 +20,7 @@ import Image from "next/image";
  * download the inactive theme's copy.
  *
  * Only the active theme's image is displayed; the other is `display: none`
- * and — because it is lazy-loaded — never downloaded.
+ * and - because it is lazy-loaded - never downloaded.
  */
 export default function Artwork({
   image,

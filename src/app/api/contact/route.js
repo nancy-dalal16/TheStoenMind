@@ -5,7 +5,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 /**
  * Contact form endpoint. Validates the message server-side.
  *
- * TODO: deliver the message. No email service is connected yet — set
+ * TODO: deliver the message. No email service is connected yet - set
  * CONTACT_WEBHOOK_URL (e.g. a Formspree / Resend / Zapier endpoint) to forward the JSON,
  * or replace the forward below with your provider's SDK.
  */
@@ -38,7 +38,7 @@ export async function POST(request) {
       return NextResponse.json({ ok: false, error: "We couldn't send your message." }, { status: 502 });
     }
   } else {
-    console.info("[contact] New message (no CONTACT_WEBHOOK_URL set — not delivered):", payload);
+    console.info("[contact] New message (no CONTACT_WEBHOOK_URL set - not delivered):", payload);
   }
 
   return NextResponse.json({ ok: true });

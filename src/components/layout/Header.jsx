@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <StickyHeader>
       <div className="pointer-events-auto relative h-full transition-[height] duration-500 ease-soft group-data-[scrolled]/header:h-16 motion-reduce:transition-none md:group-data-[scrolled]/header:h-[72px]">
-        {/* Soft fade behind the scrolled header (no bar, no blur) — see .header-fade in globals.css */}
+        {/* Soft fade behind the scrolled header (no bar, no blur) - see .header-fade in globals.css */}
         <div aria-hidden="true" className="header-fade" />
 
         <div className="page-gutter relative mx-auto flex h-full max-w-[1440px] items-center justify-between motion-safe:animate-drop-in">
@@ -31,7 +31,7 @@ export default function Header() {
 
           <div className="flex items-center gap-3 md:gap-8">
             <div className="relative flex items-center">
-              {/* Inline links — top of the page, md+ */}
+              {/* Inline links - top of the page, md+ */}
               <nav
                 aria-label="Main"
                 className={`hidden md:block ${SWAP} group-data-[scrolled]/header:pointer-events-none group-data-[scrolled]/header:invisible group-data-[scrolled]/header:-translate-y-1 group-data-[scrolled]/header:opacity-0`}
@@ -39,7 +39,7 @@ export default function Header() {
                 <NavLinks items={mainNav} />
               </nav>
 
-              {/* Menu button — always below md; on md+ it takes over once scrolled */}
+              {/* Menu button - always below md; on md+ it takes over once scrolled */}
               <div
                 className={`md:absolute md:inset-y-0 md:right-0 md:flex md:items-center ${SWAP} md:pointer-events-none md:invisible md:translate-y-1 md:opacity-0 md:group-data-[scrolled]/header:pointer-events-auto md:group-data-[scrolled]/header:visible md:group-data-[scrolled]/header:translate-y-0 md:group-data-[scrolled]/header:opacity-100`}
               >

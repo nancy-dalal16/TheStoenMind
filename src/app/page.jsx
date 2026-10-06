@@ -11,8 +11,9 @@ export default function HomePage() {
       <Hero />
       <Welcome />
       <Categories />
-      <Features />
+      {/* Nancy (Oct 6): "Is this for me?" now comes before "What makes these pages feel a little different?" */}
       <Articles />
+      <Features />
       <GiftBand />
     </>
   );

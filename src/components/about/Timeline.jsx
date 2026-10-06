@@ -7,7 +7,7 @@ import SectionHeading from "@/components/home/SectionHeading";
 import { timeline } from "@/lib/about";
 
 /**
- * "Evolution of the Atelier" — milestone tabs (WAI-ARIA tabs pattern: arrow keys,
+ * "Evolution of the Atelier" - milestone tabs (WAI-ARIA tabs pattern: arrow keys,
  * Home/End, roving tabindex) over a panel that softly re-enters on change.
  */
 export default function Timeline() {

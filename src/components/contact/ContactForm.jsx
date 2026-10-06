@@ -96,8 +96,8 @@ export default function ContactForm() {
           <span className="flex size-10 items-center justify-center rounded-full bg-surface-tint text-primary">
             <Icon name="check" />
           </span>
-          <p className="text-title text-fg">Thank you — your note is on its way.</p>
-          <p className="text-body">We read every message by hand and will write back within 24–48 unhurried hours.</p>
+          <p className="text-title text-fg">Thank you - your note is on its way.</p>
+          <p className="text-body">We read every message by hand and will write back within 24-48 unhurried hours.</p>
           <Button onClick={() => setStatus("idle")} variant="inverse" size="sm" className="mt-2 border border-surface-line">
             Send another message
           </Button>
