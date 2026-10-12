@@ -3,6 +3,7 @@ import ThemeToggle from "@/components/theme/ThemeToggle";
 import StickyHeader from "./StickyHeader";
 import SiteMenu from "./SiteMenu";
 import NavLinks from "./NavLinks";
+import CartButton from "@/components/shop/CartButton";
 import { brandTagline, mainNav, socialLinks } from "@/lib/content";
 
 // Shared transition for the pieces that swap when the page starts scrolling.
@@ -14,6 +15,7 @@ const SWAP = "transition-[opacity,translate,visibility] duration-500 ease-soft m
  * - Once the page scrolls: the bar slims (transparent, with only a soft page-colour fade behind it), the inline links fade out and the
  *   "Menu" button fades in, opening <SiteMenu />, which slides in from the right.
  * - Below md there's no room for inline links, so the Menu button is always shown.
+ * - The bag button (<CartButton />) sits beside the theme toggle on every page (Oct 7).
  * Hidden states use `invisible` (not just opacity) so they drop out of the tab order.
  */
 export default function Header() {
@@ -47,7 +49,10 @@ export default function Header() {
               </div>
             </div>
 
-            <ThemeToggle />
+            <div className="flex items-center gap-2.5 md:gap-3">
+              <CartButton />
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>

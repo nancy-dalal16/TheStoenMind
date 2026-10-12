@@ -82,6 +82,12 @@
   --shelf: transparent;
   --shelf-line: #e4e3df;
   --hover-shadow: rgb(46 62 72 / 0.16);
+  /* Soft text shadow on hover (.hover-text) - Nancy, Oct 12 */
+  /* Day: a hair bolder (a 0.25px same-colour stroke thickens the letters without reflowing the
+     text) with a soft shadow underneath - Nancy, Oct 12 */
+  --text-hover-shadow:
+    0.25px 0 0 currentColor, -0.25px 0 0 currentColor,
+    0 2px 3px rgb(46 62 72 / 0.12), 0 6px 18px rgb(46 62 72 / 0.22);
   --field: var(--palette-white);
   --field-line: var(--palette-rain);
   --band-soft: var(--palette-haze);
@@ -119,6 +125,9 @@
   --shelf: color-mix(in srgb, var(--palette-white) 6%, var(--palette-deep-sea));
   --shelf-line: transparent; /* dark keeps its tinted box, no outline */
   --hover-shadow: rgb(0 0 0 / 0.34);
+  /* Night: the text glows (white core, frost halo) */
+  --text-hover-shadow:
+    0 0 4px rgb(255 255 255 / 0.55), 0 0 12px rgb(165 197 217 / 0.7), 0 0 26px rgb(165 197 217 / 0.45);
   --field: color-mix(in srgb, #000 16%, var(--palette-deep-sea));
   --field-line: color-mix(in srgb, var(--palette-frost) 34%, var(--palette-deep-sea));
   --band-soft: var(--palette-tide);
@@ -503,6 +512,7 @@
  *      .hover-rise   small lift, keeps its own shadow
  *      .hover-float  floats higher than its card (badges)
  *      .hover-nudge  slides right (list titles)
+ *    .hover-text     text stays put and gains a soft shadow; only the icon moves
  *    .hover-pill     small lift for chips
  *    .hover-outline  border warms toward the brand colour (FAQ rows)
  *    .link-draw      underline draws in from the left
@@ -524,6 +534,7 @@
   .halo-glyph,
   .hover-nudge { transition: transform 0.6s var(--ease-soft), color 0.4s ease; }
   .hover-zoom > div { transition: transform 1.2s var(--ease-soft); }
+  .hover-text :is(h3, p, blockquote) { transition: text-shadow 0.6s var(--ease-soft); }
   .hover-pill {
     transition:
       transform 0.4s var(--ease-soft),
@@ -601,6 +612,10 @@
     box-shadow: 0 28px 44px -26px var(--hover-shadow), 0 10px 18px -14px var(--hover-shadow);
   }
   .hover-lift:hover { transform: translateY(-4px); }
+  /* Oct 12 (Nancy): open items with an icon no longer lift as a whole - the paragraph moving
+     with the icon felt exaggerated. The icon keeps its own motion; the text just softly lifts
+     off the page with a shadow. */
+  .hover-text:hover :is(h3, p, blockquote) { text-shadow: var(--text-hover-shadow); }
 
   .hover-group:hover .halo-bg { transform: rotate(9deg) scale(1.08); }
   .hover-group:hover .halo-glyph { transform: translateY(-3px); }
@@ -823,6 +838,86 @@
     font-family: var(--font-sans);
     font-size: 0.9em;
     letter-spacing: -0.07em;
+  }
+
+  /* About page teleprompter (Nancy, Oct 12) - the home card is unchanged.
+     Smaller type and tighter spacing; each line is painted with a left → right gradient,
+     dark to light (clone = every wrapped line gets the full ramp). Coloured accents
+     (sky / present / cloud) keep their own colour. */
+  .prompter-card--about .about-copy {
+    --line-from: var(--palette-ink);
+    --line-to: color-mix(in srgb, var(--palette-slate) 82%, var(--palette-white));
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); /* 17 → 19 (was 19 → 22) */
+    line-height: 1.14; /* was 1.2 */
+  }
+  [data-theme="dark"] .prompter-card--about .about-copy {
+    --line-from: var(--palette-frost);
+    --line-to: var(--palette-white);
+  }
+  .prompter-card--about .about-copy .prompter-item + .prompter-item {
+    margin-top: 0.5em; /* was 0.85em */
+  }
+  .prompter-card--about .about-copy .prompter-item[data-gap="lg"] {
+    margin-top: 1.4em; /* was 2.2em */
+  }
+  .prompter-card--about .prompter-line {
+    background-image: linear-gradient(to right, var(--line-from), var(--line-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .prompter-card--about .prompter-line :is(.about-sky, .about-present, .about-cloud, .about-raised, .about-narrow) {
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /* Drifting lines (kind "drift", Nancy Oct 12): a few short lines that float into the window
+     like clouds - each at a random spot across the column, in a random order (AboutPrompter.jsx
+     sets --x/--y/--d/--fd/--fdel/--fx each time the block comes into view). They mist in
+     (fade + blur + a small sideways drift) and then bob gently. Without JS they're plain lines. */
+  .about-drift {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    padding-block: 0.3em;
+  }
+  .drift-line {
+    display: block;
+    transform: translate(var(--x, 0px), var(--y, 0em));
+  }
+  .drift-cloud {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .prompter[data-enhanced] .drift-cloud {
+    opacity: 0;
+    filter: blur(6px);
+    translate: calc(var(--fx, 6px) * -2) 0.35em;
+    transition:
+      opacity 1.6s ease var(--d, 0ms),
+      filter 1.8s ease var(--d, 0ms),
+      translate 2.2s var(--ease-soft) var(--d, 0ms);
+  }
+  .prompter[data-enhanced] [data-shown] .drift-cloud {
+    opacity: 1;
+    filter: blur(0);
+    translate: 0 0;
+  }
+  .prompter[data-enhanced] [data-shown] .drift-line {
+    animation: drift-bob var(--fd, 8s) ease-in-out var(--fdel, 0s) infinite alternate;
+  }
+  @keyframes drift-bob {
+    from { translate: 0 0; }
+    to { translate: var(--fx, 6px) -0.18em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prompter[data-enhanced] .drift-cloud {
+      filter: none;
+      translate: 0 0;
+      transition: opacity 1s ease var(--d, 0ms);
+    }
+    .prompter[data-enhanced] [data-shown] .drift-line { animation: none; }
   }
 
   /* Progress rail on the right: shows where you are and hints that it can be scrubbed */
@@ -1054,8 +1149,13 @@
 
 /* ─────────────────────────────────────────────────────────────
  *  Ambient sound toggle (<SoundToggle />, components/sound)
- *  A small translucent disc fixed bottom-left on every page.
- *  Three bars sway while the sound plays; flat and dimmed when off.
+ *  A small disc fixed bottom-left on every page.
+ *  Oct 12 (Nancy): more contrast. It now uses the theme toggle's
+ *  inverted pair (--toggle-bg / --toggle-fg): an ink disc with white
+ *  bars in light mode, a white disc with deep-sea bars in dark mode.
+ *  Later Oct 12: no border/halo - styled exactly like the theme toggle
+ *  (48px, flat, scale 1.05 on hover / 0.95 on press).
+ *  Three bars sway while the sound plays; when off they rest with a slash.
  *  Sits under the header (z-40) and the menu panel (z-50).
  * ───────────────────────────────────────────────────────────── */
 .sound-toggle {
@@ -1065,21 +1165,18 @@
   z-index: 30;
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3rem; /* same as the header theme toggle (size-12) */
+  height: 3rem;
+  border: 0;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--divider) 70%, transparent);
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  color: var(--fg);
+  background: var(--toggle-bg);
+  color: var(--toggle-fg);
   cursor: pointer;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 0.06);
   animation: sound-toggle-in 1.2s var(--ease-soft) 1.2s both;
   transition:
-    transform 0.4s var(--ease-soft),
-    border-color 0.3s ease,
-    background-color 0.3s ease;
+    transform 0.2s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 @media (width >= 48rem) {
   .sound-toggle {
@@ -1091,12 +1188,8 @@
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
-@media (hover: hover) and (pointer: fine) {
-  .sound-toggle:hover {
-    transform: translateY(-2px);
-    border-color: var(--primary);
-  }
-}
+.sound-toggle:hover { transform: scale(1.05); }
+.sound-toggle:active { transform: scale(0.95); }
 
 .sound-bars {
   position: relative;
@@ -1110,7 +1203,7 @@
   height: 100%;
   border-radius: 2px;
   background: currentColor;
-  opacity: 0.5;
+  opacity: 0.72;
   transform: scaleY(0.45);
   transition:
     transform 0.6s var(--ease-soft),
@@ -1128,7 +1221,7 @@
   height: 22px;
   border-radius: 2px;
   background: currentColor;
-  opacity: 0.75;
+  opacity: 0.95;
   translate: -50% -50%;
   rotate: 45deg;
   transition: opacity 0.4s ease, scale 0.4s var(--ease-soft);
@@ -1138,7 +1231,7 @@
   scale: 1 0;
 }
 .sound-toggle[data-playing] .sound-bars > span {
-  opacity: 0.85;
+  opacity: 1;
   animation: sound-sway 1.6s ease-in-out infinite alternate;
 }
 .sound-toggle[data-playing] .sound-bars > span:nth-child(1) { animation-duration: 1.3s; }
@@ -1163,4 +1256,368 @@
 }
 @media print {
   .sound-toggle { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Shop (/shop, /shop/[collection], /shop/[collection]/[handle], the bag)
+ *  Minimal and gallery-like: products float on a soft "stage" with no
+ *  card around them; type and hairlines do the rest. Plain classes,
+ *  because Nancy's dev server can miss brand-new Tailwind utilities.
+ *
+ *    .shop-stage       soft backdrop the product floats on
+ *    .shop-cover       drop shadow under a floating cover
+ *    .shop-alt         second image, cross-fades in on card hover
+ *    .shop-chip        "Sold out" / "Sale" tag on a card
+ *    .shop-tab         collection link (underline when current)
+ *    .sort-*           sort pill + menu (see "Sort menu")
+ *    .shop-thumb       small stage (gallery thumbnails, bag lines)
+ *    .shop-swatch      colour option (product page); .shop-swatch-dot on cards
+ *    .shop-option      text option (product page)
+ *    .shop-prose       product description from Shopify
+ *    .bag-count        count badge on the header bag button
+ * ───────────────────────────────────────────────────────────── */
+:root {
+  --stage: color-mix(in srgb, var(--palette-haze) 42%, var(--palette-white)); /* ≈ #f2f6f7, a breath of mist */
+  --stage-shadow: rgb(40 38 32 / 0.13);
+}
+[data-theme="dark"] {
+  --stage: color-mix(in srgb, var(--palette-white) 6%, var(--palette-deep-sea));
+  --stage-shadow: rgb(0 10 24 / 0.34);
+}
+
+.shop-stage,
+.shop-thumb {
+  background-color: var(--stage);
+}
+.shop-cover {
+  filter: drop-shadow(0 1px 1.5px var(--stage-shadow)) drop-shadow(0 14px 16px var(--stage-shadow));
+}
+
+/* Card: second image */
+.shop-alt {
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-soft);
+}
+.shop-primary {
+  transition: opacity 0.7s var(--ease-soft), transform 1.2s var(--ease-soft);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hover-group:hover .shop-alt { opacity: 1; }
+  .hover-group:hover .shop-primary { transform: scale(1.035); }
+  .hover-group:has(.shop-alt):hover .shop-primary { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hover-group:hover .shop-primary { transform: none; }
+}
+
+.shop-chip {
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  padding: 0.3rem 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.shop-swatch-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12), 0 0 0 1px color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+/* Collection links */
+.shop-tab {
+  position: relative;
+  display: inline-block;
+  padding-block: 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+  opacity: 0.78;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+.shop-tab::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 1.5px;
+  background: var(--fg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s var(--ease-soft);
+}
+.shop-tab:hover,
+.shop-tab[aria-current="page"] {
+  color: var(--fg);
+  opacity: 1;
+}
+.shop-tab[aria-current="page"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .shop-tab:hover::after { transform: scaleX(0.35); }
+  .shop-tab[aria-current="page"]:hover::after { transform: scaleX(1); }
+}
+
+/* Sort menu (<SortSelect />): a quiet pill that opens a small themed list,
+   right-aligned under it, on the same surface/shadow language as the cards. */
+.sort {
+  position: relative;
+  transition: opacity 0.3s ease;
+}
+.sort[data-pending] { opacity: 0.55; }
+
+.sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding-inline: 1rem 0.7rem;
+  border: 1px solid var(--field-line);
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.4s var(--ease-soft);
+}
+.sort-trigger:hover { border-color: color-mix(in srgb, var(--fg) 32%, transparent); }
+.sort[data-open] .sort-trigger {
+  border-color: color-mix(in srgb, var(--fg) 40%, transparent);
+  background: var(--surface);
+  box-shadow: 0 10px 22px -16px var(--hover-shadow);
+}
+.sort-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  opacity: 0.85;
+}
+.sort-value {
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+.sort-caret {
+  color: var(--fg-muted);
+  transition: transform 0.45s var(--ease-soft);
+}
+.sort[data-open] .sort-caret { transform: rotate(180deg); }
+
+.sort-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 30;
+  min-width: 15rem;
+  padding: 0.5rem;
+  border: 1px solid var(--surface-line);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  box-shadow:
+    0 30px 60px -30px var(--hover-shadow),
+    0 12px 24px -18px var(--hover-shadow);
+  transform-origin: top right;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -6px;
+  scale: 0.97;
+  transition:
+    opacity 0.25s ease,
+    translate 0.35s var(--ease-soft),
+    scale 0.35s var(--ease-soft),
+    visibility 0s linear 0.35s;
+}
+.sort[data-open] .sort-menu {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  scale: 1;
+  transition:
+    opacity 0.25s ease,
+    translate 0.45s var(--ease-soft),
+    scale 0.45s var(--ease-soft),
+    visibility 0s;
+}
+.sort-menu-title {
+  padding: 0.4rem 0.75rem 0.6rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid var(--surface-line);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--eyebrow);
+}
+.sort-list { outline: none; }
+.sort-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  letter-spacing: 0.01em;
+  color: var(--fg-muted);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.35s var(--ease-soft);
+}
+.sort-option[data-active] {
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+  color: var(--fg);
+  padding-left: 1rem;
+}
+.sort-option[aria-selected="true"] { color: var(--fg); }
+.sort-check {
+  color: var(--primary);
+  opacity: 0;
+  scale: 0.6;
+  transition: opacity 0.25s ease, scale 0.35s var(--ease-soft);
+}
+[data-theme="dark"] .sort-check { color: var(--eyebrow); }
+.sort-option[aria-selected="true"] .sort-check { opacity: 1; scale: 1; }
+/* Keyboard focus on the list: ring the highlighted option instead of the whole list */
+.sort-list:focus-visible .sort-option[data-active] { box-shadow: inset 0 0 0 1.5px var(--focus-ring); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sort-menu,
+  .sort[data-open] .sort-menu { translate: none; scale: none; transition: opacity 0.15s ease, visibility 0s; }
+  .sort-option { transition: background-color 0.2s ease, color 0.2s ease; }
+}
+
+/* Product gallery: on desktop the stage is capped to the screen height (so the details sit
+   beside it on a laptop) and the thumbnails stand in a column to its left. */
+@media (width >= 64rem) {
+  .shop-gallery {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .shop-gallery-stage {
+    flex: none;
+    width: max(360px, min(100% - 88px, (100svh - 190px) * 0.8));
+  }
+  .shop-gallery-thumbs {
+    flex-direction: column;
+    margin-top: 0 !important;
+  }
+}
+
+/* Gallery thumbnails */
+.shop-thumb-button {
+  outline: 1px solid transparent;
+  outline-offset: 3px;
+  opacity: 0.62;
+  transition: opacity 0.3s ease, outline-color 0.3s ease;
+}
+.shop-thumb-button:hover { opacity: 0.9; }
+.shop-thumb-button[aria-current="true"] {
+  opacity: 1;
+  outline-color: color-mix(in srgb, var(--fg) 45%, transparent);
+}
+
+/* Product options */
+.shop-swatch {
+  position: relative;
+  display: inline-block;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+  transition: transform 0.4s var(--ease-soft);
+}
+.shop-swatch::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+.shop-swatch[data-checked]::after { border-color: var(--fg); }
+.shop-swatch:hover:not([data-checked])::after { border-color: color-mix(in srgb, var(--fg) 30%, transparent); }
+.shop-swatch:has(:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 8px; }
+.shop-swatch[data-soldout] { opacity: 0.4; }
+
+.shop-option {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: 1.1rem;
+  border: 1px solid var(--field-line);
+  border-radius: var(--radius-ui);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.shop-option:hover { border-color: color-mix(in srgb, var(--fg) 40%, transparent); }
+.shop-option[data-checked] { border-color: var(--fg); background: color-mix(in srgb, var(--fg) 4%, transparent); }
+.shop-option:has(:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+.shop-option[data-soldout] { color: var(--fg-muted); text-decoration: line-through; }
+
+/* Description from Shopify */
+.shop-prose {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+}
+.shop-prose :where(p, ul, ol) { color: var(--fg-body); }
+.shop-prose :where(p, ul, ol) + :where(p, ul, ol) { margin-top: 0.9em; }
+.shop-prose :where(ul) { list-style: disc; padding-left: 1.2em; }
+.shop-prose :where(ol) { list-style: decimal; padding-left: 1.2em; }
+.shop-prose :where(strong, b) { color: var(--fg); font-weight: 700; }
+.shop-prose :where(a) { color: var(--primary); text-decoration: underline; text-underline-offset: 4px; }
+
+/* Header bag button */
+.bag-count {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: grid;
+  place-items: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding-inline: 0.3rem;
+  border-radius: 9999px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 2px var(--bg);
+  animation: bag-pop 0.6s var(--ease-soft) both;
+}
+[data-theme="dark"] .bag-count { background: var(--palette-frost); color: var(--palette-deep-sea); }
+.bag-glyph { transition: transform 0.6s var(--ease-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .bag-button:hover .bag-glyph { transform: translateY(-2px) rotate(-6deg); }
+}
+@keyframes bag-pop {
+  0% { scale: 0.4; opacity: 0; }
+  60% { scale: 1.15; opacity: 1; }
+  100% { scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bag-count { animation: none; }
+  .bag-button:hover .bag-glyph { transform: none; }
 }

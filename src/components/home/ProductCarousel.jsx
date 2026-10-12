@@ -143,8 +143,10 @@ export default function ProductCarousel({ images, label, sizes }) {
       aria-roledescription={multiple ? "slide" : undefined}
       aria-label={multiple ? `${i + 1} of ${count}` : undefined}
     >
-      {/* Padded stage: the product floats in the box with room around it, as in the reference */}
-      <div className="absolute inset-[9%_13%]">
+      {/* Padded stage: the product floats in the box with room around it, as in the reference.
+          Oct 12 (Nancy): books ~10% larger - the inner box is the old 74% x 82% scaled by 1.1
+          (was inset 9% / 13%), nudged up a touch so the drop shadow isn't clipped. */}
+      <div className="absolute inset-[4%_9.3%_5.8%]">
         <Image
           src={image.src}
           alt={image.alt}

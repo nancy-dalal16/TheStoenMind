@@ -44,6 +44,34 @@ const FADE_MS = 650; // must match .prompter[data-fading] transition
 // (a true lens, no overlaps): full size at the centre, cos(EDGE) ≈ 0.58 at the edges.
 const EDGE = 0.95;
 const HALF_PI = Math.PI / 2;
+// "drift" blocks (a few short lines that float in like clouds): they appear once the block has
+// risen to within DRIFT_SHOW radians of the lens centre, in a random order and at random spots
+// across the column. They reset after leaving the window, so every pass is a new arrangement.
+const DRIFT_SHOW = 0.7;
+const DRIFT_STAGGER = 520; // ms between lines appearing (plus a little jitter)
+
+function scatterDrift(el) {
+  const lines = Array.from(el.querySelectorAll(".drift-line"));
+  const width = el.clientWidth;
+  const order = lines.map((_, i) => i).sort(() => Math.random() - 0.5);
+  let prev = -1;
+  lines.forEach((line, i) => {
+    const cloud = line.firstElementChild;
+    // 14px kept free on each side for the sideways bob, so a line never touches the window edge
+    const room = Math.max(0, width - (cloud ? cloud.offsetWidth : 0) - 28);
+    // "Here and there": keep each line well away from the horizontal spot of the one above it
+    let f = Math.random();
+    for (let tries = 0; tries < 8 && prev >= 0 && Math.abs(f - prev) < 0.32; tries += 1) f = Math.random();
+    prev = f;
+    line.style.setProperty("--x", `${Math.round(14 + f * room)}px`);
+    line.style.setProperty("--y", `${(Math.random() * 0.36 - 0.18).toFixed(2)}em`);
+    line.style.setProperty("--d", `${order.indexOf(i) * DRIFT_STAGGER + Math.round(Math.random() * 220)}ms`);
+    line.style.setProperty("--fd", `${(6 + Math.random() * 4).toFixed(1)}s`);
+    line.style.setProperty("--fdel", `${(-Math.random() * 8).toFixed(1)}s`);
+    line.style.setProperty("--fx", `${(Math.random() < 0.5 ? -1 : 1) * (4 + Math.random() * 6)}px`);
+  });
+  el.dataset.shown = "";
+}
 
 const TONES = {
   names: "about-names",
@@ -142,11 +170,15 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
         const d = centers[i] - p; // distance from the lens centre along the copy
         const theta = d / R;
         if (Math.abs(theta) >= Math.min(HALF_PI, EDGE + 0.35)) {
+          if (el.dataset.shown !== undefined) delete el.dataset.shown; // re-scatter next pass
           if (el.style.visibility !== "hidden") {
             el.style.visibility = "hidden";
             el.style.opacity = "0";
           }
           continue;
+        }
+        if (el.dataset.drift !== undefined && el.dataset.shown === undefined && Math.abs(theta) < DRIFT_SHOW) {
+          scatterDrift(el);
         }
         const c = Math.cos(theta);
         const y = R * Math.sin(theta); // where the block lands on the convex surface
@@ -401,6 +433,7 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
         el.style.transform = "";
         el.style.opacity = "";
         el.style.visibility = "";
+        delete el.dataset.shown;
       });
     };
   }, []);
@@ -417,15 +450,28 @@ export default function AboutPrompter({ blocks, label = "About the Stoen Mind" }
           tabIndex={0}
         >
           <div ref={trackRef} className="prompter-track">
-            {blocks.map((block, i) => (
+            {blocks.map((block, i) =>
+              block.kind === "drift" ? (
+                <p key={i} className="prompter-item about-drift" data-drift="" data-gap={block.gap}>
+                  {block.lines.map((line) => (
+                    <span key={line} className="drift-line">
+                      <span className="drift-cloud prompter-line">{line}</span>
+                    </span>
+                  ))}
+                </p>
+              ) : (
               <p
                 key={i}
                 className={["prompter-item", KINDS[block.kind] ?? ""].join(" ")}
                 data-gap={block.gap}
               >
-                <Rich content={block.content} />
+                {/* Inline wrapper: lets a page paint per-line effects (About: dark → light gradient) */}
+                <span className="prompter-line">
+                  <Rich content={block.content} />
+                </span>
               </p>
-            ))}
+              ),
+            )}
           </div>
         </div>
 

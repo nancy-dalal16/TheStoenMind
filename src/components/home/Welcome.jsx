@@ -31,7 +31,8 @@ export default function Welcome() {
         <Artwork
           className="absolute top-[492px] left-[-23.33cqw] aspect-[671/299] w-[max(46.6cqw,300px)]"
           light={{ src: "/images/light/mist-b.png", crop: [159.12, 238.21, -59.12, -31.51] }}
-          dark={{ src: "/images/dark/night-cloud-curl.png", crop: [116.58, 174.52, -20.47, -5.23], brightness: 1.12 }}
+          // Nancy (Oct 12): left cloud toned down at night (was brightness 1.12)
+          dark={{ src: "/images/dark/night-cloud-curl.png", crop: [116.58, 174.52, -20.47, -5.23], brightness: 0.8, opacity: 0.6 }}
           sizes="(min-width: 640px) 75vw, 480px"
           data-reveal="left"
           style={{ "--reveal-dur": "1.8s", "--delay": "200ms" }}

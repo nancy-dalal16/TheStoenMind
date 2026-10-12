@@ -57,7 +57,7 @@ export default function ContactHero() {
               key={channel.title}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-group hover-card flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-surface to-surface-soft p-6 text-center"
+              className="hover-group hover-card hover-text flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-surface to-surface-soft p-6 text-center"
             >
               <IconHalo icon={channel.icon} blob={channel.blob} />
               <div className="flex w-full flex-1 flex-col items-center gap-4">

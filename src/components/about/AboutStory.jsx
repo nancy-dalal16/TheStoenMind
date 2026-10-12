@@ -8,6 +8,8 @@ import { aboutStory } from "@/lib/content";
  * landscape to leave room for here. The hero's "Explore our journey" button scrolls to #about-story.
  * The "Know more about us" button is left out, since it links to this page.
  * Oct 6: matches the home card - 600px wide, compact window, 1.2 leading, no eyebrow (.prompter-card).
+ * Oct 12 (Nancy): About only (.prompter-card--about) - smaller type, tighter spacing, and each line
+ * runs dark → light from left to right (globals.css → "About page teleprompter").
  */
 export default function AboutStory() {
   return (
@@ -18,7 +20,8 @@ export default function AboutStory() {
         <Artwork
           className="absolute top-[492px] left-[-23.33cqw] aspect-[671/299] w-[max(46.6cqw,300px)]"
           light={{ src: "/images/light/mist-b.png", crop: [159.12, 238.21, -59.12, -31.51] }}
-          dark={{ src: "/images/dark/night-cloud-curl.png", crop: [116.58, 174.52, -20.47, -5.23], brightness: 1.12 }}
+          // Nancy (Oct 12): left cloud toned down at night (was brightness 1.12)
+          dark={{ src: "/images/dark/night-cloud-curl.png", crop: [116.58, 174.52, -20.47, -5.23], brightness: 0.8, opacity: 0.6 }}
           sizes="(min-width: 640px) 75vw, 480px"
           data-reveal="left"
           style={{ "--reveal-dur": "1.8s", "--delay": "200ms" }}
@@ -36,7 +39,7 @@ export default function AboutStory() {
         <div
           id="about-story"
           data-reveal="zoom"
-          className="prompter-card relative z-10 mx-auto scroll-mt-6 flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-card-from to-card-to px-6 py-8 backdrop-blur-[4px] sm:px-10 sm:py-9"
+          className="prompter-card prompter-card--about relative z-10 mx-auto scroll-mt-6 flex flex-col items-center gap-5 rounded-ui bg-linear-to-b from-card-from to-card-to px-6 py-8 backdrop-blur-[4px] sm:px-10 sm:py-9"
           style={{ maxWidth: 600 }}
         >
           <div data-part="rise" style={{ "--j": 0 }} className="w-full">

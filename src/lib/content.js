@@ -81,7 +81,7 @@ export const categories = [
   {
     title: "NOTEBOOKS",
     description: `Little blank spaces made to come along with you: light, easy to carry, and ready for notes, lists, passing thoughts, sudden ideas, little squiggles and whatever else happens to find you along the way.`,
-    href: "/shop/books",
+    href: "/shop/notebooks",
     images: [
       {
         src: "/images/products/web/notebook-thoughts-olive.jpg",
@@ -108,7 +108,8 @@ export const categories = [
 /**
  * Home "What makes these pages feel a little different?".
  * `art` is a watercolour medallion: transparent in light mode, on a cool paper disc in dark mode
- * (made by design/content-source/feature-medallions-cutout.py from Nancy's three uploads).
+ * Oct 12: replaced with Nancy's new Drive icons ("Icon- Short Stories / Quiet Companion / Space to wander"),
+ * cut out by design/content-source/icons-oct12/feature-icons-cutout-oct12.py. The old medallions are kept.
  */
 export const features = [
   {
@@ -116,8 +117,8 @@ export const features = [
     description:
       "Sometimes it is nice to be taken somewhere before you have to find the words yourself. So there are little stories and worlds for you to disappear into, smile at, think about, or simply enjoy for what they are.",
     art: {
-      light: "/images/features/short-stories.png",
-      dark: "/images/features/short-stories-night.png",
+      light: "/images/features/icon-short-stories.png",
+      dark: "/images/features/icon-short-stories.png", // Nancy (Oct 12): transparent in dark mode too
     },
   },
   {
@@ -125,8 +126,8 @@ export const features = [
     description:
       "You do not have to wander these pages alone. Meet Rahi, your constant companion - a little like you, and a little like all of us. He has travelled these lands before, and now he is extending a hand so you can wander them together.",
     art: {
-      light: "/images/features/companion.png",
-      dark: "/images/features/companion-night.png",
+      light: "/images/features/icon-companion.png",
+      dark: "/images/features/icon-companion.png", // Nancy (Oct 12): transparent in dark mode too
     },
   },
   {
@@ -134,8 +135,8 @@ export const features = [
     description:
       "There is plenty of space for you. For everything you know, everything you are still figuring out, and the thoughts that arrive without needing to become anything at all. Write, wonder, doodle, linger, or simply let your mind explore.",
     art: {
-      light: "/images/features/wander.png",
-      dark: "/images/features/wander-night.png",
+      light: "/images/features/icon-wander.png",
+      dark: "/images/features/icon-wander.png", // Nancy (Oct 12): transparent in dark mode too
     },
   },
 ];
@@ -312,13 +313,20 @@ export const aboutStory = {
     { content: "Sometimes simply floating by." },
     { content: "The Stoen Mind is a space for that cloud." },
     { content: "A place where you can sit beside it for a while." },
-    { content: "Observe it." },
-    { content: "Wonder about it." },
-    { content: "Rest beside it." },
-    { content: "Follow where it leads." },
-    { content: "Shape it if you wish." },
-    { content: "Or let it shape itself." },
-    { content: "Or simply rest and let it all be." },
+    // Nancy (Oct 12): these seven drift in like clouds - random order, scattered across the box
+    // (kind "drift" in AboutPrompter.jsx; styles in globals.css → "Drifting lines").
+    {
+      kind: "drift",
+      lines: [
+        "Observe it.",
+        "Wonder about it.",
+        "Rest beside it.",
+        "Follow where it leads.",
+        "Shape it if you wish.",
+        "Or let it shape itself.", // Oct 12 (later): these two joined the drift too
+        "Or simply rest and let it all be.",
+      ],
+    },
     { kind: "closing", content: "…Now we want you to come along with us." },
     {
       gap: "lg",

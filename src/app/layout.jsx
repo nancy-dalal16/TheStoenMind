@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import InlineScript from "@/components/theme/InlineScript";
 import RevealObserver from "@/components/motion/RevealObserver";
 import AmbientSound from "@/components/sound/AmbientSound";
+import CartDrawer from "@/components/shop/CartDrawer";
+import { shopMode } from "@/lib/shop/catalog";
 import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
@@ -73,6 +75,8 @@ export default function RootLayout({ children }) {
           <Footer />
           <RevealObserver />
           <AmbientSound />
+          {/* The bag (slide-in drawer); "shopify" once the Storefront env vars are set, else "preview" */}
+          <CartDrawer mode={shopMode} />
         </ThemeProvider>
       </body>
     </html>

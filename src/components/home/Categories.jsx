@@ -10,6 +10,8 @@ import { categories } from "@/lib/content";
  * (layout after Nancy's postcard-shelf reference, Oct 4). The section itself has no background.
  * Light: each box is just a soft grey hairline (Oct 5); dark: a tinted box (.shelf-card in globals.css).
  * Prices: none yet (add `price` in content.js).
+ * Oct 12 (Nancy): book images ~10% larger (ProductCarousel inset), the description is no longer
+ * shown (still in content.js), smaller box, and every card's button reads "Buy Now".
  */
 export default function Categories() {
   return (
@@ -38,24 +40,27 @@ export default function Categories() {
                 <ProductCarousel
                   images={category.images}
                   label={category.label ?? `${category.title.charAt(0)}${category.title.slice(1).toLowerCase()}`}
-                  sizes="(min-width: 1024px) 230px, (min-width: 640px) 40vw, 80vw"
+                  sizes="(min-width: 1024px) 260px, (min-width: 640px) 44vw, 88vw"
                 />
               </div>
 
-              <div className="flex flex-1 flex-col gap-6 px-6 pt-4 pb-6 sm:px-7 sm:pb-7">
-                <div className="flex flex-1 flex-col gap-2 text-fg">
+              {/* Oct 12 (Nancy): description removed, compact foot, one clear "Buy Now" */}
+              <div className="flex flex-1 flex-col gap-4 px-5 pt-1 pb-5 sm:px-6 sm:pb-6">
+                <div className="flex flex-1 flex-col gap-1 text-fg">
                   <h3 className="text-title">{category.title}</h3>
-                  <p className="text-body text-justify">
-                    {category.description}
-                  </p>
                   {category.price ? (
-                    <p className="mt-1 font-sans text-base tracking-[0.04em] text-fg-muted">
+                    <p className="font-sans text-base tracking-[0.04em] text-fg-muted">
                       {category.price}
                     </p>
                   ) : null}
                 </div>
-                <Button href={category.href} fullWidth>
-                  {category.cta ?? `Explore ${category.title}`}
+                <Button
+                  href={category.href}
+                  icon="handbag"
+                  fullWidth
+                  aria-label={`Buy now: ${category.title}`}
+                >
+                  Buy Now
                 </Button>
               </div>
             </li>

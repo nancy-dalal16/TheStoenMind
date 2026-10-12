@@ -13,7 +13,8 @@ export default function Pillars() {
       <Artwork
         className="absolute top-0 left-[-23.33cqw] aspect-[671/299] w-[max(46.6cqw,300px)]"
         light={{ src: "/images/light/mist-b.png", crop: [159.12, 238.21, -59.12, -31.51] }}
-        dark={{ src: "/images/dark/night-cloud-wave.png", crop: [122.25, 183.01, -24.25, 1.87], brightness: 1.12 }}
+        // Nancy (Oct 12): left cloud toned down at night (was brightness 1.12)
+        dark={{ src: "/images/dark/night-cloud-wave.png", crop: [122.25, 183.01, -24.25, 1.87], brightness: 0.8, opacity: 0.6 }}
         sizes="(min-width: 640px) 75vw, 480px"
         data-reveal="left"
         style={{ "--reveal-dur": "1.8s" }}
@@ -28,7 +29,7 @@ export default function Pillars() {
               key={item.title}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-group hover-lift flex flex-col items-center gap-5 rounded-ui p-6 text-center text-fg"
+              className="hover-group hover-text flex flex-col items-center gap-5 rounded-ui p-6 text-center text-fg"
             >
               <IconHalo icon={item.icon} blob={item.blob} />
               <div className="flex flex-col items-center gap-2">

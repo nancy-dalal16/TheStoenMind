@@ -54,7 +54,9 @@ export default function Features() {
         dark={{
           src: "/images/dark/night-cloud-wave.png",
           crop: [122.25, 183.01, -24.25, 1.87],
-          brightness: 1.12,
+          // Nancy (Oct 12): toned down at night (was brightness 1.12)
+          brightness: 0.8,
+          opacity: 0.6,
         }}
         sizes="(min-width: 768px) 52vw, 350px"
         data-reveal="left"
@@ -81,7 +83,7 @@ export default function Features() {
               key={feature.title}
               data-reveal=""
               style={{ "--i": index }}
-              className="hover-group hover-lift flex flex-col items-center gap-6 px-0 text-center sm:px-6"
+              className="hover-group hover-text flex flex-col items-center gap-6 px-0 text-center sm:px-6"
             >
               {/* Watercolour medallion: blooms in with the reveal, tilts and lifts on hover (globals.css → "Feature medallions") */}
               <div data-part="bloom" className="medallion">
