@@ -667,6 +667,86 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
+ *  Is this for me (home → <Articles />, Oct 14 design)
+ *  Measured from Nancy's 1440 export: copy in a centred 1062px column
+ *  (377px lead · 60px gap · 625px list), heading 48/57, eyebrow 24 bold,
+ *  titles 24 regular. The mist is mist-b's bank on the left and its mirror on
+ *  the right (fitted to the export: 1440px wide, opacity 0.6, r = 0.999).
+ * ───────────────────────────────────────────────────────────── */
+.audience {
+  padding-block: 60px clamp(180px, 22vw + 100px, 260px);
+}
+.audience-mist {
+  position: absolute;
+  bottom: 0;
+  /* Never narrower than 900px, so phones still see both slopes of the valley */
+  width: max(100cqw, 900px);
+  left: calc(50cqw - max(50cqw, 450px));
+  aspect-ratio: 1440 / 503;
+}
+.audience-fade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: clamp(87px, 8.4cqw, 120px);
+}
+.audience-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  max-width: 1062px;
+  margin-inline: auto;
+}
+.audience-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.audience-list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.audience-eyebrow {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+.audience-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.125rem, 1.25rem + 2.0833vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1875;
+  letter-spacing: 0.02em;
+}
+.audience-cta {
+  margin-top: 24px;
+}
+.audience-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.375rem, 1.25rem + 0.35vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.1667;
+}
+@media (min-width: 64rem) {
+  .audience {
+    padding-block: 156px 160px;
+  }
+  .audience-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 60px;
+  }
+  .audience-lead {
+    width: 377px;
+    flex-shrink: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
  *  About teleprompter (home → <AboutPrompter />)
  * ─────────────────────────────────────────────────────────────
  *  The copy rises through a lens-shaped window. JS projects each
