@@ -19,7 +19,7 @@ export const mainNav = [
 export const categories = [
   {
     // Nancy (Oct 6): was JOURNALS. Cover from Drive "Letters From the Universe (Journal).pdf".
-    title: "Journal / Workbook - Night",
+    title: "JOURNALS / WORKBOOKS - NIGHT",
     cta: "Explore NIGHT",
     description: `Little story worlds to step into, slow down and stay awhile, with space to reflect and discover what your mind has been quietly waiting to say. A familiar character wanders with you, and may just become a friend.`,
     href: "/shop/journals",
@@ -34,7 +34,7 @@ export const categories = [
   },
   {
     // Nancy (Oct 6): was WORKBOOKS. Cover from Drive "The Life I Am Creating (Workbook) JPEG.pdf".
-    title: "Journal / Workbook - Day",
+    title: "JOURNALS / WORKBOOKS - DAY",
     cta: "Explore DAY",
     description: `Story worlds with a character beside you from beginning to end. Each chapter brings things to notice, ideas to sit with, little exercises to try and space for your own reflections, at whatever pace feels right.`,
     href: "/shop/workbooks",
@@ -114,17 +114,20 @@ export const categories = [
 export const features = [
   {
     title: "Short stories",
-    description:
-      "Sometimes it is nice to be taken somewhere before you have to find the words yourself. So there are little stories and worlds for you to disappear into, smile at, think about, or simply enjoy for what they are.",
+    description: `Sometimes it is nice to be taken somewhere before you have to find the words
+yourself. So there are little stories and worlds for you to disappear into, smile at,
+think about, or simply enjoy for what they are.`,
     art: {
       light: "/images/features/icon-short-stories.png",
       dark: "/images/features/icon-short-stories.png", // Nancy (Oct 12): transparent in dark mode too
     },
   },
   {
-    title: "A quiet companion",
-    description:
-      "You do not have to wander these pages alone. Meet Rahi, your constant companion - a little like you, and a little like all of us. He has travelled these lands before, and now he is extending a hand so you can wander them together.",
+    title: "A KINDRED COMPANION",
+    description: `As you wander these pages, you’ll often meet Rahi, a kindred companion who has
+wondered, sauntered, and found his way through these lands. He’s here to walk
+alongside you, one discovery at a time. And perhaps, by the end, you’ll find a friend
+in him, and a little of yourself, too.`,
     art: {
       light: "/images/features/icon-companion.png",
       dark: "/images/features/icon-companion.png", // Nancy (Oct 12): transparent in dark mode too
@@ -132,8 +135,9 @@ export const features = [
   },
   {
     title: "Space to wander",
-    description:
-      "There is plenty of space for you. For everything you know, everything you are still figuring out, and the thoughts that arrive without needing to become anything at all. Write, wonder, doodle, linger, or simply let your mind explore.",
+    description: `There is plenty of space for you. For everything you know, everything you are still
+figuring out, and the thoughts that arrive without needing to become anything at all.
+Write, wonder, doodle, linger, or simply let your mind explore.`,
     art: {
       light: "/images/features/icon-wander.png",
       dark: "/images/features/icon-wander.png", // Nancy (Oct 12): transparent in dark mode too
@@ -305,12 +309,14 @@ export const aboutStory = {
         ". A cloud of thoughts, feelings, imaginings, questions, and countless other things that pass through us.",
       ],
     },
-    { content: "Sometimes light and playful." },
-    { content: "Sometimes vast and mysterious." },
-    { content: "Sometimes full of questions." },
-    { content: "Sometimes carrying a storm." },
-    { content: "Sometimes taking shapes that seem to mean something." },
-    { content: "Sometimes simply floating by." },
+    // Nancy (Oct 21): the six "Sometimes…" lines each take a soft rainbow hue (VIBGYOR order;
+    // tones "violet" … "red" → .about-hue in globals.css → "Rainbow lines").
+    { content: [{ text: "Sometimes light and playful.", tone: "violet" }] },
+    { content: [{ text: "Sometimes vast and mysterious.", tone: "blue" }] },
+    { content: [{ text: "Sometimes full of questions.", tone: "green" }] },
+    { content: [{ text: "Sometimes carrying a storm.", tone: "yellow" }] },
+    { content: [{ text: "Sometimes taking shapes that seem to mean something.", tone: "orange" }] },
+    { content: [{ text: "Sometimes simply floating by.", tone: "red" }] },
     { content: "The Stoen Mind is a space for that cloud." },
     { content: "A place where you can sit beside it for a while." },
     // Nancy (Oct 12): these seven drift in like clouds - random order, scattered across the box

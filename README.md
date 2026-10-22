@@ -107,6 +107,31 @@ The motion styles live in `globals.css` under **Motion**. Every animation is ski
 
 Avoid putting `data-reveal` on an element that already uses Tailwind `translate` or `scale` classes; wrap it in another element instead.
 
+## Explore (blog) and Sanity
+
+`/explore` is a magazine-style journal: a front page (lead story, briefs, "worth lingering over",
+the latest river, a spotlight band, a pull quote and topic rails), story pages at
+`/explore/[slug]` and topic pages at `/explore/topic/[topic]`.
+
+- **Data:** `src/lib/explore/posts.js` is the only door the pages use. Without Sanity env vars it
+  serves the demo journal in `src/lib/explore/demo.js` (16 placeholder stories using the site's
+  watercolours); with them it reads Sanity over the GROQ HTTP API (`src/lib/explore/sanity.js`,
+  plain `fetch`, no extra packages) and falls back to the demo if Sanity errors.
+- **Connect Sanity:** create a project at sanity.io/manage, then in `.env.local` set
+  `SANITY_PROJECT_ID` (and `SANITY_DATASET` if it isn't `production`; `SANITY_API_READ_TOKEN`
+  only for a private dataset). Pages refresh every 60 seconds.
+- **Studio schema:** `sanity/schemaTypes/` (story, topic, author, body). Copy it into your Studio
+  and register `schemaTypes` in `sanity.config.js`. Field names match the GROQ in `sanity.js`.
+- **Body:** Portable Text, rendered by `components/explore/PortableText.jsx` - paragraphs,
+  headings, quotes, lists, links, pictures (with optional night version), pull quotes, prompt
+  cards and cloud section breaks. The first paragraph gets a drop cap, the last an end mark.
+- **Pictures:** each story can have a day picture and an optional night picture (dark mode) and
+  a fit: "Fill" for paintings and photos, "Float" for covers and medallions.
+- **Copy that isn't a post** (nameplate intro, pull quote, "A small picture", newsletter text):
+  `src/lib/explore/copy.js`.
+- **Newsletter:** the sign-up posts to `/api/newsletter`; set `NEWSLETTER_WEBHOOK_URL` to forward
+  addresses to your mailing list. Until then they are only logged.
+
 ## Adding a page
 
 Create `src/app/<route>/page.jsx`. Header, footer and theming come from the root layout.

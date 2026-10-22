@@ -15,6 +15,19 @@
  * sound. A small pool of players takes turns instead: one plays, the next crossfades in at
  * each loop or track change, the last fades out. Volume goes through Web Audio gain nodes,
  * because iOS ignores `audio.volume`. The sound fades out while the tab is hidden.
+ *
+ * Seamless loops (Nancy, Oct 21: "it feels like the music starts again"). Going back to 0:00
+ * replayed each Home track's intro every couple of minutes. Both Home tracks repeat a passage
+ * sample-for-sample (the day swell every 50 s, a night chime phrase 153.4 s apart), so instead
+ * they loop *inside* that passage: a second player starts `lag` seconds back, is lined up with
+ * the one playing (to within ~10 ms), and a short crossfade swaps them while both play the same
+ * notes - there is nothing to hear. The intro only plays once, at the very start of a visit.
+ * The About tracks have no note-for-note repeats, so they loop at the best-matching moments
+ * instead: About night on its 124 s pattern (lined up, 2.5 s crossfade), About day between two
+ * spots with the same texture (4 s equal-power crossfade).
+ *
+ * Positions are kept for the browser session (sessionStorage), so a reload or a page that does
+ * a full load carries on where the music was instead of starting over.
  */
 
 export const SOUND_STORAGE_KEY = "stoen-sound";
@@ -37,6 +50,29 @@ const TRIM = {
   "/audio/About-night-audio.mp3": 1.16,
 };
 
+/**
+ * Loop points, measured from the files (Oct 21). Re-measure if a file is replaced.
+ *   lag    how far back the loop jumps (s)
+ *   from   when playback reaches this, the swap starts (the second player is readied ~1.5 s
+ *          before); until: the latest it may start
+ *   seam   crossfade length (s)
+ *   align  line the two players up first (the audio either side is the same, or follows the
+ *          same pattern, so it must stay in step)
+ *   power  equal-power crossfade, for joining two different but similar-sounding moments
+ * Home day/night: identical to themselves `lag` earlier between from and until + seam
+ * (waveform correlation ≥ 0.94). About night: a 124 s pattern (≈ 0.8 there). About day:
+ * same texture and level either side (spectral match 0.93), not the same notes.
+ */
+const LOOPS = {
+  "/audio/Day-background-audio-2.mp3": { from: 88.2, until: 90.1, lag: 50, seam: 0.35, align: true },
+  "/audio/Night-background-audio.mp3": { from: 217.4, until: 225.3, lag: 153.4043, seam: 0.35, align: true },
+  "/audio/About-night-audio.mp3": { from: 144.6, until: 145.4, lag: 124, seam: 2.5, align: true },
+  "/audio/About-day-audio.mp3": { from: 50.2, until: 50.8, lag: 44.2, seam: 4, power: true },
+};
+const PREP = 1.5; // s, the second player is started this long before `from`
+const ALIGN = 0.012; // s, how closely aligned players must line up before the seam
+const POS_KEY = "stoen-sound-pos";
+
 const LEVEL = 0.4; // overall loudness: a background, never in the way
 const FADE_IN = 3.5; // s, first start / turning back on
 const FADE_OUT = 1.2; // s, turning off / tab hidden
@@ -58,6 +94,25 @@ let pauseTimer = 0;
 let scene = "home";
 let wantedSrc = TRACKS.home.light;
 const positions = new Map(); // src -> seconds, so a track resumes where it was left
+let savedAt = 0;
+
+/* Positions survive reloads within the browser session. */
+function loadPositions() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(POS_KEY) || "{}");
+    Object.entries(saved).forEach(([src, at]) => Number.isFinite(at) && positions.set(src, at));
+  } catch {
+    /* storage blocked: positions last for this page only */
+  }
+}
+function savePositions() {
+  players.forEach((p) => p.busy && remember(p));
+  try {
+    sessionStorage.setItem(POS_KEY, JSON.stringify(Object.fromEntries(positions)));
+  } catch {
+    /* storage blocked */
+  }
+}
 
 const level = (src) => TRIM[src] ?? 1;
 const readTheme = () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light");
@@ -93,6 +148,22 @@ function ramp(param, to, seconds) {
   }
   param.linearRampToValueAtTime(to, now + seconds);
 }
+/** Equal-power fade (sine / cosine), so two unrelated sounds don't dip in the middle. */
+function powerRamp(param, to, seconds) {
+  const now = ctx.currentTime;
+  const start = param.value;
+  const steps = 64;
+  const shape = new Float32Array(steps);
+  for (let i = 0; i < steps; i++) {
+    const x = i / (steps - 1);
+    const k = to > start ? Math.sin((x * Math.PI) / 2) : 1 - Math.cos((x * Math.PI) / 2);
+    shape[i] = start + (to - start) * k;
+  }
+  param.cancelScheduledValues(now);
+  param.setValueAtTime(start, now);
+  // A curve may not share its start time with another event: begin it a moment later.
+  param.setValueCurveAtTime(shape, now + 0.01, seconds);
+}
 function hold(param, value) {
   param.cancelScheduledValues(0);
   param.value = value;
@@ -107,7 +178,7 @@ function makePlayer() {
   const gain = ctx.createGain();
   gain.gain.value = 0;
   ctx.createMediaElementSource(el).connect(gain).connect(master);
-  const p = { el, gain, src: null, busy: false, timer: 0, blessed: false };
+  const p = { el, gain, src: null, busy: false, timer: 0, blessed: false, seam: false };
   el.addEventListener("timeupdate", () => onTimeUpdate(p));
   el.addEventListener("ended", () => onEnded(p));
   return p;
@@ -123,7 +194,7 @@ function setup() {
   master.connect(ctx.destination);
   players = Array.from({ length: POOL }, makePlayer);
   current = players[0];
-  claim(current, wantedSrc, positions.get(wantedSrc) ?? 0);
+  claim(current, wantedSrc, startAt(wantedSrc));
   return true;
 }
 
@@ -132,6 +203,13 @@ function remember(p) {
   const { el } = p;
   if (!p.src || !el.duration) return;
   if (el.currentTime > 1 && el.currentTime < el.duration - CROSSFADE) positions.set(p.src, el.currentTime);
+}
+
+/** Where to (re)start a track: past a loop's end, the same notes sit `lag` seconds earlier. */
+function startAt(src) {
+  const at = positions.get(src) ?? 0;
+  const loop = LOOPS[src];
+  return loop && at > loop.until ? at - loop.lag : at;
 }
 
 /** Give a player a track (silent until faded in). */
@@ -143,6 +221,7 @@ function claim(p, src, at) {
     p.el.src = src;
   }
   p.busy = true;
+  p.seam = false;
   try {
     p.el.currentTime = at;
   } catch {
@@ -242,21 +321,101 @@ function bless() {
 
 /* Near the end of a loop, start the same track on a free player and crossfade into it. */
 function onTimeUpdate(p) {
-  if (!playing || p !== current || !p.el.duration) return;
-  if (p.el.currentTime < p.el.duration - CROSSFADE) return;
-  const next = freePlayer();
-  claim(next, p.src, 0);
-  next.el.play().catch(() => {});
-  fade(next, CROSSFADE);
-  retire(p, CROSSFADE);
-  current = next;
+  if (p === current && Date.now() - savedAt > 4000) {
+    savedAt = Date.now();
+    savePositions();
+  }
+  if (!playing || p !== current || !p.el.duration || p.seam) return;
+  const t = p.el.currentTime;
+  const loop = LOOPS[p.src];
+  if (loop) {
+    if (t >= loop.from - PREP && t < loop.until) seamLoop(p, loop);
+    else if (t >= loop.until + 1) crossfadeTo(p, t - loop.lag, CROSSFADE); // seam missed (tab throttled)
+    return;
+  }
+  if (t >= p.el.duration - CROSSFADE) crossfadeTo(p, 0, CROSSFADE);
 }
 const fade = (p, seconds) => ramp(p.gain.gain, level(p.src), seconds);
+
+/** Plain crossfade from `p` into the same track at `at`. */
+function crossfadeTo(p, at, seconds) {
+  p.seam = true;
+  const next = freePlayer();
+  claim(next, p.src, at);
+  next.el.play().catch(() => {});
+  fade(next, seconds);
+  retire(p, seconds);
+  current = next;
+}
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+/** After a seek: wait until it has landed and playback has run on a moment. */
+async function settled(el) {
+  for (let i = 0; i < 20 && el.seeking; i++) await wait(50);
+  await wait(180);
+}
+const playingNow = (el) =>
+  el.readyState >= 3 && !el.paused
+    ? Promise.resolve()
+    : new Promise((resolve) => {
+        const done = () => {
+          clearTimeout(timer);
+          el.removeEventListener("playing", done);
+          resolve();
+        };
+        const timer = setTimeout(done, 1500);
+        el.addEventListener("playing", done);
+      });
+
+/**
+ * Loop seam: start a silent second player `lag` seconds back (lined up with the one playing
+ * when `align`), wait for `from`, then swap them with the loop's crossfade.
+ */
+async function seamLoop(p, loop) {
+  p.seam = true;
+  const next = freePlayer();
+  const offset = () => next.el.currentTime - (p.el.currentTime - loop.lag);
+  claim(next, p.src, Math.max(0, p.el.currentTime - loop.lag + 0.1));
+  next.el.play().catch(() => {});
+  await playingNow(next.el);
+  if (loop.align) {
+    // Nudge the silent one until it is within ALIGN of the other.
+    for (let i = 0; i < 4 && Math.abs(offset()) > ALIGN; i++) {
+      next.el.currentTime -= offset();
+      await settled(next.el);
+    }
+  }
+  while (p.el.currentTime < loop.from && current === p && playing && next.busy) await wait(40);
+  // A theme / page switch or the sound being turned off got there first.
+  if (!next.busy || next.src !== p.src) {
+    p.seam = false;
+    return;
+  }
+  if (current !== p || !playing) {
+    release(next);
+    p.seam = false;
+    return;
+  }
+  const inTime = p.el.currentTime <= loop.until + 0.2;
+  const lined = !loop.align || Math.abs(offset()) <= ALIGN * 3;
+  const seconds = inTime && lined ? loop.seam : CROSSFADE; // else: a longer, gentle crossfade
+  if (loop.power) {
+    powerRamp(next.gain.gain, level(next.src), seconds);
+    powerRamp(p.gain.gain, 0, seconds);
+    clearTimeout(p.timer);
+    p.timer = setTimeout(() => release(p), seconds * 1000 + 100);
+  } else {
+    fade(next, seconds);
+    retire(p, seconds);
+  }
+  current = next;
+}
 
 /* Fallback if the crossfade was missed (e.g. timeupdate throttled): start over in place. */
 function onEnded(p) {
   if (!playing || p !== current) return;
-  p.el.currentTime = 0;
+  const loop = LOOPS[p.src];
+  p.el.currentTime = loop ? loop.until - loop.lag : 0;
   p.el.play().catch(() => {});
 }
 
@@ -290,7 +449,7 @@ function syncTrack() {
 
   // Keep the old track playing until the new one has buffered, then crossfade.
   const next = freePlayer();
-  claim(next, src, positions.get(src) ?? 0);
+  claim(next, src, startAt(src));
   pending = next;
   const mine = ++ticket;
   next.el.play().catch(() => {});
@@ -311,7 +470,7 @@ function updateTrack() {
 /** Make `current` the wanted track at full level, with nothing else lingering. */
 function prepareCurrent() {
   players.forEach((p) => p !== current && p.busy && release(p));
-  if (current.src !== wantedSrc) claim(current, wantedSrc, positions.get(wantedSrc) ?? 0);
+  if (current.src !== wantedSrc) claim(current, wantedSrc, startAt(wantedSrc));
   current.busy = true;
   hold(current.gain.gain, level(current.src));
 }
@@ -417,6 +576,9 @@ export function initAmbientSound() {
     events.forEach((type) => window.addEventListener(type, onGesture, { capture: true, passive: true }));
   };
 
+  loadPositions();
+  window.addEventListener("pagehide", savePositions);
+
   // Day / night: crossfade when <html data-theme> changes (theme toggle, OS change, other tab).
   updateTrack();
   const themeWatch = new MutationObserver(updateTrack);
@@ -427,6 +589,7 @@ export function initAmbientSound() {
   const onVisibility = () => {
     if (document.hidden) {
       resumeOnShow = playing;
+      savePositions();
       pause();
     } else if (resumeOnShow && readPref()) {
       resumeOnShow = false;
@@ -444,6 +607,7 @@ export function initAmbientSound() {
 
   return () => {
     stopWaiting();
+    window.removeEventListener("pagehide", savePositions);
     themeWatch.disconnect();
     document.removeEventListener("visibilitychange", onVisibility);
   };

@@ -27,6 +27,9 @@ const ICONS = {
   "shopping-bag-blob": { src: "/images/icons/shopping-bag-blob.svg", width: 40, height: 40 },
   "map-pin-blob": { src: "/images/icons/map-pin-blob.svg", width: 40, height: 40 },
   wordmark: { src: "/images/shared/wordmark.svg", width: 187, height: 26 },
+  // Explore: share link, and the logo's cloud as a section break / end mark
+  link: { src: "/images/icons/link.svg", width: 24, height: 24 },
+  cloud: { src: "/images/shared/logo-cloud.svg", width: 44, height: 25 },
 };
 
 export default function Icon({ name, width, height, className = "", style }) {

@@ -84,6 +84,13 @@ const TONES = {
   large: "about-large",
   raised: "about-raised",
   narrow: "about-narrow",
+  // About: the six "Sometimes…" lines, one soft rainbow hue each (Nancy, Oct 21)
+  violet: "about-hue about-hue--violet",
+  blue: "about-hue about-hue--blue",
+  green: "about-hue about-hue--green",
+  yellow: "about-hue about-hue--yellow",
+  orange: "about-hue about-hue--orange",
+  red: "about-hue about-hue--red",
 };
 
 // Block kinds → classes. title: bold italic; lead: bold; italic; aside: indented and

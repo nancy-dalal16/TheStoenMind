@@ -7,8 +7,11 @@ import SectionHeading from "@/components/home/SectionHeading";
 import { timeline } from "@/lib/about";
 
 /**
- * "Evolution of the Atelier" - milestone tabs (WAI-ARIA tabs pattern: arrow keys,
+ * "Atelier" - milestone tabs (WAI-ARIA tabs pattern: arrow keys,
  * Home/End, roving tabindex) over a panel that softly re-enters on change.
+ * Oct 21: each year's body is a few short paragraphs (the heading line is optional). All years
+ * are stacked in one grid cell (.timeline-stack) so the panel keeps the height of the longest
+ * and the page doesn't jump when switching tabs; only the selected one is visible.
  */
 export default function Timeline() {
   const { title, description, milestones } = timeline;
@@ -87,20 +90,41 @@ export default function Timeline() {
               aria-labelledby={`${baseId}-tab-${current.id}`}
               className="w-full rounded-ui bg-surface p-8 sm:p-10 lg:p-[60px]"
             >
-              {/* Re-keyed so the content softly re-enters on each change */}
-              <div
-                key={current.id}
-                className="flex flex-col items-center gap-8 motion-safe:animate-rise-in md:flex-row md:gap-10"
-              >
-                <div className="flex flex-1 flex-col items-center gap-1 text-center">
-                  <p className="font-serif text-[clamp(2.5rem,2.1rem+1.2vw,3rem)] leading-none text-fg">{current.year}</p>
-                  <p className="font-sans text-base font-medium tracking-[0.08em] text-eyebrow uppercase">{current.label}</p>
-                </div>
-                <span aria-hidden="true" className="h-px w-full bg-divider md:h-36 md:w-px" />
-                <div className="flex flex-1 flex-col gap-5 py-0 text-fg md:py-4">
-                  <h3 className="font-serif text-[clamp(1.5rem,1.3rem+0.6vw,1.75rem)] leading-[1.15]">{current.title}</h3>
-                  <p className="text-body">{current.body}</p>
-                </div>
+              {/* All years share one cell; the selected one is shown and softly re-enters */}
+              <div className="timeline-stack">
+                {milestones.map((milestone) => {
+                  const shown = milestone.id === current.id;
+                  return (
+                    <div
+                      key={milestone.id}
+                      aria-hidden={shown ? undefined : true}
+                      style={shown ? undefined : { visibility: "hidden" }}
+                      className={`flex flex-col items-center gap-8 md:flex-row md:gap-10 ${shown ? "motion-safe:animate-rise-in" : ""}`}
+                    >
+                      <div className="flex flex-1 flex-col items-center gap-1 text-center">
+                        <p className="font-serif text-[clamp(2.5rem,2.1rem+1.2vw,3rem)] leading-none text-fg">
+                          {milestone.year}
+                        </p>
+                        <p className="font-sans text-base font-medium tracking-[0.08em] text-eyebrow uppercase">
+                          {milestone.label}
+                        </p>
+                      </div>
+                      <span aria-hidden="true" className="h-px w-full bg-divider md:h-36 md:w-px" />
+                      <div className="flex flex-1 flex-col gap-4 py-0 text-fg md:py-4">
+                        {milestone.title ? (
+                          <h3 className="font-serif text-[clamp(1.5rem,1.3rem+0.6vw,1.75rem)] leading-[1.15]">
+                            {milestone.title}
+                          </h3>
+                        ) : null}
+                        {[].concat(milestone.body).map((paragraph) => (
+                          <p key={paragraph} className="text-body">
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

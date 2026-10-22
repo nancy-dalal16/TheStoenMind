@@ -31,41 +31,55 @@ export const aboutStory = {
 };
 
 export const timeline = {
-  title: "Evolution of the Atelier",
+  // Copy deck (Nancy, Oct 21): "Atelier" - four years, each body is a list of paragraphs.
+  title: "Atelier",
   description:
     "From quiet beginnings to meaningful creations. A journey shaped by time, craft, and intention.",
   milestones: [
     {
-      id: "2021",
-      tab: "2021 - The Spark",
-      year: "2021",
-      label: "Studio Binding Room",
-      title: "A Single Desk in a Sunlit Corner",
-      body: "Founded by paper enthusiast Clara Vance, Inner Skies started with a hand-lever paper cutter and a desire to make journals that felt like timeless heirlooms rather than disposable stationery.",
-    },
-    {
-      id: "2022",
-      tab: "2022 - The First Journal",
-      year: "2022",
-      label: "First Edition",
-      title: "The First Hand-Bound Journal",
-      body: "Two hundred copies, sewn by hand over one long winter. Each was wrapped in linen, numbered, and sent out with a handwritten note to the readers who found us first.",
+      id: "2023",
+      tab: "2023 — The Spark",
+      year: "2023",
+      label: "The Spark",
+      body: [
+        "It started with a single desk, a small computer, and a window that opened to a wide sky. The changing light brought with it ombre thoughts and little dreams. These grew amid beautiful company and well-wishers.",
+        "And the beginning of something we could only imagine.",
+      ],
     },
     {
       id: "2024",
-      tab: "2024 - Botanical Collection",
+      tab: "2024 — A Marché of Thoughts",
       year: "2024",
-      label: "Botanical Collection",
-      title: "Pressed Leaves & Watercolour Covers",
-      body: "Our first seasonal series paired archival cotton paper with covers painted from pressed botanicals - each one quietly different from the next.",
+      label: "A Marché of Thoughts",
+      body: [
+        "The world became a marché of sorts.",
+        "So much to see, to notice and gather. Little trinkets of conversation came together as thoughts, thoughts then convened into ideas.",
+        "A year of looking, listening, and letting the world find its way in.",
+      ],
     },
     {
-      id: "present",
-      tab: "Present - Global Sanctuary",
-      year: "Today",
-      label: "Global Sanctuary",
-      title: "A Quiet Sanctuary, Everywhere",
-      body: "Stoen journals now travel to writers and wanderers around the world - still bound in small batches, still made to be returned to.",
+      id: "2025",
+      tab: "2025 — Chasing Fireflies",
+      year: "2025",
+      label: "Chasing Fireflies",
+      body: [
+        "Work, work, work.",
+        "And chasing fireflies of thoughts and words, trying to catch them, to make sense of their little formations, to let them find their way onto pages.",
+        "“And oh,” my mind said, “look! They are beginning to make worlds.”",
+        "From things imagined, observed, learnt, and from the beautiful minds all around us. Little by little, these worlds begin to take shape, becoming places we can almost step into.",
+      ],
+    },
+    {
+      id: "2026",
+      tab: "2026 — Finding Their Form",
+      year: "2026",
+      label: "Finding Their Form",
+      body: [
+        "More work. More ideating, trimming, pruning, shaping.",
+        "The fireflies are slowly settling onto pages, and the worlds are finding their form for each of you wonderful souls who have called for them to come to life.",
+        "So we keep at it, giving each thought a little more room and a little more shape.",
+        "Until it feels like yours and ours.",
+      ],
     },
   ],
 };
