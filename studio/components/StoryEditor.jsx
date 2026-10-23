@@ -59,21 +59,38 @@ function usePaneRouter(onNavigateIntent, onClose) {
   );
 }
 
-export default function StoryEditor({ id, isNew, onBack }) {
+const noop = () => {};
+
+/**
+ * Also used for the Explore page settings (ExplorePageTool): `type="explorePage"`, no back
+ * button, no delete, Preview → /explore. The pane router here is our own (state kept locally),
+ * which is why the form's Edit/Page tabs, comments and history work without touching the URL.
+ */
+export default function StoryEditor({
+  id,
+  isNew,
+  onBack,
+  type = "post",
+  backLabel = "Stories",
+  fallbackTitle = isNew ? "New story" : "Untitled story",
+  previewHref,
+  allowDelete = true,
+}) {
   const router = useRouter();
-  const edit = useEditState(id, "post");
-  const ops = useDocumentOperation(id, "post");
+  const edit = useEditState(id, type);
+  const ops = useDocumentOperation(id, type);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const paneRouter = usePaneRouter(router.navigateIntent, onBack);
+  const paneRouter = usePaneRouter(router.navigateIntent, onBack ?? noop);
 
   const doc = edit?.draft ?? edit?.published;
-  const title = doc?.title || (isNew ? "New story" : "Untitled story");
+  const title = doc?.title || fallbackTitle;
   const slug = edit?.published?.slug?.current;
+  const preview = previewHref ?? (slug ? `/explore/${slug}` : null);
   const status = !edit?.published ? "Not published" : edit?.draft ? "Unpublished changes" : "Published";
 
   const pane = useMemo(
-    () => ({ id, type: "document", title: "", options: { id, type: "post", ...(isNew ? { template: "post" } : {}) } }),
-    [id, isNew],
+    () => ({ id, type: "document", title: "", options: { id, type, ...(isNew ? { template: type } : {}) } }),
+    [id, isNew, type],
   );
 
   const publishDisabled = Boolean(ops.publish.disabled) || !edit?.draft;
@@ -85,16 +102,18 @@ export default function StoryEditor({ id, isNew, onBack }) {
     <div className="stn-editor">
       <style>{EDITOR_CSS}</style>
       <header className="stn-editor-bar">
-        <button type="button" className="stn-back" onClick={onBack}>
-          <ChevronLeftIcon /> Stories
-        </button>
+        {onBack ? (
+          <button type="button" className="stn-back" onClick={onBack}>
+            <ChevronLeftIcon /> {backLabel}
+          </button>
+        ) : null}
         <div className="stn-editor-title">
           <strong>{title}</strong>
           <span className={`stn-editor-status ${edit?.draft || !edit?.published ? "is-draft" : ""}`}>{status}</span>
         </div>
         <div className="stn-editor-actions">
-          {slug ? (
-            <a className="stn-pill-btn" href={`/explore/${slug}`} target="_blank" rel="noreferrer">
+          {preview ? (
+            <a className="stn-pill-btn" href={preview} target="_blank" rel="noreferrer">
               <LaunchIcon /> Preview
             </a>
           ) : null}
@@ -103,7 +122,7 @@ export default function StoryEditor({ id, isNew, onBack }) {
               <RevertIcon /> Discard changes
             </button>
           ) : null}
-          {confirmDelete ? (
+          {!allowDelete ? null : confirmDelete ? (
             <>
               <span className="stn-confirm">Delete this story?</span>
               <button type="button" className="stn-pill-btn" onClick={() => setConfirmDelete(false)}>
@@ -114,7 +133,7 @@ export default function StoryEditor({ id, isNew, onBack }) {
                 className="stn-pill-btn stn-danger-solid"
                 onClick={() => {
                   ops.del.execute();
-                  onBack();
+                  onBack?.();
                 }}
               >
                 Yes, delete
@@ -141,8 +160,8 @@ export default function StoryEditor({ id, isNew, onBack }) {
         <StructureToolProvider>
           <PaneLayout style={{ height: "100%" }}>
             <PaneRouterContext.Provider value={paneRouter}>
-              <Suspense fallback={<div className="stn-loading">Opening the story…</div>}>
-                <DocumentPane paneKey="story" index={1} itemId="story" pane={pane} />
+              <Suspense fallback={<div className="stn-loading">Opening…</div>}>
+                <DocumentPane paneKey={type} index={1} itemId={type} pane={pane} />
               </Suspense>
             </PaneRouterContext.Provider>
           </PaneLayout>

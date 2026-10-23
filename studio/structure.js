@@ -88,17 +88,10 @@ export const structure = (S) =>
       S.documentTypeListItem("author").title("Authors").icon(UserIcon),
     ]);
 
-/** The "Explore page" tab: the settings document itself, with its live page beside it. */
-export const explorePageStructure = (S) =>
-  S.document()
-    .schemaType("explorePage")
-    .documentId("explorePage")
-    .title("Explore page")
-    .views([S.view.form().title("Edit"), S.view.component(PagePreview).title("Page").icon(EyeOpenIcon)]);
-
-/** Stories also get the "Page" tab when opened from any list. */
+/** Stories and the Explore page get the "Page" tab when opened from any list. */
 export const defaultDocumentNode = (S, { schemaType }) => {
-  if (schemaType === "post") {
+  // Edit + Page (the live page beside the form) for stories and the Explore page settings
+  if (schemaType === "post" || schemaType === "explorePage") {
     return S.document().views([S.view.form().title("Edit"), S.view.component(PagePreview).title("Page").icon(EyeOpenIcon)]);
   }
   return S.document().views([S.view.form()]);
