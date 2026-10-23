@@ -1,0 +1,2807 @@
+[
+ {
+  "_id": "explorePage",
+  "_type": "explorePage",
+  "eyebrow": "wordmark",
+  "title": "Explore",
+  "intro": "Stories, wanderings and quiet notes from the STOEN mind - to read slowly, and return to.",
+  "showMeta": true,
+  "allStoriesLabel": "All stories",
+  "leadStory": {
+   "_type": "reference",
+   "_ref": "post-the-harbour-at-the-edge-of-evening"
+  },
+  "latestTitle": "The latest",
+  "latestCount": 6,
+  "picksTitle": "Worth lingering over",
+  "showSpotlight": true,
+  "spotlightTopic": {
+   "_type": "reference",
+   "_ref": "topic-short-stories"
+  },
+  "showQuote": true,
+  "quoteText": "The lights are not for me. I am simply allowed to watch - and there is a rest in that I hadn’t known I was missing.",
+  "quoteStory": {
+   "_type": "reference",
+   "_ref": "post-the-harbour-at-the-edge-of-evening"
+  },
+  "showTopicRails": true,
+  "showGiftBand": true,
+  "emptyFront": "The first stories are on their way.",
+  "smallPicture": {
+   "show": true,
+   "label": "A small picture",
+   "image": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/products/web/diary-pagoda.jpg"
+    },
+    "alt": "A pagoda on a misty lake beneath a drifting cloud, in soft blue ink"
+   },
+   "fit": "contain",
+   "caption": "“I’ve decided the mist isn’t hiding anything. It’s just keeping things soft until we’re ready.”",
+   "credit": "From the Diaries · the Pagoda"
+  },
+  "newsletter": {
+   "show": true,
+   "eyebrow": "Letters, now and then",
+   "title": "A slow letter for your inbox",
+   "text": "New stories, a prompt or two and the occasional painting - once a month, never more.",
+   "placeholder": "you@example.com",
+   "button": "Sign me up",
+   "success": "Thank you. Your first letter will find its way to you soon."
+  },
+  "seeAll": "See all",
+  "readNextTitle": "Keep wandering",
+  "readNextLink": "All stories",
+  "shareLabel": "Share this story",
+  "copiedLabel": "Link copied",
+  "moreFromLabel": "More",
+  "byLabel": "By",
+  "minReadLabel": "min read",
+  "emptyTopic": "Nothing here just yet",
+  "emptyTopicText": "New stories are on their way. In the meantime, the rest of Explore is open.",
+  "seoTitle": "Explore",
+  "seoDescription": "Stories, wanderings and quiet notes from the STOEN mind - to read slowly, and return to."
+ },
+ {
+  "_id": "topic-short-stories",
+  "_type": "topic",
+  "title": "Short Stories",
+  "slug": {
+   "_type": "slug",
+   "current": "short-stories"
+  },
+  "description": "Little worlds to step into - small characters, quiet surprises, and a door left open at the end.",
+  "order": 1,
+  "showInNav": true
+ },
+ {
+  "_id": "topic-wanderings",
+  "_type": "topic",
+  "title": "Wanderings",
+  "slug": {
+   "_type": "slug",
+   "current": "wanderings"
+  },
+  "description": "Essays from the long way round: harbours, hills, slow roads and the thoughts that walk beside them.",
+  "order": 2,
+  "showInNav": true
+ },
+ {
+  "_id": "topic-the-quiet-mind",
+  "_type": "topic",
+  "title": "The Quiet Mind",
+  "slug": {
+   "_type": "slug",
+   "current": "the-quiet-mind"
+  },
+  "description": "Notes on attention, rest and the weather inside - the mind as something to keep company with, not to fix.",
+  "order": 3,
+  "showInNav": true
+ },
+ {
+  "_id": "topic-from-the-studio",
+  "_type": "topic",
+  "title": "From the Studio",
+  "slug": {
+   "_type": "slug",
+   "current": "from-the-studio"
+  },
+  "description": "Behind the pages: how our journals, workbooks and diaries are imagined, painted, bound and sent.",
+  "order": 4,
+  "showInNav": true
+ },
+ {
+  "_id": "topic-prompts",
+  "_type": "topic",
+  "title": "Prompts",
+  "slug": {
+   "_type": "slug",
+   "current": "prompts"
+  },
+  "description": "Gentle questions for your notebook. No right answers, no deadlines - just somewhere to begin.",
+  "order": 5,
+  "showInNav": true
+ },
+ {
+  "_id": "author-elena-rostova",
+  "_type": "author",
+  "name": "Elena Rostova",
+  "slug": {
+   "_type": "slug",
+   "current": "elena-rostova"
+  },
+  "role": "Writer & Editor",
+  "bio": "Elena looks after the words - the stories, the prompts and the quiet spaces between them."
+ },
+ {
+  "_id": "author-clara-vance",
+  "_type": "author",
+  "name": "Clara Vance",
+  "slug": {
+   "_type": "slug",
+   "current": "clara-vance"
+  },
+  "role": "Founder & Master Bookbinder",
+  "bio": "Clara binds every first copy by hand, and writes in the margins of most of them."
+ },
+ {
+  "_id": "author-julian-thorne",
+  "_type": "author",
+  "name": "Julian Thorne",
+  "slug": {
+   "_type": "slug",
+   "current": "julian-thorne"
+  },
+  "role": "Illustrator",
+  "bio": "Julian paints the clouds, harbours and small wandering creatures that live in our books."
+ },
+ {
+  "_id": "author-the-studio",
+  "_type": "author",
+  "name": "The Studio",
+  "slug": {
+   "_type": "slug",
+   "current": "the-studio"
+  },
+  "role": "the STOEN mind",
+  "bio": "Notes from the people who imagine, paint, write and bind the STOEN mind’s books."
+ },
+ {
+  "_id": "post-the-harbour-at-the-edge-of-evening",
+  "_type": "post",
+  "title": "The Harbour at the Edge of Evening",
+  "slug": {
+   "_type": "slug",
+   "current": "the-harbour-at-the-edge-of-evening"
+  },
+  "dek": "On the hour when the day lets go of its edges, and what a city of lights can teach a restless mind about waiting.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-wanderings"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-10-20T02:30:00.000Z",
+  "featured": true,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/about/bridge.png"
+   },
+   "alt": "A watercolour harbour at dusk: a pine on the left, a long arched bridge and the city lights on still water",
+   "fit": "cover",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/about/bridge-night-harbour.png"
+    }
+   },
+   "caption": "The bridge at dusk, from the pine on the western shore.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "t0",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d0",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1",
+        "text": "There is a moment, just after the sun has gone and just before anyone has decided it is night, when a harbour forgets to be busy. The ferries slow. The gulls fold themselves onto the railings. The bridge, which all day has been a road, becomes a line drawn across the water, and the water, which all day has been grey, becomes a second sky.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d2",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3",
+        "text": "I have been going to the same bench at that hour for most of a year. Not every evening - that would make it a task - but often enough that the bench has started to feel like a place that knows me. I bring nothing. That is the only rule. No book, no headphones, no list of things to think through. Just the walk down, the bench, and the forty minutes in which the lights come on one window at a time.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d4",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5",
+        "text": "A city switching itself on",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d6",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d7",
+        "text": "If you watch carefully, you can see the city decide. A single office on the twelfth floor. Then a kitchen in the flats along the water. Then, all at once, the bridge - every lamp at the same instant, as if someone had been waiting with a hand on the switch. It is the most ordinary thing in the world, and it never fails to make me hold my breath.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d8",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d9",
+        "text": "What I have come to love is that none of it is for me. The lights are for the people cooking dinner and finishing reports and walking home. I am simply allowed to watch. There is a particular kind of rest in being a witness rather than a participant - in letting the world get on with itself while you sit very still at its edge.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "da",
+    "text": "The lights are not for me. I am simply allowed to watch - and there is a rest in that I hadn’t known I was missing.",
+    "attribution": "Elena Rostova"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "t1",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "db",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dc",
+        "text": "For a long time I treated waiting as the empty space between the things that mattered. The queue before the counter. The train before the meeting. The evening before the morning. I filled those gaps as quickly as I could, with my phone, with plans, with small worries I could turn over like stones.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "dd",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "de",
+        "text": "The harbour has been slowly un-teaching that. At the edge of evening, nothing is going to happen that you can hurry. The light will go when it goes. The lamps will come on when they come on. You can sit inside the waiting, or you can fight it - but the bridge will light up at exactly the same moment either way.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "sectionBreak",
+    "_key": "df"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "t2",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "dg",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dh",
+        "text": "What the water keeps",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "di",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dj",
+        "text": "Reflections are the harbour’s quiet trick. Every lamp on the bridge appears twice: once in the air, sharp and certain, and once below, loosened by the water into a long, wavering ribbon. I used to think of the reflection as the lesser copy. Now I’m not so sure. The one on the water moves. It breathes. It is never the same twice.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "dk",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dl",
+        "text": "I think minds are a little like that. There is the version of a day that happened - sharp, certain, already finished. And there is the version we carry, loosened and moving, changing shape each time we look at it. Neither is wrong. The second one is simply still alive.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "dm",
+    "heading": "A prompt to carry home",
+    "text": "Think of a place you return to without needing a reason. What does it ask of you? What does it let you put down?"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "t3",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "dn",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "do",
+        "text": "When the last of the colour has gone from the sky, I walk back up the hill. The bench stays where it is. The bridge stays lit. And something in me - I couldn’t tell you what - stays a little quieter than it was when I came down.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-the-goose-who-waited-at-the-fence",
+  "_type": "post",
+  "title": "The Goose Who Waited at the Fence",
+  "slug": {
+   "_type": "slug",
+   "current": "the-goose-who-waited-at-the-fence"
+  },
+  "dek": "Every morning, a goose in a long coat leaned on the same fence and watched the road. Nobody knew who she was waiting for. Least of all the goose.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-short-stories"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-10-18T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/products/web/diary-goose.jpg"
+   },
+   "alt": "A goose in a long coat leaning on a field fence, drawn in rose ink",
+   "fit": "contain",
+   "caption": "From the Diaries: the Goose, in rose ink.",
+   "credit": "From the Diaries · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "t4",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "dp",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dq",
+        "text": "The goose arrived at the fence on a Tuesday, wearing a coat that was a little too long for her and an expression that suggested she had somewhere to be. She did not, it turned out, have anywhere to be. She had somewhere to ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "dr",
+        "text": "wait",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "ds",
+        "text": ", which is a different thing entirely.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "dt",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "du",
+        "text": "She leaned on the top rail with both wings folded, and she watched the road.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "dv",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dw",
+        "text": "The farmer’s daughter asked her, on the third morning, who she was waiting for. The goose considered the question for a long time. “I’ll know,” she said at last, “when they come.”",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "dx",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "dy",
+        "text": "Weeks passed. The road brought a postman, two cyclists, a lost tourist, a flock of sheep going the wrong way and, once, a parade. The goose greeted each of them politely and went back to watching.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "dz",
+    "text": "“I’ll know,” she said at last, “when they come.”"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "t5",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d10",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d11",
+        "text": "By autumn, the village had begun to wait with her. People brought flasks of tea to the fence. Children leaned on the rail beside her and watched the road, too. Nobody was quite sure what they were waiting for, but it turned out to be very pleasant, waiting together, with the leaves coming down.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d12",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d13",
+        "text": "On the first cold morning of winter, the goose straightened her coat, looked along the fence at everyone leaning there, and smiled - the slow, surprised smile of someone recognising a face in a crowd.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d14",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d15",
+        "text": "“Oh,” she said. “There you are.”",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-the-mind-is-more-like-a-sky",
+  "_type": "post",
+  "title": "The Mind Is More Like a Sky",
+  "slug": {
+   "_type": "slug",
+   "current": "the-mind-is-more-like-a-sky"
+  },
+  "dek": "We are taught to treat our thoughts as problems to be solved. What if they were weather - passing through something wider that was there all along?",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-the-quiet-mind"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-clara-vance"
+  },
+  "publishedAt": "2026-10-16T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/features/wander.png"
+   },
+   "alt": "A small figure reaching up to touch a curl of cloud, inside a painted circle",
+   "fit": "contain",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/features/wander-night.png"
+    }
+   },
+   "caption": "Reaching for a cloud - from the Features medallions.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "t6",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d16",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d17",
+        "text": "Somewhere along the way, most of us picked up the idea that the mind is a machine. It has inputs and outputs. It can be optimised. When it makes a strange noise, something must be broken, and the sensible thing to do is open the casing and find the faulty part.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d18",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d19",
+        "text": "It is a useful idea for some things. It is a lonely idea for most of the others.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d1a",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1b",
+        "text": "Weather, not wreckage",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d1c",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1d",
+        "text": "The picture that has stayed with me instead is older and softer: the mind as a sky. Thoughts arrive like weather. Some are bright and fast. Some settle in for days. Some are storms, and storms are real, and they can be frightening. But the sky is not damaged by the storm. It is simply the place the storm is happening.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d1e",
+      "style": "blockquote",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1f",
+        "text": "The sky has never once been harmed by a cloud. It has only ever made room for it.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d1g",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1h",
+        "text": "I don’t find this comforting because it makes the weather go away. It doesn’t. I find it comforting because it gives me somewhere to stand. When a heavy thought rolls in, I can notice it - ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d1i",
+        "text": "there’s that cloud again",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d1j",
+        "text": " - without having to become it.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "sectionBreak",
+    "_key": "d1k"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "t7",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d1l",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1m",
+        "text": "Keeping a weather diary",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d1n",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1o",
+        "text": "A small practice that helps: once a day, write down the weather inside. Not the reasons, not the analysis. Just the weather.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   [
+    {
+     "_type": "block",
+     "_key": "d1p",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d1q",
+       "text": "Clear, with a cool wind from the north.",
+       "marks": [
+        "em"
+       ]
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d1r",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d1s",
+       "text": "Low cloud all morning; brightening after lunch.",
+       "marks": [
+        "em"
+       ]
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d1t",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d1u",
+       "text": "A storm, mostly about the email. Passing now.",
+       "marks": [
+        "em"
+       ]
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    }
+   ],
+   {
+    "_type": "textBlock",
+    "_key": "t8",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d1v",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1w",
+        "text": "After a few weeks you’ll notice something. The weather changes. It always changes. And the sky - the wide, patient part of you that does the noticing - is still there at the end of every entry.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "d1x",
+    "heading": "A prompt for today",
+    "text": "If your mind were a sky this morning, what would the forecast say? Write it as plainly as a radio announcer would."
+   }
+  ]
+ },
+ {
+  "_id": "post-on-travelling-slowly",
+  "_type": "post",
+  "title": "On Travelling Slowly",
+  "slug": {
+   "_type": "slug",
+   "current": "on-travelling-slowly"
+  },
+  "dek": "A horse, a carriage and a road that refuses to be hurried. Notes from the long way round.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-wanderings"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-julian-thorne"
+  },
+  "publishedAt": "2026-10-14T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/light/hero-landscape.png"
+   },
+   "hotspot": {
+    "_type": "sanity.imageHotspot",
+    "x": 0.5,
+    "y": 0.62,
+    "width": 1,
+    "height": 1
+   },
+   "crop": {
+    "_type": "sanity.imageCrop",
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+   },
+   "alt": "A horse and carriage beneath a broad tree, on a road winding through misty green hills",
+   "fit": "cover",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/dark/night-hero-landscape.png"
+    },
+    "hotspot": {
+     "_type": "sanity.imageHotspot",
+     "x": 0.5,
+     "y": 0.62,
+     "width": 1,
+     "height": 1
+    },
+    "crop": {
+     "_type": "sanity.imageCrop",
+     "top": 0,
+     "bottom": 0,
+     "left": 0,
+     "right": 0
+    }
+   },
+   "caption": "The carriage under the great tree - the first painting of the home page.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "t9",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d1y",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d1z",
+        "text": "When I painted the carriage for the first page of this site, I gave the horse no particular destination. People ask about that. Where is it going? Who is inside? I tell them the truth, which is that I don’t know, and that not knowing was rather the point.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d20",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d21",
+        "text": "A carriage is a wonderfully inefficient way to travel. You feel every rise in the road. You notice the trees one by one instead of as a green blur. You arrive later than you would have, and you arrive having ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d22",
+        "text": "been somewhere",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d23",
+        "text": " on the way.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d24",
+    "text": "You arrive later than you would have - and you arrive having been somewhere on the way."
+   },
+   {
+    "_type": "textBlock",
+    "_key": "ta",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d25",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d26",
+        "text": "The speed of noticing",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d27",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d28",
+        "text": "There seems to be a speed at which the world becomes visible. Walk, and you see the beetle on the path. Cycle, and you see the hedgerow. Drive, and you see the motorway signs. Fly, and you mostly see the seat in front of you.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d29",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2a",
+        "text": "I don’t think the answer is to never go fast. Sometimes you need to be somewhere by Tuesday. But I’ve started to keep a few journeys deliberately slow - the walk to the post office, the bus that takes the long route by the river - simply so I remember what the world looks like at the speed of noticing.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "d2b",
+    "heading": "Try this week",
+    "text": "Choose one short journey you make often. Make it slower on purpose, and write down three things you have never noticed before."
+   }
+  ]
+ },
+ {
+  "_id": "post-behind-the-pages-the-life-i-am-creating",
+  "_type": "post",
+  "title": "Behind the Pages: Making “The Life I Am Creating”",
+  "slug": {
+   "_type": "slug",
+   "current": "behind-the-pages-the-life-i-am-creating"
+  },
+  "dek": "From the first sunlit sketch to the last stitch of the binding - how our Day workbook came to be.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-from-the-studio"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-the-studio"
+  },
+  "publishedAt": "2026-10-12T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/products/web/workbook-life-i-am-creating-basket.jpg"
+   },
+   "hotspot": {
+    "_type": "sanity.imageHotspot",
+    "x": 0.5,
+    "y": 0.4,
+    "width": 1,
+    "height": 1
+   },
+   "crop": {
+    "_type": "sanity.imageCrop",
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+   },
+   "alt": "The Life I Am Creating workbook tucked into a woven basket by a sunny window",
+   "fit": "cover",
+   "caption": "Season 1 of the workbook, in the studio window.",
+   "credit": "Photograph · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tb",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d2c",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2d",
+        "text": "Every one of our workbooks starts as a walk. For ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d2e",
+        "text": "The Life I Am Creating",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d2f",
+        "text": ", it was a long, slow one along a path past a duck pond on a bright spring morning - the same path that ended up on the cover.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d2g",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2h",
+        "text": "We knew we wanted a book that felt like daylight: a companion for mornings, for beginnings, for the sort of hopeful, unhurried planning that doesn’t feel like a to-do list. So the first decision was the light itself. Julian painted the cover four times before the yellow felt warm enough to hold in your hands.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_key": "d2i",
+    "_type": "picture",
+    "asset": {
+     "_upload": "/images/products/web/workbook-life-i-am-creating.jpg"
+    },
+    "alt": "The Life I Am Creating workbook beside a gold pen on a white desk",
+    "fit": "cover",
+    "caption": "The finished cover, beside the pen we use for every first inscription.",
+    "size": "column"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tc",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d2j",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2k",
+        "text": "A character for the journey",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d2l",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2m",
+        "text": "Each chapter has a small character who walks beside you - noticing things, asking gentle questions, occasionally getting a little lost. We wrote her voice slowly, reading every line aloud to see whether it sounded like a friend or a teacher. Friends stayed in. Teachers were kindly asked to leave.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d2n",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2o",
+        "text": "Paper, thread and patience",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   [
+    {
+     "_type": "block",
+     "_key": "d2p",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d2q",
+       "text": "Uncoated paper, heavy enough for ink and pencil, soft enough for watercolour.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d2r",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d2s",
+       "text": "A lay-flat binding, so the book stays open while you write.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d2t",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d2u",
+       "text": "Wide margins, because the best thoughts usually arrive in the margins.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    }
+   ],
+   {
+    "_type": "textBlock",
+    "_key": "td",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d2v",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2w",
+        "text": "Clara bound the first fifty copies by hand. The rest are bound by a small workshop we have worked with for years, who now know exactly how loose to leave the spine.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "sectionBreak",
+    "_key": "d2x"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "te",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d2y",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d2z",
+        "text": "If you have a copy, we’d love to hear where it has travelled. Write to us any time - the address is on the ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d31",
+        "text": "contact page",
+        "marks": [
+         "d30"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d32",
+        "text": ".",
+        "marks": []
+       }
+      ],
+      "markDefs": [
+       {
+        "_type": "link",
+        "_key": "d30",
+        "href": "/contact"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-a-horse-named-thursday",
+  "_type": "post",
+  "title": "A Horse Named Thursday",
+  "slug": {
+   "_type": "slug",
+   "current": "a-horse-named-thursday"
+  },
+  "dek": "The horse at the chateau had been named for the day she arrived. She had always felt it was the wrong day.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-short-stories"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-10-10T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/products/web/diary-horse.jpg"
+   },
+   "alt": "A horse standing before a chateau beneath a plum-coloured cloud",
+   "fit": "contain",
+   "caption": "From the Diaries: the Horse, in plum ink.",
+   "credit": "From the Diaries · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tf",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d33",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d34",
+        "text": "Thursday had arrived at the chateau on a Thursday, which was how she got her name, and she had never been entirely happy about it.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d35",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d36",
+        "text": "Thursday, she felt, was a day of nearly. Nearly the weekend. Nearly finished. Nearly time. She would much rather have been a Saturday, or at the very least a Sunday afternoon, the kind with long shadows and nowhere to be.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d37",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d38",
+        "text": "So, one autumn, she decided to find out what the other days were like.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d39",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3a",
+        "text": "She spent a Monday in the orchard and found it brisk and full of good intentions. She spent a Wednesday by the lake and found it patient, and a little tired. On Saturday she went to the village fair and came home dizzy with ribbons. On Sunday she slept.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d3b",
+    "text": "She had been nearly something all her life. It turned out nearly was a lovely place to stand."
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tg",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d3c",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3d",
+        "text": "And on the following Thursday she stood at the gate in the late light, with the cloud turning plum above the chateau, and realised she was not unhappy at all. Thursday was the day you could still see the whole weekend ahead of you, untouched. Thursday was the day of everything still possible.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d3e",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3f",
+        "text": "She kept the name.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-keeping-company-with-yourself",
+  "_type": "post",
+  "title": "Keeping Company With Yourself",
+  "slug": {
+   "_type": "slug",
+   "current": "keeping-company-with-yourself"
+  },
+  "dek": "Solitude has a reputation problem. A small defence of the evenings we spend alone - and how to make them kinder.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-the-quiet-mind"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-10-08T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/features/companion.png"
+   },
+   "alt": "The silhouette of a face in profile, filled with blue watercolour, inside a painted circle",
+   "fit": "contain",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/features/companion-night.png"
+    }
+   },
+   "caption": "A quiet companion - from the Features medallions.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "th",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d3g",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3h",
+        "text": "There is a difference between being alone and being lonely, and most of us learn it the hard way. Loneliness is an absence. Solitude, at its best, is a presence: your own, at last, without anyone else in the room to perform for.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d3i",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3j",
+        "text": "The trouble is that we are rarely taught how to be good company for ourselves. We would never invite a friend round and then ignore them for the whole evening while scrolling through our phones. And yet that is how many of our evenings alone are spent.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d3k",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3l",
+        "text": "Small hospitalities",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d3m",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3n",
+        "text": "I’ve started treating evenings on my own the way I’d treat a guest I like:",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   [
+    {
+     "_type": "block",
+     "_key": "d3o",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d3p",
+       "text": "I put on a lamp instead of the big light.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d3q",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d3r",
+       "text": "I make something warm to drink, and I drink it while it’s still warm.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d3s",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d3t",
+       "text": "I ask myself a question - a real one - and wait for the answer.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "bullet",
+     "level": 1
+    }
+   ],
+   {
+    "_type": "textBlock",
+    "_key": "ti",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d3u",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3v",
+        "text": "It sounds almost silly written down. But the effect is real. The evening stops being an empty space to be filled and becomes something closer to a visit.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "d3w",
+    "heading": "A question to ask your own company",
+    "text": "What has been on your mind this week that nobody has asked you about?"
+   }
+  ]
+ },
+ {
+  "_id": "post-the-art-of-not-arriving",
+  "_type": "post",
+  "title": "A Sailboat and the Art of Not Arriving",
+  "slug": {
+   "_type": "slug",
+   "current": "the-art-of-not-arriving"
+  },
+  "dek": "On a long shoreline, a single sail moves so slowly it seems to stand still. Perhaps that is the whole journey.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-wanderings"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-julian-thorne"
+  },
+  "publishedAt": "2026-10-05T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/about/landscape-sailboat.png"
+   },
+   "hotspot": {
+    "_type": "sanity.imageHotspot",
+    "x": 1,
+    "y": 0.5,
+    "width": 1,
+    "height": 1
+   },
+   "crop": {
+    "_type": "sanity.imageCrop",
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+   },
+   "alt": "A long, low shoreline of hills and mist with a single small sailboat on the water",
+   "fit": "cover",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/about/landscape-sailboat-night.png"
+    },
+    "hotspot": {
+     "_type": "sanity.imageHotspot",
+     "x": 1,
+     "y": 0.5,
+     "width": 1,
+     "height": 1
+    },
+    "crop": {
+     "_type": "sanity.imageCrop",
+     "top": 0,
+     "bottom": 0,
+     "left": 0,
+     "right": 0
+    }
+   },
+   "caption": "The long shore, with its single sail.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tj",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d3x",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d3y",
+        "text": "I painted this shoreline over several weeks, a little at a time, and for most of those weeks the sailboat wasn’t in it. The hills were there, and the mist, and the water. Something was missing, and I couldn’t tell what.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d3z",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d40",
+        "text": "The boat arrived on the last day. It is very small. You could cover it with a fingernail. And it changed everything, because suddenly the painting was not a place but a journey - and a journey that was clearly in no hurry at all.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d41",
+    "text": "Suddenly the painting was not a place but a journey - and one in no hurry at all."
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tk",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d42",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d43",
+        "text": "I think about that boat a great deal. It is not racing. It is not lost. It is simply moving along the shore at the speed the wind allows, and the shore is very long, and that seems to be fine with everyone involved.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "d44",
+    "heading": "A small permission",
+    "text": "Write down one thing you are trying to arrive at. Then write down what the journey towards it has already given you."
+   }
+  ]
+ },
+ {
+  "_id": "post-two-aviators-and-an-unmapped-cloud",
+  "_type": "post",
+  "title": "Two Aviators and an Unmapped Cloud",
+  "slug": {
+   "_type": "slug",
+   "current": "two-aviators-and-an-unmapped-cloud"
+  },
+  "dek": "They had flown over every mountain on the chart. Then a cloud appeared that wasn’t on any map at all.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-short-stories"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-julian-thorne"
+  },
+  "publishedAt": "2026-10-02T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": false,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/products/web/diary-aviators.jpg"
+   },
+   "alt": "Two aviators beside a vintage biplane, a cloud curling overhead, in sepia ink",
+   "fit": "contain",
+   "caption": "From the Diaries: the Aviators, in sepia ink.",
+   "credit": "From the Diaries · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tl",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d45",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d46",
+        "text": "Agnes and Bertrand had mapped the whole valley. Every peak had a name, every river a number, every field a neat pencilled outline on the chart they kept folded in Bertrand’s breast pocket.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d47",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d48",
+        "text": "So when the cloud appeared over the eastern ridge one bright morning - a great, curling, unmistakable cloud, shaped rather like a question - they did what any self-respecting aviators would do. They took the chart out and looked for it.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d49",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d4a",
+        "text": "It was not there.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d4b",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d4c",
+        "text": "“Clouds aren’t on charts,” said Agnes, reasonably.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d4d",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d4e",
+        "text": "“This one,” said Bertrand, “looks like it ought to be.”",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d4f",
+    "text": "“This one,” said Bertrand, “looks like it ought to be.”"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tm",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d4g",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d4h",
+        "text": "They stood by the plane for a long while, watching it. It did not drift away, as clouds should. It simply hung there, curling and uncurling, as if it were waiting to be asked something.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d4i",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d4j",
+        "text": "In the end, they didn’t fly to it. Some things, Agnes said, are better left unmapped. But that evening Bertrand unfolded the chart and, in the empty space above the eastern ridge, drew a very small cloud in pencil - with a question mark beside it, just in case.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-seven-prompts-for-a-slow-sunday",
+  "_type": "post",
+  "title": "Seven Prompts for a Slow Sunday",
+  "slug": {
+   "_type": "slug",
+   "current": "seven-prompts-for-a-slow-sunday"
+  },
+  "dek": "No goals, no plans, no tidy conclusions. Just seven gentle questions to take outside with a notebook and a tree to sit under.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-prompts"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-09-28T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/features/icon-companion.png"
+   },
+   "alt": "Someone reading in the grass under a tree, with soft hills and a cloud beyond",
+   "fit": "contain",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/features/icon-companion-night.png"
+    }
+   },
+   "caption": "Reading under the great tree - from the Features medallions.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tn",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d4k",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d4l",
+        "text": "Take these with you somewhere comfortable. Answer one, or all seven, or none - and simply let them keep you company. There are no wrong answers. There isn’t really such a thing as an answer at all.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   [
+    {
+     "_type": "block",
+     "_key": "d4m",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4n",
+       "text": "What did the light look like when you woke up today?",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d4o",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4p",
+       "text": "Which small thing went right this week that nobody noticed?",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d4q",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4r",
+       "text": "If you could keep one hour from the last month, which would it be?",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d4s",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4t",
+       "text": "What are you carrying that you could set down, just for this afternoon?",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d4u",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4v",
+       "text": "Describe a place you loved as a child, using only the sounds you remember.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d4w",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4x",
+       "text": "Who do you miss? Write them a postcard you’ll never send.",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    },
+    {
+     "_type": "block",
+     "_key": "d4y",
+     "style": "normal",
+     "children": [
+      {
+       "_type": "span",
+       "_key": "d4z",
+       "text": "What would you like to wonder about next?",
+       "marks": []
+      }
+     ],
+     "markDefs": [],
+     "listItem": "number",
+     "level": 1
+    }
+   ],
+   {
+    "_type": "sectionBreak",
+    "_key": "d50"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "to",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d51",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d52",
+        "text": "When you’re done, close the notebook without reading back. Let the words rest for a week. They’ll be different when you return to them - and so will you.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-tending-a-very-small-tree",
+  "_type": "post",
+  "title": "Tending a Very Small Tree",
+  "slug": {
+   "_type": "slug",
+   "current": "tending-a-very-small-tree"
+  },
+  "dek": "A windswept pine no taller than a teacup, and the slow lesson of caring for something that will not be rushed.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-the-quiet-mind"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-clara-vance"
+  },
+  "publishedAt": "2026-09-24T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/light/mist-a.png"
+   },
+   "alt": "A small windswept pine, a curl of cloud above and a bear cub wandering below",
+   "fit": "contain",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/dark/night-tree-bear.png"
+    }
+   },
+   "caption": "The little pine, with a wandering bear for company.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tp",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d53",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d54",
+        "text": "My grandmother kept a small pine on her windowsill for forty years. It never grew much taller than a teacup. When she gave it to me, she gave me exactly one instruction: ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d55",
+        "text": "don’t hurry it.",
+        "marks": [
+         "em"
+        ]
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d56",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d57",
+        "text": "I thought I understood. I didn’t. It took me two years of over-watering, over-pruning and over-worrying before I realised that almost everything the tree needed from me was restraint.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d58",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d59",
+        "text": "What the tree asks",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5a",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5b",
+        "text": "Light, mostly. A little water, less often than you’d think. A turn every week so it doesn’t lean. And, once a season, a careful snip - not to make it into something, but to help it become more of what it already is.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d5c",
+    "text": "Not to make it into something, but to help it become more of what it already is."
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tq",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d5d",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5e",
+        "text": "I’ve come to think that a great deal of looking after ourselves is the same. Fewer interventions. More light. A gentle turn now and then so we don’t grow lopsided. And the patience to let change happen at the speed of a tree.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-the-night-carnival",
+  "_type": "post",
+  "title": "The Night Carnival",
+  "slug": {
+   "_type": "slug",
+   "current": "the-night-carnival"
+  },
+  "dek": "It arrives only after midnight, and only for people who are still awake for no particular reason.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-short-stories"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-09-20T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/products/web/journal-night-carnival.jpg"
+   },
+   "alt": "A night carnival drawn in fine gold lines on deep blue: a Ferris wheel, tents and a shooting star",
+   "fit": "cover",
+   "caption": "The carnival, drawn in gold on night-blue paper.",
+   "credit": "From the Night journals · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tr",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d5f",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5g",
+        "text": "The carnival does not advertise. There are no posters, no music drifting over the hill in the afternoon. It simply appears, a little after midnight, in the field behind the last house in the village - and only for people who happen to be awake for no particular reason.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5h",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5i",
+        "text": "Mira found it on a night when she couldn’t sleep and didn’t know why. She saw the Ferris wheel first, turning slowly against the stars, drawn in fine gold lines as if someone had sketched it on the dark.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5j",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5k",
+        "text": "Inside, the stalls sold things you couldn’t buy anywhere else. A jar of the last warm hour of summer. A ticket for a conversation you’d been meaning to have. A small, folded worry, exchanged for a shooting star.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d5l",
+    "text": "A small, folded worry, exchanged for a shooting star."
+   },
+   {
+    "_type": "textBlock",
+    "_key": "ts",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d5m",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5n",
+        "text": "Mira traded her worry - it had been about nothing, really, which is the hardest kind to put down - and watched the star go streaking off over the tents. Then she rode the wheel once, all the way to the top, where you could see the whole sleeping valley at once.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5o",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5p",
+        "text": "When she woke the next morning, the field was just a field. But there was gold dust on her shoes, and she slept very well for a long time afterwards.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-the-call-you-never-made",
+  "_type": "post",
+  "title": "The Call You Never Made",
+  "slug": {
+   "_type": "slug",
+   "current": "the-call-you-never-made"
+  },
+  "dek": "Some conversations live their whole lives in our heads. A gentle look at the words we rehearse and never say.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-the-quiet-mind"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-clara-vance"
+  },
+  "publishedAt": "2026-09-15T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/contact/telephone.png"
+   },
+   "alt": "An old rotary telephone with a coiled cord, painted in soft watercolour",
+   "fit": "contain",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/contact/telephone-night.png"
+    }
+   },
+   "caption": "The old telephone from the Contact page.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tt",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d5q",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5r",
+        "text": "Most of us have one. A phone call we’ve rehearsed so many times we know both sides of it by heart. The apology, the thank-you, the ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d5s",
+        "text": "I’ve been thinking about you",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d5t",
+        "text": ". We have it in the shower, on the bus, at three in the morning. We just never dial.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5u",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5v",
+        "text": "I don’t think that makes us cowards. I think it makes us careful. The words matter, so we keep polishing them, and the more we polish, the more impossible it feels to say them out loud in their rough, real form.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5w",
+      "style": "h2",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5x",
+        "text": "Letting the words be unfinished",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d5y",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d5z",
+        "text": "What helped me, in the end, was writing the call down - not to send, just to see it. Seeing it on paper made it smaller and more human. It wasn’t a speech. It was three sentences, and one of them was just someone’s name.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "d60",
+    "heading": "If you’re carrying a call",
+    "text": "Write down the first sentence you’d say. Only the first. You don’t have to say it - just let it exist outside your head for a moment."
+   }
+  ]
+ },
+ {
+  "_id": "post-where-the-mountains-go-quiet",
+  "_type": "post",
+  "title": "Where the Mountains Go Quiet",
+  "slug": {
+   "_type": "slug",
+   "current": "where-the-mountains-go-quiet"
+  },
+  "dek": "Above a certain height, the noise thins out. A short walk into the mist, and what it leaves behind.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-wanderings"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-julian-thorne"
+  },
+  "publishedAt": "2026-09-10T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/light/footer-landscape.png"
+   },
+   "hotspot": {
+    "_type": "sanity.imageHotspot",
+    "x": 0.5,
+    "y": 0.7,
+    "width": 1,
+    "height": 1
+   },
+   "crop": {
+    "_type": "sanity.imageCrop",
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+   },
+   "alt": "Layered mountain ridges dissolving into mist",
+   "fit": "cover",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/dark/night-range.png"
+    },
+    "hotspot": {
+     "_type": "sanity.imageHotspot",
+     "x": 0.5,
+     "y": 0.7,
+     "width": 1,
+     "height": 1
+    },
+    "crop": {
+     "_type": "sanity.imageCrop",
+     "top": 0,
+     "bottom": 0,
+     "left": 0,
+     "right": 0
+    }
+   },
+   "caption": "The ridges at the foot of every page.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tu",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d61",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d62",
+        "text": "There’s a point on most mountain walks where the sound changes. The road falls away behind you. The birds thin out. The wind becomes the only voice, and then even the wind seems to hush, as if the mountain has asked everyone to lower their voices.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d63",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d64",
+        "text": "I go walking to get to that point. Not the summit - I’m rarely fussed about the summit - but the quiet, which tends to arrive somewhere around the second hour, usually in the mist.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "pullQuote",
+    "_key": "d65",
+    "text": "Not the summit. The quiet, which tends to arrive somewhere around the second hour."
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tv",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d66",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d67",
+        "text": "In the mist the ridges become layers, each one paler than the last, until the furthest is barely a suggestion. It’s the most calming thing I know how to paint, and I’ve painted it, in one form or another, along the bottom of every page of this site.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-why-every-diary-hides-one-small-story",
+  "_type": "post",
+  "title": "Why Every Diary Hides One Small Story",
+  "slug": {
+   "_type": "slug",
+   "current": "why-every-diary-hides-one-small-story"
+  },
+  "dek": "Mostly blank pages - and one small surprise. On the character waiting quietly inside each of our diaries.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-from-the-studio"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-the-studio"
+  },
+  "publishedAt": "2026-09-05T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/features/short-stories.png"
+   },
+   "alt": "An open book with its pages fanning, painted in pale blue",
+   "fit": "contain",
+   "night": {
+    "_type": "image",
+    "asset": {
+     "_upload": "/images/features/short-stories-night.png"
+    }
+   },
+   "caption": "Short stories - from the Features medallions.",
+   "credit": "Illustration · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "tw",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d68",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d69",
+        "text": "A blank diary is a wonderful thing, and a slightly daunting one. All those pages, all that possibility, and nothing to tell you where to begin.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d6a",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d6b",
+        "text": "So we tucked a story inside each of ours. Just one, near the front: a goose at a fence, a horse at a chateau, two aviators beneath a strange cloud. A small character with a small tale to tell, who then politely steps aside and leaves the rest of the book to you.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_key": "d6c",
+    "_type": "picture",
+    "asset": {
+     "_upload": "/images/features/icon-short-stories.png"
+    },
+    "alt": "A little theatre stage with dancers under painted clouds",
+    "fit": "contain",
+    "night": {
+     "_type": "image",
+     "asset": {
+      "_upload": "/images/features/icon-short-stories-night.png"
+     }
+    },
+    "caption": "Every diary is a little stage. The character opens the show; the rest is yours.",
+    "size": "column"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tx",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d6d",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d6e",
+        "text": "We like to think of them as the friend who walks you to the door of a party and then says, ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d6f",
+        "text": "go on, you’ll be fine",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d6g",
+        "text": ". Some readers write back to the characters. Some carry on their stories. Most simply start writing their own - which was always the point.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_id": "post-letters-to-the-universe",
+  "_type": "post",
+  "title": "Letters to the Universe: A Prompt for Night Owls",
+  "slug": {
+   "_type": "slug",
+   "current": "letters-to-the-universe"
+  },
+  "dek": "For the hours after midnight, when the house is quiet and the questions are large. Write a letter, and address it to the sky.",
+  "topic": {
+   "_type": "reference",
+   "_ref": "topic-prompts"
+  },
+  "author": {
+   "_type": "reference",
+   "_ref": "author-elena-rostova"
+  },
+  "publishedAt": "2026-08-30T02:30:00.000Z",
+  "featured": false,
+  "editorsPick": true,
+  "cover": {
+   "_type": "picture",
+   "asset": {
+    "_upload": "/images/products/web/journal-letters-from-the-universe-night.jpg"
+   },
+   "alt": "A navy journal cover: a small figure reaching for a cloud, titled The Universe Speaks at Night",
+   "fit": "contain",
+   "caption": "Letters From the Universe - a Night journal.",
+   "credit": "From the Night journals · the STOEN mind",
+   "size": "column"
+  },
+  "body": [
+   {
+    "_type": "textBlock",
+    "_key": "ty",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d6h",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d6i",
+        "text": "Some questions are too big for daylight. They wait until the house is quiet and the lights are off, and then they sit on the end of the bed and look at you.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     },
+     {
+      "_type": "block",
+      "_key": "d6j",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d6k",
+        "text": "Our Night journal, ",
+        "marks": []
+       },
+       {
+        "_type": "span",
+        "_key": "d6l",
+        "text": "Letters From the Universe",
+        "marks": [
+         "em"
+        ]
+       },
+       {
+        "_type": "span",
+        "_key": "d6m",
+        "text": ", began with a simple idea: what if, instead of lying awake with those questions, you wrote them down - and addressed them to the sky?",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   },
+   {
+    "_type": "prompt",
+    "_key": "d6n",
+    "heading": "Tonight’s letter",
+    "text": "Dear Universe, there is something I’ve been meaning to ask you…"
+   },
+   {
+    "_type": "textBlock",
+    "_key": "tz",
+    "content": [
+     {
+      "_type": "block",
+      "_key": "d6o",
+      "style": "normal",
+      "children": [
+       {
+        "_type": "span",
+        "_key": "d6p",
+        "text": "You don’t have to finish it. You don’t have to send it anywhere. But you may find, as many night owls have, that the asking is half of the answer - and that the sky, for all its size, is a surprisingly good listener.",
+        "marks": []
+       }
+      ],
+      "markDefs": []
+     }
+    ]
+   }
+  ]
+ }
+]

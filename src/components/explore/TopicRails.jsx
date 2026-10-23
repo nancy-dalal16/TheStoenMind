@@ -1,5 +1,4 @@
 import Container from "@/components/ui/Container";
-import { exploreLabels } from "@/lib/explore/copy";
 import { topicHref } from "@/lib/explore/links";
 import SectionHeader from "./SectionHeader";
 import StoryCard from "./StoryCard";
@@ -9,7 +8,7 @@ import StoryCard from "./StoryCard";
  * smaller topics are paired side by side as compact lists, so no rail is left half empty.
  * `groups`: [{ topic, posts }]
  */
-export default function TopicRails({ groups }) {
+export default function TopicRails({ groups, seeAll = "See all" }) {
   const full = groups.filter((g) => g.posts.length >= 3);
   const small = groups.filter((g) => g.posts.length > 0 && g.posts.length < 3);
 
@@ -23,7 +22,7 @@ export default function TopicRails({ groups }) {
               title={topic.title}
               description={topic.description}
               href={topicHref(topic)}
-              linkLabel={exploreLabels.seeAll}
+              linkLabel={seeAll}
               linkContext={topic.title}
             />
             <ul className="mt-10 grid gap-x-[30px] gap-y-12 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
@@ -53,7 +52,7 @@ export default function TopicRails({ groups }) {
                   title={topic.title}
                   description={topic.description}
                   href={topicHref(topic)}
-                  linkLabel={exploreLabels.seeAll}
+                  linkLabel={seeAll}
                   linkContext={topic.title}
                   className="ex-section-head-stacked"
                 />

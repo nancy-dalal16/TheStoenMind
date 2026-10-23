@@ -1,11 +1,10 @@
 import Container from "@/components/ui/Container";
-import { exploreLabels } from "@/lib/explore/copy";
 import { topicHref } from "@/lib/explore/links";
 import SectionHeader from "./SectionHeader";
 import StoryCard from "./StoryCard";
 
 /** One topic on a tinted band with tall pictures - the front page's "fiction" moment. */
-export default function SpotlightBand({ topic, posts }) {
+export default function SpotlightBand({ topic, posts, seeAll = "See all" }) {
   if (!topic || !posts.length) return null;
 
   return (
@@ -16,7 +15,7 @@ export default function SpotlightBand({ topic, posts }) {
           title={topic.title}
           description={topic.description}
           href={topicHref(topic)}
-          linkLabel={exploreLabels.seeAll}
+          linkLabel={seeAll}
           linkContext={topic.title}
         />
         <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-6 md:mt-12 md:gap-x-[30px] lg:grid-cols-4">

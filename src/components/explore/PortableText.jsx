@@ -1,13 +1,15 @@
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
-import StoryImage from "./StoryImage";
+import { Audio, Embed, Gallery, Picture, Video } from "./StoryMedia";
+import { ButtonBlock, Callout, Columns, ImagePair, ImageText, ProductCard, Spacer, Stats, StoryLinkCard } from "./StoryModules";
 
 /**
  * Renders a Sanity Portable Text body (the demo posts use the same structure) without any
  * extra packages. Supports:
  *   blocks   normal, h2, h3, h4, blockquote · bullet / number lists
  *   marks    em, strong, underline, code, link (internal links use next/link)
- *   types    image, pullQuote, prompt, sectionBreak
+ *   types    picture (image / GIF / SVG), gallery, video, audio, embed, imageText, callout, button,
+ *            columns, spacer, storyLink, productLink, pullQuote, prompt, sectionBreak (cloud / line / dots)
  * The first paragraph gets a drop cap and the last one the end mark (a small cloud).
  * Unknown types render nothing, so new Studio blocks never break a page.
  */
@@ -57,18 +59,36 @@ function Node({ node, dropcap, end }) {
         </List>
       );
     }
-    case "image":
-      return node.light ? (
-        <figure className="ex-figure">
-          <StoryImage
-            image={node}
-            sizes="(min-width: 768px) 760px, 100vw"
-            className={node.fit === "contain" ? "aspect-[4/3]" : ""}
-            style={node.fit === "contain" ? undefined : { aspectRatio: `${node.light.width} / ${node.light.height}` }}
-          />
-          {node.caption ? <figcaption className="ex-caption">{node.caption}</figcaption> : null}
-        </figure>
-      ) : null;
+    case "picture":
+    case "gif":
+    case "image": // older documents
+      return <Picture node={node} />;
+    case "gallery":
+      return <Gallery node={node} />;
+    case "video":
+      return <Video node={node} />;
+    case "audio":
+      return <Audio node={node} />;
+    case "embed":
+      return <Embed node={node} />;
+    case "imageText":
+      return <ImageText node={node} />;
+    case "imagePair":
+      return <ImagePair node={node} />;
+    case "stats":
+      return <Stats node={node} />;
+    case "callout":
+      return <Callout node={node} />;
+    case "button":
+      return <ButtonBlock node={node} />;
+    case "columns":
+      return <Columns node={node} />;
+    case "spacer":
+      return <Spacer node={node} />;
+    case "storyLink":
+      return <StoryLinkCard node={node} />;
+    case "productLink":
+      return <ProductCard node={node} />;
     case "pullQuote":
       return node.text ? (
         <figure className="ex-pull">
@@ -88,8 +108,8 @@ function Node({ node, dropcap, end }) {
       );
     case "sectionBreak":
       return (
-        <div role="separator" className="ex-break">
-          <Icon name="cloud" width={40} height={23} />
+        <div role="separator" className={`ex-break ex-break-${node.style ?? "cloud"}`}>
+          {node.style === "line" ? <span className="ex-break-line" /> : node.style === "dots" ? <span className="ex-break-dots">· · ·</span> : <Icon name="cloud" width={40} height={23} />}
         </div>
       );
     default:
@@ -159,11 +179,13 @@ function wrap(children, mark, def) {
       return <strong>{children}</strong>;
     case "underline":
       return <u>{children}</u>;
+    case "strike-through":
+      return <s>{children}</s>;
     case "code":
       return <code>{children}</code>;
     default:
       if (def?._type === "link" && def.href) {
-        const internal = def.href.startsWith("/") || def.href.startsWith("#");
+        const internal = (def.href.startsWith("/") || def.href.startsWith("#")) && !def.blank;
         return internal ? (
           <Link href={def.href}>{children}</Link>
         ) : (

@@ -6,8 +6,8 @@ import { topicHref } from "@/lib/explore/links";
  * Topic links under the nameplate, between a double rule and a single one (magazine section bar).
  * Centred on desktop; scrolls sideways on phones.
  */
-export default function TopicNav({ topics = [], active = "all" }) {
-  const items = [{ slug: "all", title: "All stories", href: "/explore" }, ...topics.map((t) => ({ ...t, href: topicHref(t) }))];
+export default function TopicNav({ topics = [], allLabel = "All stories", active = "all" }) {
+  const items = [{ slug: "all", title: allLabel, href: "/explore" }, ...topics.map((t) => ({ ...t, href: topicHref(t) }))];
 
   return (
     <Container className="relative z-10 motion-safe:animate-rise-in motion-safe:[animation-delay:520ms]">

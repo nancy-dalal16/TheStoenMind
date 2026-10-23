@@ -36,6 +36,8 @@ export default function StoryImage({ image, sizes = "100vw", important = false, 
                 fill
                 sizes={sizes}
                 {...(important ? { fetchPriority: "high" } : {})}
+                // Animated GIFs and SVGs are served as they are (the optimiser would freeze/rasterise them)
+                unoptimized={variant.unoptimized || /\.(gif|svg)(\?|$)/i.test(variant.src)}
                 className={contain ? `object-contain ${/\.jpe?g$/i.test(variant.src) ? "ex-float" : ""}` : "object-cover"}
                 style={contain ? undefined : { objectPosition: variant.position ?? "center" }}
               />

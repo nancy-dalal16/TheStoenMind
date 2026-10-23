@@ -5,7 +5,7 @@ import Icon from "@/components/ui/Icon";
 import { postHref } from "@/lib/explore/links";
 
 /** A single line from a story, set large and centred, with a cloud drifting behind it. */
-export default function QuoteBand({ text, post }) {
+export default function QuoteBand({ text, post, attribution }) {
   if (!text) return null;
 
   return (
@@ -40,6 +40,10 @@ export default function QuoteBand({ text, post }) {
                   <span>{post.author.name}</span>
                 </>
               ) : null}
+            </figcaption>
+          ) : attribution ? (
+            <figcaption data-part="rise" style={{ "--j": 1 }} className="ex-byline mt-7 justify-center">
+              {attribution}
             </figcaption>
           ) : null}
         </figure>

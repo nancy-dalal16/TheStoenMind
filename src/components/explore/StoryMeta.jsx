@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { formatDate } from "@/lib/explore/format";
+import { getExplorePage } from "@/lib/explore/posts";
 import { topicHref } from "@/lib/explore/links";
 
 /** The small capitals above a headline (the topic), linking to its topic page. */
@@ -18,11 +19,13 @@ export function Rubric({ topic, className = "" }) {
  * part after them and sit in a clipped gutter, so a part that wraps never starts its line
  * with a stray dot. `center` centres it (author above date on phones).
  */
-export function Byline({ post, date = true, time = false, center = false, className = "" }) {
+export async function Byline({ post, date = true, time = false, center = false, className = "" }) {
+  // "By" and "min read" are editable in the Studio (Explore page → Labels)
+  const { labels } = await getExplorePage();
   const parts = [
     post.author ? (
       <span key="by">
-        By <span className="ex-byline-name">{post.author.name}</span>
+        {labels.by} <span className="ex-byline-name">{post.author.name}</span>
       </span>
     ) : null,
     date && post.publishedAt ? (
@@ -30,7 +33,9 @@ export function Byline({ post, date = true, time = false, center = false, classN
         {formatDate(post.publishedAt)}
       </time>
     ) : null,
-    time && post.readingTime ? <span key="time">{post.readingTime} min read</span> : null,
+    time && post.readingTime ? <span key="time">
+        {post.readingTime} {labels.minRead}
+      </span> : null,
   ].filter(Boolean);
 
   if (!parts.length) return null;

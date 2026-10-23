@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Button from "@/components/ui/Button";
-import { newsletter } from "@/lib/explore/copy";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -13,9 +12,9 @@ const FIELD =
 /**
  * Email sign-up for the monthly letter. Posts to /api/newsletter, which forwards to
  * NEWSLETTER_WEBHOOK_URL when it's set (Mailchimp, Buttondown, a Zapier hook…).
- * `stacked` puts the button under the field (narrow columns).
+ * `stacked` puts the button under the field (narrow columns). `copy` holds the Studio wording.
  */
-export default function NewsletterForm({ id = "letter", stacked = false }) {
+export default function NewsletterForm({ id = "letter", stacked = false, copy = {} }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle"); // idle | invalid | sending | done | failed
 
@@ -42,7 +41,7 @@ export default function NewsletterForm({ id = "letter", stacked = false }) {
   if (status === "done") {
     return (
       <p role="status" className="font-serif text-body-lg text-fg">
-        {newsletter.success}
+        {copy.success ?? "Thank you."}
       </p>
     );
   }
@@ -60,7 +59,7 @@ export default function NewsletterForm({ id = "letter", stacked = false }) {
           type="email"
           name="email"
           autoComplete="email"
-          placeholder="you@example.com"
+          placeholder={copy.placeholder ?? "you@example.com"}
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -71,7 +70,7 @@ export default function NewsletterForm({ id = "letter", stacked = false }) {
           className={FIELD}
         />
         <Button type="submit" disabled={status === "sending"} className="shrink-0 disabled:cursor-wait disabled:opacity-70">
-          {status === "sending" ? "Signing up…" : "Sign me up"}
+          {status === "sending" ? "…" : (copy.button ?? "Sign me up")}
         </Button>
       </div>
       {invalid ? (

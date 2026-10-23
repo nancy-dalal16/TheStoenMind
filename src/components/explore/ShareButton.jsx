@@ -6,7 +6,7 @@ import Icon from "@/components/ui/Icon";
 /**
  * "Copy link" pill. On touch devices with the Web Share sheet it opens that instead.
  */
-export default function ShareButton({ title }) {
+export default function ShareButton({ title, label = "Share this story", copiedLabel = "Link copied" }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef(0);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -35,7 +35,7 @@ export default function ShareButton({ title }) {
   return (
     <button type="button" onClick={share} className="ex-share hover-pill">
       <Icon name={copied ? "check" : "link"} width={18} height={18} />
-      <span aria-live="polite">{copied ? "Link copied" : "Share this story"}</span>
+      <span aria-live="polite">{copied ? copiedLabel : label}</span>
     </button>
   );
 }

@@ -66,4 +66,4 @@ export const prompt = (heading, text) => ({ _type: "prompt", _key: key(), headin
 /** A small cloud between sections. */
 export const pause = () => ({ _type: "sectionBreak", _key: key() });
 /** An inline illustration with a caption. `image` is { light, dark?, alt, width, height }. */
-export const figure = (image, caption) => ({ _type: "image", _key: key(), ...image, caption });
+export const figure = (image, caption, size = "column") => ({ _type: "picture", _key: key(), ...image, caption, size });

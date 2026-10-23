@@ -1,5 +1,4 @@
 import Container from "@/components/ui/Container";
-import { exploreLabels } from "@/lib/explore/copy";
 import StoryCard from "./StoryCard";
 
 /**
@@ -7,7 +6,7 @@ import StoryCard from "./StoryCard";
  * two stories stacked on the left, the lead story in the wide centre (with two briefs under it),
  * and a numbered "worth lingering over" list on the right. Tablet: lead across the top, the two columns below.
  */
-export default function TopStories({ lead, side = [], below = [], picks = [] }) {
+export default function TopStories({ lead, side = [], below = [], picks = [], picksTitle = "Worth lingering over" }) {
   return (
     <section aria-labelledby="top-stories" className="pt-10 md:pt-14">
       <h2 id="top-stories" className="sr-only">
@@ -39,7 +38,7 @@ export default function TopStories({ lead, side = [], below = [], picks = [] }) 
           {picks.length ? (
             <aside aria-labelledby="picks" className="lg:order-3 lg:pl-10 xl:pl-12">
               <h3 id="picks" data-reveal="" className="ex-aside-title">
-                {exploreLabels.picks}
+                {picksTitle}
               </h3>
               <ol className="ex-divided mt-2 flex flex-col">
                 {picks.map((post, index) => (
