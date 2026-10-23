@@ -813,8 +813,10 @@
   --about-present: #8b8178;
   --about-cloud: #7ea4ab;
   --lens-tint: var(--palette-slate);
-  /* Rainbow lines (Nancy, Oct 21): vibrant but soft - mid-tones that still read on the white card */
-  --hue-violet: #a374d9;
+  /* "Sometimes…" lines, day (Nancy, Oct 23): the rainbow from dark blue onward -
+     indigo (dark blue), blue, green, yellow, orange, red. Token names are the line slots
+     (line 1 = --hue-violet … line 6 = --hue-red); night keeps its pastel rainbow below. */
+  --hue-violet: #1f3c88;
   --hue-blue: #4a93db;
   --hue-green: #2fa271;
   --hue-yellow: #c3920e;
@@ -944,7 +946,7 @@
   .about-cloud {
     color: var(--about-cloud);
   }
-  /* Rainbow lines (About: the six "Sometimes…" lines, VIBGYOR order) */
+  /* "Sometimes…" lines (About): day = rainbow from dark blue to red, night = pastel rainbow (tokens above) */
   .about-hue {
     color: var(--hue);
   }

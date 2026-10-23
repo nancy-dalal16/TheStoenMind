@@ -3,7 +3,7 @@ import AboutStory from "@/components/about/AboutStory";
 // import Story from "@/components/about/Story";
 import Timeline from "@/components/about/Timeline";
 // import Pillars from "@/components/about/Pillars"; // hidden (Nancy, Oct 6)
-import Artisans from "@/components/about/Artisans";
+// import Artisans from "@/components/about/Artisans"; // hidden (Nancy, Oct 23)
 import GiftBand from "@/components/home/GiftBand";
 
 export const metadata = {
@@ -22,7 +22,8 @@ export default function AboutPage() {
       <Timeline />
       {/* "Pillars of Our Craft" hidden (Nancy, Oct 6). Component and copy kept. */}
       {/* <Pillars /> */}
-      <Artisans />
+      {/* "Meet Our Artisans" hidden (Nancy, Oct 23). Component and copy kept. */}
+      {/* <Artisans /> */}
       <GiftBand variant="soft" />
     </>
   );
