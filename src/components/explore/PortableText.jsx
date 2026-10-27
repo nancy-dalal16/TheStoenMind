@@ -2,12 +2,15 @@ import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import { Audio, Embed, Gallery, Picture, Video } from "./StoryMedia";
 import { ButtonBlock, Callout, Columns, ImagePair, ImageText, ProductCard, Spacer, Stats, StoryLinkCard } from "./StoryModules";
+import { fontFamilyCss, fontSizeCss, fontSizePx, LINE_SPACINGS, textColorCss } from "@/lib/explore/editorOptions";
 
 /**
  * Renders a Sanity Portable Text body (the demo posts use the same structure) without any
  * extra packages. Supports:
- *   blocks   normal, h2, h3, h4, blockquote · bullet / number lists
- *   marks    em, strong, underline, code, link (internal links use next/link)
+ *   blocks   normal, lead, small, display, h2, h3, h4, label, blockquote · bullet / number lists
+ *            (+ align / spacing from the Text module)
+ *   marks    em, strong, underline, strike, code, highlight, sup, sub, smallcaps
+ *            link (internal links use next/link), fontSize, textColor, typeface
  *   types    picture (image / GIF / SVG), gallery, video, audio, embed, imageText, callout, button,
  *            columns, spacer, storyLink, productLink, pullQuote, prompt, sectionBreak (cloud / line / dots)
  * The first paragraph gets a drop cap and the last one the end mark (a small cloud).
@@ -16,13 +19,15 @@ import { ButtonBlock, Callout, Columns, ImagePair, ImageText, ProductCard, Space
 export default function PortableText({ value = [] }) {
   const nodes = groupLists(value);
   const isPara = (n) => n._type === "block" && (n.style ?? "normal") === "normal";
+  // The drop cap only suits a left-aligned opening paragraph
+  const dropcapOk = (n) => isPara(n) && (!n.align || n.align === "left" || n.align === "justify");
   const first = nodes.findIndex(isPara);
   const last = nodes.findLastIndex(isPara);
 
   return (
     <div className="ex-prose">
       {nodes.map((node, index) => (
-        <Node key={node._key ?? index} node={node} dropcap={index === first} end={index === last} />
+        <Node key={node._key ?? index} node={node} dropcap={index === first && dropcapOk(node)} end={index === last} />
       ))}
     </div>
   );
@@ -35,7 +40,7 @@ function groupLists(blocks) {
     if (block._type === "block" && block.listItem) {
       const prev = out.at(-1);
       if (prev?._type === "list" && prev.listItem === block.listItem) prev.items.push(block);
-      else out.push({ _type: "list", _key: `list-${block._key}`, listItem: block.listItem, items: [block] });
+      else out.push({ _type: "list", _key: `list-${block._key}`, listItem: block.listItem, items: [block], align: block.align, spacing: block.spacing });
     } else {
       out.push(block);
     }
@@ -50,7 +55,7 @@ function Node({ node, dropcap, end }) {
     case "list": {
       const List = node.listItem === "number" ? "ol" : "ul";
       return (
-        <List>
+        <List style={blockStyle(node)} className={node.align === "center" || node.align === "right" ? "ex-list-inside" : undefined}>
           {node.items.map((item) => (
             <li key={item._key}>
               <Spans block={item} />
@@ -117,24 +122,60 @@ function Node({ node, dropcap, end }) {
   }
 }
 
+/** Alignment and line spacing set on the Text module. */
+function blockStyle(block) {
+  const lineHeight = LINE_SPACINGS.find((s) => s.value === block.spacing)?.css;
+  const textAlign = block.align && block.align !== "left" ? block.align : undefined;
+  return textAlign || lineHeight ? { textAlign, lineHeight } : undefined;
+}
+
 function Block({ block, dropcap, end }) {
   const content = <Spans block={block} end={end} />;
+  const style = blockStyle(block);
 
   switch (block.style) {
+    case "display":
+      return (
+        <h2 className="ex-display" style={style}>
+          {content}
+        </h2>
+      );
     case "h2":
-      return <h2>{content}</h2>;
+      return <h2 style={style}>{content}</h2>;
     case "h3":
-      return <h3>{content}</h3>;
+      return <h3 style={style}>{content}</h3>;
     case "h4":
-      return <h4>{content}</h4>;
+      return <h4 style={style}>{content}</h4>;
+    case "label":
+      return (
+        <p className="ex-label" style={style}>
+          {content}
+        </p>
+      );
+    case "lead":
+      return (
+        <p className="ex-lead" style={style}>
+          {content}
+        </p>
+      );
+    case "small":
+      return (
+        <p className="ex-small" style={style}>
+          {content}
+        </p>
+      );
     case "blockquote":
       return (
-        <blockquote>
+        <blockquote style={style}>
           <p>{content}</p>
         </blockquote>
       );
     default:
-      return <p className={dropcap ? "ex-dropcap" : undefined}>{content}</p>;
+      return (
+        <p className={dropcap ? "ex-dropcap" : undefined} style={style}>
+          {content}
+        </p>
+      );
   }
 }
 
@@ -183,7 +224,27 @@ function wrap(children, mark, def) {
       return <s>{children}</s>;
     case "code":
       return <code>{children}</code>;
+    case "highlight":
+      return <mark className="ex-highlight">{children}</mark>;
+    case "sup":
+      return <sup>{children}</sup>;
+    case "sub":
+      return <sub>{children}</sub>;
+    case "smallcaps":
+      return <span className="ex-smallcaps">{children}</span>;
     default:
+      if (def?._type === "fontSize") {
+        const px = fontSizePx(def);
+        return px ? <span style={{ fontSize: fontSizeCss(px), lineHeight: px >= 28 ? 1.18 : undefined }}>{children}</span> : children;
+      }
+      if (def?._type === "textColor") {
+        const color = textColorCss(def);
+        return color ? <span style={{ color }}>{children}</span> : children;
+      }
+      if (def?._type === "typeface") {
+        const fontFamily = fontFamilyCss(def);
+        return fontFamily ? <span style={{ fontFamily }}>{children}</span> : children;
+      }
       if (def?._type === "link" && def.href) {
         const internal = (def.href.startsWith("/") || def.href.startsWith("#")) && !def.blank;
         return internal ? (

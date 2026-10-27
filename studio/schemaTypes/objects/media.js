@@ -4,6 +4,7 @@ import { ImagesIcon } from "@sanity/icons/Images";
 import { LaunchIcon } from "@sanity/icons/Launch";
 import { PlayIcon } from "@sanity/icons/Play";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { isFixedSize, MEDIA_ALIGNS, MEDIA_SIZE_LIST } from "../../../src/lib/explore/editorOptions";
 
 /*
  * Media building blocks used by stories and the Explore page.
@@ -23,15 +24,50 @@ export const FIT_OPTIONS = {
   direction: "horizontal",
 };
 
-const SIZE_OPTIONS = {
-  list: [
-    { title: "Text width", value: "column" },
-    { title: "Wide", value: "wide" },
-    { title: "Full width", value: "full" },
-  ],
-  layout: "radio",
-  direction: "horizontal",
-};
+/** Story covers, cover videos and featured images fill their own frames, so they don't show the size options. */
+const isCoverPath = (path = []) => ["cover", "featuredImage", "coverVideo"].includes(path[0]);
+
+/**
+ * Size options for pictures, GIFs, videos and embeds: fixed frames from 200 × 200 px up, the
+ * layout widths (text width / wide / full) or a custom width × height, plus where a smaller
+ * frame sits (left, centre, right, or with the text flowing around it).
+ */
+export function sizeFields(initialSize = "column") {
+  return [
+    defineField({
+      name: "size",
+      type: "string",
+      description: "Fixed sizes shrink to fit on small phones.",
+      options: { list: MEDIA_SIZE_LIST },
+      initialValue: initialSize,
+      hidden: ({ path }) => isCoverPath(path),
+    }),
+    defineField({
+      name: "customWidth",
+      title: "Width (px)",
+      type: "number",
+      hidden: ({ parent, path }) => parent?.size !== "custom" || isCoverPath(path),
+      validation: (r) =>
+        r.custom((value, { parent }) => (parent?.size === "custom" && !value ? "Enter a width for the custom size." : true)).integer().min(40).max(2400),
+    }),
+    defineField({
+      name: "customHeight",
+      title: "Height (px)",
+      type: "number",
+      description: "Leave empty to keep the picture's own shape.",
+      hidden: ({ parent, path }) => parent?.size !== "custom" || isCoverPath(path),
+      validation: (r) => r.integer().min(40).max(2400),
+    }),
+    defineField({
+      name: "align",
+      title: "Position",
+      type: "string",
+      options: { list: MEDIA_ALIGNS },
+      initialValue: "center",
+      hidden: ({ parent, path }) => !isFixedSize(parent?.size) || isCoverPath(path),
+    }),
+  ];
+}
 
 /** Alt text, required on every picture - read aloud by screen readers and used by search engines. */
 export const altField = defineField({
@@ -61,7 +97,7 @@ export const picture = defineType({
       options: { hotspot: true, accept: "image/*" },
     }),
     defineField({ name: "fit", type: "string", options: FIT_OPTIONS, initialValue: "cover" }),
-    defineField({ name: "size", type: "string", options: SIZE_OPTIONS, initialValue: "column" }),
+    ...sizeFields("column"),
   ],
   preview: {
     select: { title: "caption", subtitle: "alt", media: "asset" },
@@ -144,7 +180,7 @@ export const video = defineType({
     }),
     defineField({ name: "title", title: "Description", type: "string", description: "For screen readers." }),
     defineField({ name: "caption", type: "string" }),
-    defineField({ name: "size", type: "string", options: SIZE_OPTIONS, initialValue: "wide" }),
+    ...sizeFields("wide"),
   ],
   preview: {
     select: { title: "caption", subtitle: "title", media: "poster" },
@@ -194,6 +230,7 @@ export const embed = defineType({
     }),
     defineField({ name: "title", title: "Description", type: "string", description: "For screen readers." }),
     defineField({ name: "caption", type: "string" }),
+    ...sizeFields("wide"),
   ],
   preview: {
     select: { title: "caption", subtitle: "url" },

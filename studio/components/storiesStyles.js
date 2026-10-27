@@ -198,8 +198,8 @@ export const STORIES_CSS = `
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: var(--radius);
-  background: #f1f5f6;
-  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.04);
+  /* No tint behind the pictures (Nancy, Oct 27) */
+  background: transparent;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
 }
 .stn-card-media img {
@@ -214,12 +214,14 @@ export const STORIES_CSS = `
   padding: 9% 12%;
   filter: drop-shadow(0 10px 14px rgb(40 38 32 / 0.16));
 }
-.stn-card:hover .stn-card-media { transform: translateY(-3px); box-shadow: 0 18px 30px -18px rgb(30 45 50 / 0.45); }
+.stn-card:hover .stn-card-media { transform: translateY(-3px); }
 .stn-card:hover .stn-card-media img { transform: scale(1.04); }
 .stn-card-empty {
   display: grid;
   place-items: center;
   height: 100%;
+  border: 1px dashed #d6dcdc;
+  border-radius: var(--radius);
   font-size: 12px;
   color: var(--muted);
 }

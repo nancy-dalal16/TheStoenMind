@@ -11,7 +11,8 @@ import { readingTime, wordCount } from "./format";
  * Sanity errors so the pages never blank.
  *
  * Post shape: { id, slug, title, dek, topic {slug,title}, author {name,slug,role,bio},
- *   publishedAt, featured, pick, readingTime, cover { alt, fit, light, dark, caption, credit },
+ *   publishedAt, featured, pick, readingTime, cover { alt, fit, light, dark, caption, credit } (the story's
+ *   top picture, optional), thumbnail (the featured image on cards; falls back to the cover),
  *   body? (Portable Text - only from getPost) }
  */
 export const exploreMode = sanity.sanityConfigured ? "sanity" : "demo";

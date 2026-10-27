@@ -3,10 +3,25 @@ import StoryImage from "./StoryImage";
 
 /*
  * Media inside a story (and the story's cover video). Sizes: "column" sits in the text column,
- * "wide" breaks out a little either side, "full" spans the page.
+ * "wide" breaks out a little either side, "full" spans the page, and "fixed" is a frame of an
+ * exact size from the Studio (200 × 200 px and up, or custom) - left, centre or right, or
+ * floated with the text flowing around it. Fixed frames shrink to fit on small phones.
  */
 
 const sizeClass = (size) => (size === "full" ? "ex-media-full" : size === "wide" ? "ex-media-wide" : "ex-media-column");
+
+const ALIGNS = new Set(["center", "left", "right", "wrapLeft", "wrapRight"]);
+
+/** Figure class + style for a node's size: { className, style, box } */
+export function mediaLayout(node) {
+  if (node.size === "fixed" && node.box?.w) {
+    const align = ALIGNS.has(node.align) ? node.align : "center";
+    return { className: `ex-media-fixed ex-align-${align}`, style: { "--w": `${node.box.w}px` }, box: node.box };
+  }
+  return { className: sizeClass(node.size), style: undefined, box: null };
+}
+
+const boxRatio = (box) => (box?.h ? `${box.w} / ${box.h}` : undefined);
 
 function Caption({ caption, credit }) {
   if (!caption && !credit) return null;
@@ -25,13 +40,25 @@ const frameStyle = (image) =>
 export function Picture({ node }) {
   if (!node.light) return null;
   const full = node.size === "full";
+  const layout = mediaLayout(node);
+  // A fixed frame with a height takes that shape; without one it keeps the picture's own shape
+  const fixedRatio = boxRatio(layout.box);
+  const natural = node.light.width ? `${node.light.width} / ${node.light.height}` : undefined;
   return (
-    <figure className={`ex-figure ${sizeClass(node.size)}`}>
+    <figure className={`ex-figure ${layout.className}`} style={layout.style}>
       <StoryImage
         image={node}
-        sizes={full ? "100vw" : node.size === "wide" ? "(min-width: 1024px) 960px, 100vw" : "(min-width: 768px) 760px, 100vw"}
-        className={node.fit === "contain" ? "aspect-[4/3]" : ""}
-        style={frameStyle(node)}
+        sizes={
+          layout.box
+            ? `${layout.box.w}px`
+            : full
+              ? "100vw"
+              : node.size === "wide"
+                ? "(min-width: 1024px) 960px, 100vw"
+                : "(min-width: 768px) 760px, 100vw"
+        }
+        className={!layout.box && node.fit === "contain" ? "aspect-[4/3]" : ""}
+        style={layout.box ? { aspectRatio: fixedRatio ?? natural ?? "1 / 1" } : frameStyle(node)}
       />
       <Caption caption={node.caption} credit={node.credit} />
     </figure>
@@ -60,9 +87,11 @@ export function Gallery({ node }) {
 /** An uploaded video file - with controls, or looping silently like a GIF. */
 export function Video({ node, className = "" }) {
   if (!node.src) return null;
+  const layout = mediaLayout(node);
+  const ratio = boxRatio(layout.box);
   return (
-    <figure className={`ex-figure ${sizeClass(node.size)} ${className}`}>
-      <div className="ex-video-frame">
+    <figure className={`ex-figure ${layout.className} ${className}`} style={layout.style}>
+      <div className={`ex-video-frame ${ratio ? "is-boxed" : ""}`} style={ratio ? { aspectRatio: ratio } : undefined}>
         <StoryVideo src={node.src} mime={node.mime} poster={node.poster} loop={node.loop} title={node.title} />
       </div>
       <Caption caption={node.caption} />
@@ -131,9 +160,12 @@ export function Embed({ node }) {
       </p>
     ) : null;
   }
+  const layout = mediaLayout(node);
+  const fixedRatio = embed.height ? undefined : boxRatio(layout.box);
+  const figureClass = layout.box ? layout.className : embed.height ? "ex-media-column" : node.size === "full" ? "ex-media-full" : node.size === "column" ? "ex-media-column" : "ex-media-wide";
   return (
-    <figure className={`ex-figure ${embed.height ? "ex-media-column" : "ex-media-wide"}`}>
-      <div className="ex-embed" style={embed.height ? { height: embed.height } : { aspectRatio: embed.ratio }}>
+    <figure className={`ex-figure ${figureClass}`} style={layout.style}>
+      <div className="ex-embed" style={embed.height ? { height: embed.height } : { aspectRatio: fixedRatio ?? embed.ratio }}>
         <iframe
           src={embed.src}
           title={node.title || node.caption || "Embedded media"}

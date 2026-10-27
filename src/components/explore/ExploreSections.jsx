@@ -63,13 +63,20 @@ function TextSection({ s }) {
 function PictureSection({ s }) {
   if (!s.picture) return null;
   const full = s.picture.size === "full";
+  // A fixed size (200 × 200 px and up) sits left, centre or right on the band
+  const box = s.picture.size === "fixed" ? s.picture.box : null;
+  const natural = `${s.picture.light.width} / ${s.picture.light.height}`;
   const image = (
-    <figure data-reveal="fade">
+    <figure
+      data-reveal="fade"
+      className={box ? `ex-media-fixed ex-align-${s.picture.align === "left" || s.picture.align === "right" ? s.picture.align : "center"}` : undefined}
+      style={box ? { "--w": `${box.w}px` } : undefined}
+    >
       <StoryImage
         image={s.picture}
-        sizes={full ? "100vw" : "(min-width: 1440px) 1280px, 100vw"}
-        className={s.picture.fit === "contain" ? "aspect-[16/9]" : ""}
-        style={s.picture.fit === "contain" ? undefined : { aspectRatio: `${s.picture.light.width} / ${s.picture.light.height}` }}
+        sizes={box ? `${box.w}px` : full ? "100vw" : "(min-width: 1440px) 1280px, 100vw"}
+        className={!box && s.picture.fit === "contain" ? "aspect-[16/9]" : ""}
+        style={box ? { aspectRatio: box.h ? `${box.w} / ${box.h}` : natural } : s.picture.fit === "contain" ? undefined : { aspectRatio: natural }}
       />
       {s.picture.caption || s.picture.credit ? (
         <figcaption className={`ex-caption ${full ? "page-gutter" : ""}`}>

@@ -15,7 +15,8 @@ import { ImagesIcon } from "@sanity/icons/Images";
 import { BarChartIcon } from "@sanity/icons/BarChart";
 import { SparklesIcon } from "@sanity/icons/Sparkles";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { altField } from "./media";
+import TopicSelectInput from "../../components/editor/TopicSelectInput";
+import { altField, sizeFields } from "./media";
 
 /*
  * Extra building blocks ("modules").
@@ -175,8 +176,8 @@ export const storyLink = defineType({
     defineField({ name: "story", type: "reference", to: [{ type: "post" }], validation: (r) => r.required() }),
   ],
   preview: {
-    select: { title: "story.title", subtitle: "label", media: "story.cover" },
-    prepare: ({ title, subtitle, media }) => ({ title: title || "Story card", subtitle, media }),
+    select: { title: "story.title", subtitle: "label", thumb: "story.featuredImage", cover: "story.cover" },
+    prepare: ({ title, subtitle, thumb, cover }) => ({ title: title || "Story card", subtitle, media: thumb?.asset ? thumb : cover }),
   },
 });
 
@@ -278,20 +279,7 @@ export const gif = defineType({
   fields: [
     altField,
     defineField({ name: "caption", type: "string" }),
-    defineField({
-      name: "size",
-      type: "string",
-      options: {
-        list: [
-          { title: "Text width", value: "column" },
-          { title: "Wide", value: "wide" },
-          { title: "Full width", value: "full" },
-        ],
-        layout: "radio",
-        direction: "horizontal",
-      },
-      initialValue: "column",
-    }),
+    ...sizeFields("column"),
   ],
   preview: {
     select: { title: "caption", subtitle: "alt", media: "asset" },
@@ -417,7 +405,13 @@ export const storiesSection = defineType({
       description: "Pick 2–4 stories - or leave empty and choose a topic below.",
       validation: (r) => r.max(4).unique(),
     }),
-    defineField({ name: "topic", title: "…or the newest from a topic", type: "reference", to: [{ type: "topic" }] }),
+    defineField({
+      name: "topic",
+      title: "…or the newest from a topic",
+      type: "reference",
+      to: [{ type: "topic" }],
+      components: { input: TopicSelectInput },
+    }),
     BACKGROUND,
   ]),
 });

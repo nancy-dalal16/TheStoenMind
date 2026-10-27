@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const post = await getPost((await params).slug);
   if (!post) return {};
-  const image = post.seo?.image ?? post.cover?.light;
+  const thumb = post.thumbnail ?? post.cover;
+  const image = post.seo?.image ?? thumb?.light;
   const description = post.seo?.description || post.dek;
   return {
     title: post.seo?.title || post.title,
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }) {
       publishedTime: post.publishedAt,
       authors: post.author ? [post.author.name] : undefined,
       section: post.topic?.title,
-      images: image ? [{ url: image.src, width: image.width, height: image.height, alt: post.cover?.alt ?? "" }] : undefined,
+      images: image ? [{ url: image.src, width: image.width, height: image.height, alt: thumb?.alt ?? "" }] : undefined,
     },
   };
 }
@@ -57,7 +58,7 @@ export default async function StoryPage({ params }) {
     headline: post.title,
     description: post.dek,
     datePublished: post.publishedAt,
-    image: post.cover?.light?.src ? [new URL(post.cover.light.src, "https://thestoenmind.com").href] : undefined,
+    image: (post.thumbnail ?? post.cover)?.light?.src ? [new URL((post.thumbnail ?? post.cover).light.src, "https://thestoenmind.com").href] : undefined,
     author: post.author ? { "@type": "Person", name: post.author.name } : undefined,
     publisher: { "@type": "Organization", name: "the STOEN mind" },
     mainEntityOfPage: `https://thestoenmind.com${postHref(post)}`,
@@ -106,7 +107,7 @@ export default async function StoryPage({ params }) {
 
           {post.coverVideo ? (
             <div className="mx-auto mt-10 max-w-[1120px] md:mt-14">
-              <Video node={{ ...post.coverVideo, size: "column", poster: post.coverVideo.poster ?? post.cover?.light }} className="ex-cover-video" />
+              <Video node={{ ...post.coverVideo, size: "column", poster: post.coverVideo.poster ?? post.cover?.light ?? post.thumbnail?.light }} className="ex-cover-video" />
             </div>
           ) : post.cover ? (
             <figure data-reveal="fade" style={{ "--reveal-dur": "1.6s" }} className="mx-auto mt-10 max-w-[1120px] md:mt-14">

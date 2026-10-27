@@ -1,4 +1,5 @@
 import "server-only";
+import { mediaBox } from "./editorOptions";
 
 /**
  * Sanity Content Lake client for /explore - plain `fetch` against the GROQ HTTP API, so no
@@ -42,14 +43,15 @@ async function query(groq, params = {}) {
 // An image asset with its size; `mime` tells GIF/SVG apart (they skip Next's optimiser).
 const ASSET = `"src": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, "mime": asset->mimeType, hotspot`;
 // A "picture": the day image, its optional night version, fit, size and words
-const PICTURE = `{ ${ASSET}, alt, caption, credit, fit, size, "night": night{ ${ASSET} } }`;
+const PICTURE = `{ ${ASSET}, alt, caption, credit, fit, size, customWidth, customHeight, align, "night": night{ ${ASSET} } }`;
 const FILE = `{ "src": asset->url, "mime": asset->mimeType, "size": asset->size }`;
-const VIDEO = `{ "file": file${FILE}, "poster": poster{ ${ASSET} }, playback, title, caption, size }`;
+const VIDEO = `{ "file": file${FILE}, "poster": poster{ ${ASSET} }, playback, title, caption, size, customWidth, customHeight, align }`;
 
 const CARD = `
   _id, title, "slug": slug.current, dek, publishedAt, featured, editorsPick,
   "topic": topic->{ title, "slug": slug.current },
   "author": author->{ name, "slug": slug.current, role, bio, "photo": photo{ ${ASSET}, alt } },
+  "featuredImage": featuredImage${PICTURE},
   "cover": cover${PICTURE},
   // Story text lives in Text modules (older stories: straight in the body)
   "words": length(string::split(pt::text(body[_type == "textBlock"].content[]), " ")) + length(string::split(pt::text(body), " "))
@@ -95,14 +97,20 @@ const variant = (image) =>
       }
     : null;
 
-/** A picture → { alt, fit, size, light, dark, caption, credit } (null without an image) */
+/** Size fields → { size, box, align }: box = { w, h? } for the fixed / custom sizes. */
+const sizing = (node, fallback) => {
+  const box = mediaBox(node);
+  return { size: box ? "fixed" : ["column", "wide", "full"].includes(node.size) ? node.size : fallback, box, align: node.align ?? "center" };
+};
+
+/** A picture → { alt, fit, size, box, align, light, dark, caption, credit } (null without an image) */
 export function normalisePicture(picture, fallbackFit = "cover") {
   const light = variant(picture);
   if (!light) return null;
   return {
     alt: picture.alt ?? "",
     fit: (picture.fit ?? fallbackFit) === "contain" ? "contain" : "cover",
-    size: picture.size ?? "column",
+    ...sizing(picture, "column"),
     light,
     dark: variant(picture.night),
     caption: picture.caption ?? "",
@@ -119,7 +127,7 @@ function normaliseVideo(video) {
     loop: video.playback === "loop",
     title: video.title ?? "",
     caption: video.caption ?? "",
-    size: video.size ?? "wide",
+    ...sizing(video, "wide"),
   };
 }
 
@@ -163,6 +171,8 @@ function normaliseBlock(block) {
       const image = normalisePicture({ ...block, fit: "cover" });
       return image ? { _type: "picture", _key: block._key, ...image } : null;
     }
+    case "embed":
+      return { ...block, ...sizing(block, "wide") };
     case "imagePair":
       return {
         ...block,
@@ -204,6 +214,7 @@ function normaliseSection(section) {
 function normalisePost(doc) {
   if (!doc) return null;
   const share = variant(doc.shareImage);
+  const cover = normalisePicture(doc.cover);
   return {
     id: doc._id,
     slug: doc.slug,
@@ -214,14 +225,20 @@ function normalisePost(doc) {
     publishedAt: doc.publishedAt,
     featured: Boolean(doc.featured),
     pick: Boolean(doc.editorsPick),
-    cover: normalisePicture(doc.cover),
+    // The story's top picture (optional) and its thumbnail on cards (falls back to the cover)
+    cover,
+    thumbnail: normalisePicture(doc.featuredImage) ?? cover,
     coverVideo: normaliseVideo(doc.coverVideo),
     seo: { title: doc.seoTitle ?? "", description: doc.seoDescription ?? "", image: share },
     words: doc.words ?? 0,
     // Text modules are unpacked so the body reads as one flow (drop cap, end mark, lists)
     body: doc.body
       ? doc.body
-          .flatMap((block) => (block._type === "textBlock" ? (block.content ?? []) : [block]))
+          .flatMap((block) =>
+            block._type === "textBlock"
+              ? (block.content ?? []).map((b) => (block.align || block.spacing ? { ...b, align: block.align, spacing: block.spacing } : b))
+              : [block],
+          )
           .map(normaliseBlock)
           .filter(Boolean)
       : undefined,

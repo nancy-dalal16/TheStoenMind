@@ -25,8 +25,8 @@ const QUERY = `*[_type == "post"]{
   "slug": slug.current,
   "topic": topic->{ _id, title },
   "author": author->{ name, "photo": photo.asset->url },
-  "thumb": cover.asset->url,
-  "fit": cover.fit,
+  "thumb": coalesce(featuredImage.asset->url, cover.asset->url),
+  "fit": coalesce(featuredImage.fit, cover.fit),
   "video": defined(coverVideo.file.asset),
   "words": length(string::split(pt::text(body[_type == "textBlock"].content[]), " ")) + length(string::split(pt::text(body), " "))
 }`;
@@ -106,7 +106,7 @@ function Card({ story }) {
             <img src={img(story.thumb, 640, 480)} alt="" loading="lazy" />
           )
         ) : (
-          <span className="stn-card-empty">No cover yet</span>
+          <span className="stn-card-empty">No featured image yet</span>
         )}
         <span className="stn-card-badges">
           {badge ? <span className={`stn-badge stn-badge-${badge.tone}`}>{badge.label}</span> : null}

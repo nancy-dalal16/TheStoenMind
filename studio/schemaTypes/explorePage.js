@@ -2,6 +2,7 @@ import { HomeIcon } from "@sanity/icons/Home";
 import { defineField, defineType } from "sanity";
 import ModuleArrayInput from "../components/modules/ModuleArrayInput";
 import ModuleItem from "../components/modules/ModuleItem";
+import TopicSelectInput from "../components/editor/TopicSelectInput";
 import { altField, FIT_OPTIONS } from "./objects/media";
 
 /**
@@ -76,6 +77,7 @@ export default defineType({
       type: "reference",
       to: [{ type: "topic" }],
       group: "front",
+      components: { input: TopicSelectInput },
       hidden: ({ parent }) => parent?.showSpotlight === false,
     }),
     defineField({ name: "showQuote", title: "Show the large quote", type: "boolean", group: "front", initialValue: true }),

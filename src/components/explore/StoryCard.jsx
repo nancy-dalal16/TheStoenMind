@@ -49,7 +49,7 @@ export default function StoryCard({
   if (variant === "lead") {
     return shell(
       <>
-        <StoryImage image={post.cover} sizes={sizes ?? "(min-width: 1024px) 660px, 100vw"} important={important} className={aspect} />
+        <StoryImage image={post.thumbnail ?? post.cover} sizes={sizes ?? "(min-width: 1024px) 660px, 100vw"} important={important} className={aspect} />
         <div className="mx-auto mt-7 flex max-w-[34rem] flex-col items-center gap-3 text-center">
           {rubric ? <Rubric topic={post.topic} /> : null}
           {title("ex-title ex-title-lead text-balance")}
@@ -64,7 +64,7 @@ export default function StoryCard({
     return shell(
       <>
         <StoryImage
-          image={post.cover}
+          image={post.thumbnail ?? post.cover}
           sizes={sizes ?? "(min-width: 1024px) 720px, 100vw"}
           important={important}
           className={`${aspect} md:col-span-7`}
@@ -89,7 +89,7 @@ export default function StoryCard({
           {dek && post.dek ? <p className="ex-dek ex-dek-sm line-clamp-3 max-sm:hidden">{post.dek}</p> : null}
           <Byline post={post} time className="mt-1" />
         </div>
-        <StoryImage image={post.cover} sizes={sizes ?? "(min-width: 768px) 260px, 112px"} className="aspect-[4/3]" />
+        <StoryImage image={post.thumbnail ?? post.cover} sizes={sizes ?? "(min-width: 768px) 260px, 112px"} className="aspect-[4/3]" />
       </>,
       "grid grid-cols-[minmax(0,1fr)_112px] items-start gap-5 sm:grid-cols-[minmax(0,1fr)_180px] md:grid-cols-[minmax(0,1fr)_260px] md:gap-8",
     );
@@ -125,7 +125,7 @@ export default function StoryCard({
   if (variant === "compact") {
     return shell(
       <>
-        <StoryImage image={post.cover} sizes={sizes ?? "140px"} className="aspect-square" />
+        <StoryImage image={post.thumbnail ?? post.cover} sizes={sizes ?? "140px"} className="aspect-square" />
         <div className="flex min-w-0 flex-col gap-1.5">
           {title("ex-title ex-title-sm text-pretty")}
           {dek && post.dek ? <p className="ex-dek ex-dek-sm line-clamp-2 max-sm:hidden">{post.dek}</p> : null}
@@ -139,7 +139,7 @@ export default function StoryCard({
   // stack
   return shell(
     <>
-      <StoryImage image={post.cover} sizes={sizes ?? "(min-width: 1024px) 400px, (min-width: 768px) 45vw, 100vw"} className={aspect} />
+      <StoryImage image={post.thumbnail ?? post.cover} sizes={sizes ?? "(min-width: 1024px) 400px, (min-width: 768px) 45vw, 100vw"} className={aspect} />
       <div className="mt-5 flex flex-col gap-2">
         {rubric ? <Rubric topic={post.topic} /> : null}
         {title("ex-title ex-title-md text-balance")}
