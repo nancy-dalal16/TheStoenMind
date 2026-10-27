@@ -1973,9 +1973,9 @@ a.ex-rubric:hover { color: var(--fg); }
 }
 .ex-dek-sm { font-size: 1.0625rem; line-height: 1.42; }
 
-/* Picture stage */
+/* Picture frame - no tinted stage behind the pictures (Nancy, Oct 27) */
 .ex-frame {
-  background-color: var(--stage);
+  background-color: transparent;
   border-radius: var(--radius-ui);
   isolation: isolate;
 }
