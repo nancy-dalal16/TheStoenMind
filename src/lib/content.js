@@ -123,7 +123,7 @@ think about, or simply enjoy for what they are.`,
     },
   },
   {
-    title: "A KINDRED COMPANION",
+    title: "A kindred companion",
     description: `As you wander these pages, you’ll often meet Rahi, a kindred companion who has
 wondered, sauntered, and found his way through these lands. He’s here to walk
 alongside you, one discovery at a time. And perhaps, by the end, you’ll find a friend
@@ -315,7 +315,14 @@ export const aboutStory = {
     { content: [{ text: "Sometimes vast and mysterious.", tone: "blue" }] },
     { content: [{ text: "Sometimes full of questions.", tone: "green" }] },
     { content: [{ text: "Sometimes carrying a storm.", tone: "yellow" }] },
-    { content: [{ text: "Sometimes taking shapes that seem to mean something.", tone: "orange" }] },
+    {
+      content: [
+        {
+          text: "Sometimes taking shapes that seem to mean something.",
+          tone: "orange",
+        },
+      ],
+    },
     { content: [{ text: "Sometimes simply floating by.", tone: "red" }] },
     { content: "The Stoen Mind is a space for that cloud." },
     { content: "A place where you can sit beside it for a while." },

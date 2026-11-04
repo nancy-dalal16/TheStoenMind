@@ -39,7 +39,10 @@ export default function Categories() {
               <div data-part="img" className="px-3 pt-3 sm:px-4 sm:pt-4">
                 <ProductCarousel
                   images={category.images}
-                  label={category.label ?? `${category.title.charAt(0)}${category.title.slice(1).toLowerCase()}`}
+                  label={
+                    category.label ??
+                    `${category.title.charAt(0)}${category.title.slice(1).toLowerCase()}`
+                  }
                   sizes="(min-width: 1024px) 260px, (min-width: 640px) 44vw, 88vw"
                 />
               </div>
@@ -47,7 +50,7 @@ export default function Categories() {
               {/* Oct 12 (Nancy): description removed, compact foot, one clear "Buy Now" */}
               <div className="flex flex-1 flex-col gap-4 px-5 pt-1 pb-5 sm:px-6 sm:pb-6">
                 <div className="flex flex-1 flex-col gap-1 text-fg">
-                  <h3 className="text-title">{category.title}</h3>
+                  <h3 className="text-title text-center">{category.title}</h3>
                   {category.price ? (
                     <p className="font-sans text-base tracking-[0.04em] text-fg-muted">
                       {category.price}
