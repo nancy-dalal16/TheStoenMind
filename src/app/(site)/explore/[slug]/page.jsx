@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ExploreClouds from "@/components/explore/ExploreClouds";
 import NewsletterBand from "@/components/explore/NewsletterBand";
 import PortableText from "@/components/explore/PortableText";
 import ReadingProgress from "@/components/explore/ReadingProgress";
@@ -92,9 +93,11 @@ export default async function StoryPage({ params }) {
       <ReadingProgress targetId="story-body" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
 
-      <article className="pt-8 pb-20 md:pt-12 md:pb-28">
+      <article className="@container relative overflow-x-clip pt-8 pb-20 md:pt-12 md:pb-28">
+        {/* The same drifting clouds as the Explore nameplate, behind the headline */}
+        <ExploreClouds />
         <Container>
-          <header className="mx-auto flex max-w-[56rem] flex-col items-center text-center">
+          <header className="relative z-10 mx-auto flex max-w-[56rem] flex-col items-center text-center">
             {/* Where you are: back to Explore, and the story's topic */}
             <nav
               aria-label="Breadcrumb"

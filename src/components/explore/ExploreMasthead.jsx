@@ -1,5 +1,5 @@
-import Artwork from "@/components/ui/Artwork";
 import Icon from "@/components/ui/Icon";
+import ExploreClouds from "./ExploreClouds";
 import TopicNav from "./TopicNav";
 
 /**
@@ -12,19 +12,7 @@ import TopicNav from "./TopicNav";
 export default function ExploreMasthead({ eyebrow, title, intro, meta, topics, allLabel, active, size = "front" }) {
   return (
     <section className="@container relative overflow-x-clip">
-      <Artwork
-        className="absolute top-[34px] left-[-22cqw] aspect-[701/212] w-[max(36cqw,260px)] opacity-80 motion-safe:animate-cloud-in motion-safe:[animation-delay:500ms] max-md:top-[4px] max-md:left-[-50cqw]"
-        light={{ src: "/images/about/cloud-drift.png" }}
-        dark={{ src: "/images/about/cloud-drift-night.png", brightness: 1.15 }}
-        sizes="36vw"
-      />
-      <Artwork
-        flip
-        className="absolute top-[120px] right-[-20cqw] aspect-[701/212] w-[max(32cqw,240px)] opacity-70 motion-safe:animate-cloud-in motion-safe:[animation-delay:750ms] max-md:hidden"
-        light={{ src: "/images/about/cloud-drift.png" }}
-        dark={{ src: "/images/about/cloud-drift-night.png", brightness: 1.15 }}
-        sizes="32vw"
-      />
+      <ExploreClouds />
 
       <div className="page-gutter relative z-10 mx-auto flex max-w-[1440px] flex-col items-center pt-10 pb-9 text-center md:pt-14 md:pb-11">
         {/* eyebrow: undefined = the logo lettering, false = nothing, else whatever is passed */}

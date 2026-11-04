@@ -4,7 +4,7 @@ import { ImagesIcon } from "@sanity/icons/Images";
 import { LaunchIcon } from "@sanity/icons/Launch";
 import { PlayIcon } from "@sanity/icons/Play";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { COVER_SIZE_LIST, isFixedSize, MEDIA_ALIGNS, MEDIA_SHAPE_LIST, MEDIA_SIZE_LIST, parseShape } from "../../../src/lib/explore/editorOptions";
+import { CARD_SIZE_LIST, COVER_SIZE_LIST, isFixedSize, MEDIA_ALIGNS, MEDIA_SHAPE_LIST, MEDIA_SIZE_LIST, parseShape } from "../../../src/lib/explore/editorOptions";
 
 /*
  * Media building blocks used by stories and the Explore page.
@@ -36,12 +36,14 @@ export const FIT_OPTIONS = {
  *   cover, coverVideo  - the top of a story: "Cover size" (wide / text width / full bleed /
  *                        fixed px / custom) + shape. (Older covers already store size: "column"
  *                        from the body default, so covers use their own field, coverSize.)
- *   featuredImage      - the thumbnail on story cards: shape only (width follows the card)
+ *   featuredImage      - the thumbnail on story cards: "Card size" (fill the card, fixed px,
+ *                        custom) + position + shape
  *   anywhere else      - size (fixed px / layout widths / custom), position, and shape
  */
 const isCoverPath = (path = []) => ["cover", "coverVideo"].includes(path[0]);
 const isFeaturedPath = (path = []) => path[0] === "featuredImage";
-const sizeOf = (parent, path) => (isCoverPath(path) ? (parent?.coverSize ?? "wide") : parent?.size);
+const sizeOf = (parent, path) =>
+  isCoverPath(path) ? (parent?.coverSize ?? "wide") : isFeaturedPath(path) ? (parent?.cardSize ?? "auto") : parent?.size;
 
 /**
  * Shape (aspect ratio) of the frame: default, the picture's own shape, presets from 1:1 to
@@ -108,10 +110,19 @@ export function sizeFields(initialSize = "column") {
       hidden: ({ path }) => !isCoverPath(path),
     }),
     defineField({
+      name: "cardSize",
+      title: "Card size",
+      type: "string",
+      description:
+        "How big the picture is on story cards. Empty = fill the card's picture frame. A fixed size makes it exactly that big (never wider than the card, and smaller on phones).",
+      options: { list: CARD_SIZE_LIST },
+      hidden: ({ path }) => !isFeaturedPath(path),
+    }),
+    defineField({
       name: "customWidth",
       title: "Width (px)",
       type: "number",
-      hidden: ({ parent, path }) => sizeOf(parent, path) !== "custom" || isFeaturedPath(path),
+      hidden: ({ parent, path }) => sizeOf(parent, path) !== "custom",
       validation: (r) =>
         r
           .custom((value, { parent, path }) => (sizeOf(parent, path) === "custom" && !value ? "Enter a width for the custom size." : true))
@@ -124,22 +135,22 @@ export function sizeFields(initialSize = "column") {
       title: "Height (px)",
       type: "number",
       description: "Leave empty to keep the picture's own shape (or use Shape below).",
-      hidden: ({ parent, path }) => sizeOf(parent, path) !== "custom" || isFeaturedPath(path),
+      hidden: ({ parent, path }) => sizeOf(parent, path) !== "custom",
       validation: (r) => r.integer().min(40).max(2400),
     }),
     defineField({
       name: "align",
       title: "Position",
       type: "string",
-      description: "For a cover, the “text flows around it” options sit left or right.",
+      description: "On a cover or a story card, the “text flows around it” options just sit left or right.",
       options: { list: MEDIA_ALIGNS },
       initialValue: "center",
-      hidden: ({ parent, path }) => !isFixedSize(sizeOf(parent, path)) || isFeaturedPath(path),
+      hidden: ({ parent, path }) => !isFixedSize(sizeOf(parent, path)),
     }),
     ...shapeFields({
       description:
         "The frame's proportions - the picture is cropped to fit (around its hotspot). Default (or empty): story cards follow their layout, the cover is 16:10 (4:3 on phones), pictures in a story keep their own shape.",
-      when: (parent, path) => isFeaturedPath(path) || shapeApplies(parent, path),
+      when: (parent, path) => shapeApplies(parent, path),
     }),
   ];
 }

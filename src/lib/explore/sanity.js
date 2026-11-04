@@ -43,7 +43,7 @@ async function query(groq, params = {}) {
 // An image asset with its size; `mime` tells GIF/SVG apart (they skip Next's optimiser).
 const ASSET = `"src": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, "mime": asset->mimeType, hotspot`;
 // A "picture": the day image, its optional night version, fit, size and words
-const SIZE = `size, coverSize, customWidth, customHeight, align, shape, customShape`;
+const SIZE = `size, coverSize, cardSize, customWidth, customHeight, align, shape, customShape`;
 const PICTURE = `{ ${ASSET}, alt, caption, credit, fit, ${SIZE}, "night": night{ ${ASSET} } }`;
 const FILE = `{ "src": asset->url, "mime": asset->mimeType, "size": asset->size }`;
 const VIDEO = `{ "file": file${FILE}, "poster": poster{ ${ASSET} }, playback, title, caption, ${SIZE} }`;
@@ -143,6 +143,9 @@ function normaliseVideo(video) {
   };
 }
 
+/** The featured image's size on story cards: { box: { w, h? } | null, align } */
+const cardSizing = (node) => ({ box: mediaBox({ ...node, size: node?.cardSize }), align: node?.align ?? "center" });
+
 /** A module-level shape applied to each of its pictures ("original" = each its own). */
 const withShape = (block, image) => (image ? { ...image, ratio: shapeRatio(block, naturalRatio(image.light)) } : image);
 
@@ -235,6 +238,7 @@ function normalisePost(doc) {
   // The cover's own size (coverSize) and shape; on cards it falls back without its shape
   const cover = coverPicture ? { ...coverPicture, ...coverSizing(doc.cover) } : null;
   const coverVideo = normaliseVideo(doc.coverVideo);
+  const featured = normalisePicture(doc.featuredImage);
   return {
     id: doc._id,
     slug: doc.slug,
@@ -247,7 +251,7 @@ function normalisePost(doc) {
     pick: Boolean(doc.editorsPick),
     // The story's top picture (optional) and its thumbnail on cards (falls back to the cover)
     cover,
-    thumbnail: normalisePicture(doc.featuredImage) ?? (coverPicture ? { ...coverPicture, ratio: undefined } : null),
+    thumbnail: featured ? { ...featured, card: cardSizing(doc.featuredImage) } : coverPicture ? { ...coverPicture, ratio: undefined } : null,
     coverVideo: coverVideo ? { ...coverVideo, ...coverSizing(doc.coverVideo) } : null,
     seo: { title: doc.seoTitle ?? "", description: doc.seoDescription ?? "", image: share },
     words: doc.words ?? 0,

@@ -119,7 +119,7 @@ export const MEDIA_ALIGNS = [
 ];
 
 /** True for sizes that need a frame size (presets and custom). */
-export const isFixedSize = (size) => Boolean(size) && !["column", "wide", "full"].includes(size);
+export const isFixedSize = (size) => Boolean(size) && !["column", "wide", "full", "auto"].includes(size);
 
 /**
  * The frame for a fixed size: { w, h? } in px (h missing = keep the picture's own shape),
@@ -186,6 +186,16 @@ export function shapeRatio({ shape, customShape } = {}, natural) {
 }
 
 /* ── Cover sizes (top of a story) ────────────────────────────────────── */
+
+/**
+ * Featured image on story cards: "auto" fills the card's picture frame (as before); a fixed or
+ * custom size makes the picture exactly that big inside the card (never wider than the card).
+ */
+export const CARD_SIZE_LIST = [
+  { title: "Fill the card (standard)", value: "auto" },
+  ...MEDIA_SIZES.filter((s) => s.w).map(({ title, value }) => ({ title, value })),
+  { title: "Custom size…", value: "custom" },
+];
 
 /** Same values as MEDIA_SIZES (so mediaBox works), but "wide" is the 1120 px cover width. */
 export const COVER_SIZE_LIST = [
