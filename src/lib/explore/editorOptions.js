@@ -102,9 +102,9 @@ export const MEDIA_SIZES = [
   { title: "600 × 600 px · large square", value: "600x600", w: 600, h: 600 },
   { title: "600 × 400 px · large landscape", value: "600x400", w: 600, h: 400 },
   { title: "800 × 450 px · large widescreen (16:9)", value: "800x450", w: 800, h: 450 },
-  { title: "Text width · its own shape", value: "column" },
-  { title: "Wide · its own shape", value: "wide" },
-  { title: "Full width · its own shape", value: "full" },
+  { title: "Text width", value: "column" },
+  { title: "Wide", value: "wide" },
+  { title: "Full width", value: "full" },
   { title: "Custom size…", value: "custom" },
 ];
 
@@ -135,3 +135,63 @@ export function mediaBox({ size, customWidth, customHeight } = {}) {
   const preset = MEDIA_SIZES.find((s) => s.value === size && s.w);
   return preset ? { w: preset.w, h: preset.h } : null;
 }
+
+/* ── Picture shapes (aspect ratios) ──────────────────────────────────── */
+
+/**
+ * The frame's shape. "auto" keeps what each spot does today (cards follow their layout, the
+ * cover is 16:10, pictures in a story keep their own shape); "original" always uses the
+ * picture's own proportions; "custom" reads a W:H the editor types (e.g. 5:4 or 1200x800).
+ */
+export const MEDIA_SHAPES = [
+  { title: "Default for this spot", value: "auto" },
+  { title: "The picture's own shape (no crop)", value: "original" },
+  { title: "Square · 1:1", value: "1:1" },
+  { title: "Portrait · 4:5", value: "4:5" },
+  { title: "Portrait · 3:4", value: "3:4" },
+  { title: "Portrait · 2:3", value: "2:3" },
+  { title: "Tall · 9:16 (phone screen)", value: "9:16" },
+  { title: "Landscape · 5:4", value: "5:4" },
+  { title: "Landscape · 4:3", value: "4:3" },
+  { title: "Landscape · 3:2", value: "3:2" },
+  { title: "Landscape · 16:10", value: "16:10" },
+  { title: "Widescreen · 16:9", value: "16:9" },
+  { title: "Panorama · 2:1", value: "2:1" },
+  { title: "Cinema · 21:9", value: "21:9" },
+  { title: "Banner · 3:1", value: "3:1" },
+  { title: "Custom shape…", value: "custom" },
+];
+
+export const MEDIA_SHAPE_LIST = MEDIA_SHAPES.map(({ title, value }) => ({ title, value }));
+
+/** "5:4", "5/4", "1200x800" or "1200 × 800" → { w, h } (or null). */
+export function parseShape(text) {
+  const m = String(text ?? "").trim().match(/^(\d+(?:\.\d+)?)\s*[:/x×]\s*(\d+(?:\.\d+)?)$/i);
+  if (!m) return null;
+  const w = Number(m[1]);
+  const h = Number(m[2]);
+  if (!(w > 0 && h > 0) || w / h > 10 || h / w > 10) return null;
+  return { w, h };
+}
+
+/**
+ * CSS aspect-ratio for a node's shape ({ shape, customShape }), or undefined for "auto".
+ * `natural` is the picture's own "w / h" (used by "original").
+ */
+export function shapeRatio({ shape, customShape } = {}, natural) {
+  if (!shape || shape === "auto") return undefined;
+  if (shape === "original") return natural;
+  const parsed = shape === "custom" ? parseShape(customShape) : parseShape(shape);
+  return parsed ? `${parsed.w} / ${parsed.h}` : undefined;
+}
+
+/* ── Cover sizes (top of a story) ────────────────────────────────────── */
+
+/** Same values as MEDIA_SIZES (so mediaBox works), but "wide" is the 1120 px cover width. */
+export const COVER_SIZE_LIST = [
+  { title: "Wide · up to 1120 px (standard)", value: "wide" },
+  { title: "Text width · up to 672 px", value: "column" },
+  { title: "Full bleed · edge to edge", value: "full" },
+  ...MEDIA_SIZES.filter((s) => s.w).map(({ title, value }) => ({ title, value })),
+  { title: "Custom size…", value: "custom" },
+];

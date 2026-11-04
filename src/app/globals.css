@@ -2560,7 +2560,9 @@ a.ex-rubric:hover { color: var(--fg); }
   align-items: center;
 }
 @media (min-width: 48rem) {
-  .ex-imagetext { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2.5rem; }
+  /* --it-cols: the Studio's "Picture width" (already flipped when the picture is on the right) */
+  .ex-imagetext { grid-template-columns: var(--it-cols, minmax(0, 5fr) minmax(0, 6fr)); gap: 2.5rem; }
+  .ex-imagetext > * { min-width: 0; }
   .ex-imagetext.is-right > :first-child { order: 2; }
 }
 .ex-imagetext-copy { display: flex; flex-direction: column; gap: 0.6em; }

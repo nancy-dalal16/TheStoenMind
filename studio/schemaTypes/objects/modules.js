@@ -16,7 +16,7 @@ import { BarChartIcon } from "@sanity/icons/BarChart";
 import { SparklesIcon } from "@sanity/icons/Sparkles";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import TopicSelectInput from "../../components/editor/TopicSelectInput";
-import { altField, sizeFields } from "./media";
+import { altField, LAYOUT_WIDTHS, shapeFields, sizeFields } from "./media";
 
 /*
  * Extra building blocks ("modules").
@@ -64,6 +64,22 @@ export const imageText = defineType({
       options: { list: [{ title: "Left", value: "left" }, { title: "Right", value: "right" }], layout: "radio", direction: "horizontal" },
       initialValue: "left",
     }),
+    defineField({
+      name: "imageWidth",
+      title: "Picture width",
+      type: "string",
+      description: "How much of the row the picture takes on tablets and up (phones stack them).",
+      options: {
+        list: [
+          { title: "Narrow · a third", value: "third" },
+          { title: "Balanced (standard)", value: "balanced" },
+          { title: "Half", value: "half" },
+          { title: "Large · three fifths", value: "large" },
+        ],
+      },
+      initialValue: "balanced",
+    }),
+    ...shapeFields({ title: "Picture shape", description: "Default: portrait 4:5." }),
     defineField({ name: "heading", type: "string" }),
     defineField({ name: "text", type: "text", rows: 5 }),
     defineField({ name: "link", title: "Button (optional)", type: "object", fields: linkFields, options: { collapsible: true, collapsed: true } }),
@@ -228,6 +244,17 @@ export const imagePair = defineType({
         direction: "horizontal",
       },
       initialValue: "equal",
+    }),
+    defineField({
+      name: "size",
+      title: "Width",
+      type: "string",
+      options: { list: LAYOUT_WIDTHS, layout: "radio", direction: "horizontal" },
+      initialValue: "wide",
+    }),
+    ...shapeFields({
+      title: "Picture shape",
+      description: "Default: both pictures share one height (cropped to fit). Pick a shape to give each picture those proportions instead.",
     }),
     defineField({ name: "caption", type: "string" }),
   ],
@@ -427,6 +454,7 @@ export const ctaSection = defineType({
     defineField({ name: "text", type: "text", rows: 2 }),
     defineField({ name: "buttons", type: "array", of: [defineArrayMember({ type: "button" })], validation: (r) => r.min(1).max(2) }),
     defineField({ name: "image", title: "Picture (optional)", type: "image", options: { hotspot: true }, fields: [altField] }),
+    ...shapeFields({ title: "Picture shape", description: "Default: landscape 4:3.", when: (parent) => Boolean(parent?.image) }),
     BACKGROUND,
   ]),
 });

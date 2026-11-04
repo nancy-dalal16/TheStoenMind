@@ -6,9 +6,11 @@ import Image from "next/image";
  * both are lazy the other never downloads (same approach as <Artwork />, but with alt text).
  *
  * `image`: { alt, fit: "cover" | "contain", light: { src, width, height, position? }, dark? }
- * `className` sizes the frame (usually an aspect-ratio utility).
+ * `className` sizes the frame (usually an aspect-ratio utility). A shape chosen in the Studio
+ * (`image.ratio`, e.g. "4 / 5") overrides it; an explicit `style.aspectRatio` overrides both.
  */
-export default function StoryImage({ image, sizes = "100vw", important = false, className = "", style }) {
+export default function StoryImage({ image, sizes = "100vw", important = false, className = "", style: styleProp }) {
+  const style = image?.ratio ? { aspectRatio: image.ratio, ...styleProp } : styleProp;
   if (!image?.light) return <div aria-hidden="true" className={`ex-frame ${className}`} style={style} />;
 
   const contain = image.fit === "contain";

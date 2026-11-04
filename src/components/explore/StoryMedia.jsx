@@ -57,8 +57,8 @@ export function Picture({ node }) {
                 ? "(min-width: 1024px) 960px, 100vw"
                 : "(min-width: 768px) 760px, 100vw"
         }
-        className={!layout.box && node.fit === "contain" ? "aspect-[4/3]" : ""}
-        style={layout.box ? { aspectRatio: fixedRatio ?? natural ?? "1 / 1" } : frameStyle(node)}
+        className={!layout.box && !node.ratio && node.fit === "contain" ? "aspect-[4/3]" : ""}
+        style={layout.box ? { aspectRatio: fixedRatio ?? node.ratio ?? natural ?? "1 / 1" } : node.ratio ? { aspectRatio: node.ratio } : frameStyle(node)}
       />
       <Caption caption={node.caption} credit={node.credit} />
     </figure>
@@ -70,12 +70,17 @@ export function Gallery({ node }) {
   const images = node.images ?? [];
   if (!images.length) return null;
   const cols = Math.min(Math.max(node.columns ?? 2, 2), 4);
+  const full = node.size === "full";
   return (
-    <figure className="ex-figure ex-media-wide">
+    <figure className={`ex-figure ${sizeClass(node.size ?? "wide")}`}>
       <ul className="ex-gallery" style={{ "--cols": cols }}>
         {images.map((image) => (
           <li key={image._key ?? image.light.src}>
-            <StoryImage image={{ ...image, fit: "cover" }} sizes={`(min-width: 1024px) ${Math.round(960 / cols)}px, 50vw`} className="aspect-square" />
+            <StoryImage
+              image={{ ...image, fit: "cover" }}
+              sizes={full ? `${Math.round(100 / cols)}vw` : `(min-width: 1024px) ${Math.round(960 / cols)}px, 50vw`}
+              className={image.ratio ? "" : "aspect-square"}
+            />
           </li>
         ))}
       </ul>
@@ -88,7 +93,8 @@ export function Gallery({ node }) {
 export function Video({ node, className = "" }) {
   if (!node.src) return null;
   const layout = mediaLayout(node);
-  const ratio = boxRatio(layout.box);
+  // A fixed width × height wins; otherwise the chosen shape (or the video's own)
+  const ratio = boxRatio(layout.box) ?? node.ratio;
   return (
     <figure className={`ex-figure ${layout.className} ${className}`} style={layout.style}>
       <div className={`ex-video-frame ${ratio ? "is-boxed" : ""}`} style={ratio ? { aspectRatio: ratio } : undefined}>
@@ -161,7 +167,7 @@ export function Embed({ node }) {
     ) : null;
   }
   const layout = mediaLayout(node);
-  const fixedRatio = embed.height ? undefined : boxRatio(layout.box);
+  const fixedRatio = embed.height ? undefined : (boxRatio(layout.box) ?? node.ratio);
   const figureClass = layout.box ? layout.className : embed.height ? "ex-media-column" : node.size === "full" ? "ex-media-full" : node.size === "column" ? "ex-media-column" : "ex-media-wide";
   return (
     <figure className={`ex-figure ${figureClass}`} style={layout.style}>

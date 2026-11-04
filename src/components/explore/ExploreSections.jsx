@@ -75,8 +75,16 @@ function PictureSection({ s }) {
       <StoryImage
         image={s.picture}
         sizes={box ? `${box.w}px` : full ? "100vw" : "(min-width: 1440px) 1280px, 100vw"}
-        className={!box && s.picture.fit === "contain" ? "aspect-[16/9]" : ""}
-        style={box ? { aspectRatio: box.h ? `${box.w} / ${box.h}` : natural } : s.picture.fit === "contain" ? undefined : { aspectRatio: natural }}
+        className={!box && !s.picture.ratio && s.picture.fit === "contain" ? "aspect-[16/9]" : ""}
+        style={
+          box
+            ? { aspectRatio: box.h ? `${box.w} / ${box.h}` : (s.picture.ratio ?? natural) }
+            : s.picture.ratio
+              ? { aspectRatio: s.picture.ratio }
+              : s.picture.fit === "contain"
+                ? undefined
+                : { aspectRatio: natural }
+        }
       />
       {s.picture.caption || s.picture.credit ? (
         <figcaption className={`ex-caption ${full ? "page-gutter" : ""}`}>
@@ -122,7 +130,7 @@ function CtaSection({ s }) {
       <Container>
         <div data-reveal="" className={`grid items-center gap-10 ${s.image ? "md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-16" : ""}`}>
           {s.image ? (
-            <StoryImage image={{ alt: s.alt ?? "", fit: "contain", light: s.image, dark: null }} sizes="(min-width: 768px) 40vw, 100vw" className="aspect-[4/3]" />
+            <StoryImage image={{ alt: s.alt ?? "", fit: "contain", light: s.image, dark: null, ratio: s.ratio }} sizes="(min-width: 768px) 40vw, 100vw" className="aspect-[4/3]" />
           ) : null}
           <div className={`flex flex-col gap-4 ${s.image ? "" : "mx-auto max-w-[44rem] items-center text-center"}`}>
             <h2 data-part="blur" className="text-heading text-balance">

@@ -30,11 +30,17 @@ export function StoryButton({ label, href, style = "primary" }) {
   );
 }
 
+/** Picture width in "Picture + text" (picture : words, from tablets up). */
+const IMAGE_TEXT_COLS = { third: "1fr 2fr", balanced: "5fr 6fr", half: "1fr 1fr", large: "3fr 2fr" };
+
 export function ImageText({ node }) {
   const right = node.imageSide === "right";
+  const cols = IMAGE_TEXT_COLS[node.imageWidth] ?? IMAGE_TEXT_COLS.balanced;
+  // Picture on the right: the grid's first column is the words
+  const template = right ? cols.split(" ").reverse().join(" ") : cols;
   return (
-    <section className={`ex-imagetext ex-media-wide ${right ? "is-right" : ""}`}>
-      {node.image ? <StoryImage image={node.image} sizes="(min-width: 1024px) 460px, 100vw" className="aspect-[4/5]" /> : null}
+    <section className={`ex-imagetext ex-media-wide ${right ? "is-right" : ""}`} style={{ "--it-cols": template }}>
+      {node.image ? <StoryImage image={node.image} sizes="(min-width: 1024px) 560px, 100vw" className={node.image.ratio ? "" : "aspect-[4/5]"} /> : null}
       <div className="ex-imagetext-copy">
         {node.heading ? <h3>{node.heading}</h3> : null}
         {node.text ? <p>{node.text}</p> : null}
@@ -123,11 +129,12 @@ export function ImagePair({ node }) {
   if (images.length < 2) return null;
   const cols = node.ratio === "left" ? "3fr 2fr" : node.ratio === "right" ? "2fr 3fr" : "1fr 1fr";
   return (
-    <figure className="ex-figure ex-media-wide">
+    <figure className={`ex-figure ${node.size === "full" ? "ex-media-full" : node.size === "column" ? "ex-media-column" : "ex-media-wide"}`}>
       <div className="ex-pair" style={{ "--pair": cols }}>
         {images.slice(0, 2).map((image) => (
           <div key={image._key ?? image.light.src}>
-            <StoryImage image={image} sizes="(min-width: 1024px) 480px, 50vw" className="ex-pair-frame" />
+            {/* Default: one shared height; with a shape, each picture takes those proportions */}
+            <StoryImage image={image} sizes={node.size === "full" ? "50vw" : "(min-width: 1024px) 480px, 50vw"} className={image.ratio ? "" : "ex-pair-frame"} />
             {image.caption ? <p className="ex-pair-caption">{image.caption}</p> : null}
           </div>
         ))}

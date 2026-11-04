@@ -4,7 +4,7 @@ import { ImagesIcon } from "@sanity/icons/Images";
 import { LaunchIcon } from "@sanity/icons/Launch";
 import { PlayIcon } from "@sanity/icons/Play";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { isFixedSize, MEDIA_ALIGNS, MEDIA_SIZE_LIST } from "../../../src/lib/explore/editorOptions";
+import { COVER_SIZE_LIST, isFixedSize, MEDIA_ALIGNS, MEDIA_SHAPE_LIST, MEDIA_SIZE_LIST, parseShape } from "../../../src/lib/explore/editorOptions";
 
 /*
  * Media building blocks used by stories and the Explore page.
@@ -15,6 +15,13 @@ import { isFixedSize, MEDIA_ALIGNS, MEDIA_SIZE_LIST } from "../../../src/lib/exp
  *   embed    - YouTube, Vimeo, Spotify, SoundCloud or any embeddable link
  */
 
+/** Text width / wide / full - for modules that always follow the layout. */
+export const LAYOUT_WIDTHS = [
+  { title: "Text width", value: "column" },
+  { title: "Wide", value: "wide" },
+  { title: "Full width", value: "full" },
+];
+
 export const FIT_OPTIONS = {
   list: [
     { title: "Fill the frame", value: "cover" },
@@ -24,13 +31,63 @@ export const FIT_OPTIONS = {
   direction: "horizontal",
 };
 
-/** Story covers, cover videos and featured images fill their own frames, so they don't show the size options. */
-const isCoverPath = (path = []) => ["cover", "featuredImage", "coverVideo"].includes(path[0]);
+/*
+ * Where a picture / video sits decides which size options it shows:
+ *   cover, coverVideo  - the top of a story: "Cover size" (wide / text width / full bleed /
+ *                        fixed px / custom) + shape. (Older covers already store size: "column"
+ *                        from the body default, so covers use their own field, coverSize.)
+ *   featuredImage      - the thumbnail on story cards: shape only (width follows the card)
+ *   anywhere else      - size (fixed px / layout widths / custom), position, and shape
+ */
+const isCoverPath = (path = []) => ["cover", "coverVideo"].includes(path[0]);
+const isFeaturedPath = (path = []) => path[0] === "featuredImage";
+const sizeOf = (parent, path) => (isCoverPath(path) ? (parent?.coverSize ?? "wide") : parent?.size);
+
+/**
+ * Shape (aspect ratio) of the frame: default, the picture's own shape, presets from 1:1 to
+ * 3:1, or a custom W:H. `when(parent, path)` hides it where it doesn't apply.
+ */
+export function shapeFields({ title = "Shape", description, when } = {}) {
+  const hidden = ({ parent, path }) => (when ? !when(parent, path) : false);
+  return [
+    defineField({
+      name: "shape",
+      title,
+      type: "string",
+      description:
+        description ??
+        "The frame's proportions - the picture is cropped to fit (around its hotspot). “Default” (or empty) keeps what this spot does now.",
+      options: { list: MEDIA_SHAPE_LIST },
+      initialValue: "auto",
+      hidden,
+    }),
+    defineField({
+      name: "customShape",
+      title: "Custom shape (width : height)",
+      type: "string",
+      description: "For example 5:4, 7:3 or 1200x800.",
+      placeholder: "5:4",
+      hidden: (ctx) => ctx.parent?.shape !== "custom" || hidden(ctx),
+      validation: (r) =>
+        r.custom((value, { parent }) =>
+          parent?.shape !== "custom" || parseShape(value) ? true : "Type a shape like 5:4 or 1200x800 (no more than 10 times wider than tall).",
+        ),
+    }),
+  ];
+}
+
+/** Shape applies unless a fixed size already sets both width and height. */
+const shapeApplies = (parent, path) => {
+  const size = sizeOf(parent, path);
+  if (!isFixedSize(size)) return true;
+  return size === "custom" && !parent?.customHeight;
+};
 
 /**
  * Size options for pictures, GIFs, videos and embeds: fixed frames from 200 × 200 px up, the
- * layout widths (text width / wide / full) or a custom width × height, plus where a smaller
- * frame sits (left, centre, right, or with the text flowing around it).
+ * layout widths (text width / wide / full) or a custom width × height, where a smaller frame
+ * sits (left, centre, right, or with the text flowing around it), and the frame's shape.
+ * Covers get the same options under "Cover size"; featured images get the shape only.
  */
 export function sizeFields(initialSize = "column") {
   return [
@@ -40,31 +97,49 @@ export function sizeFields(initialSize = "column") {
       description: "Fixed sizes shrink to fit on small phones.",
       options: { list: MEDIA_SIZE_LIST },
       initialValue: initialSize,
-      hidden: ({ path }) => isCoverPath(path),
+      hidden: ({ path }) => isCoverPath(path) || isFeaturedPath(path),
+    }),
+    defineField({
+      name: "coverSize",
+      title: "Cover size",
+      type: "string",
+      description: "How wide the cover is at the top of the story. Empty = Wide (1120 px, the standard). Fixed sizes shrink to fit on small phones.",
+      options: { list: COVER_SIZE_LIST },
+      hidden: ({ path }) => !isCoverPath(path),
     }),
     defineField({
       name: "customWidth",
       title: "Width (px)",
       type: "number",
-      hidden: ({ parent, path }) => parent?.size !== "custom" || isCoverPath(path),
+      hidden: ({ parent, path }) => sizeOf(parent, path) !== "custom" || isFeaturedPath(path),
       validation: (r) =>
-        r.custom((value, { parent }) => (parent?.size === "custom" && !value ? "Enter a width for the custom size." : true)).integer().min(40).max(2400),
+        r
+          .custom((value, { parent, path }) => (sizeOf(parent, path) === "custom" && !value ? "Enter a width for the custom size." : true))
+          .integer()
+          .min(40)
+          .max(2400),
     }),
     defineField({
       name: "customHeight",
       title: "Height (px)",
       type: "number",
-      description: "Leave empty to keep the picture's own shape.",
-      hidden: ({ parent, path }) => parent?.size !== "custom" || isCoverPath(path),
+      description: "Leave empty to keep the picture's own shape (or use Shape below).",
+      hidden: ({ parent, path }) => sizeOf(parent, path) !== "custom" || isFeaturedPath(path),
       validation: (r) => r.integer().min(40).max(2400),
     }),
     defineField({
       name: "align",
       title: "Position",
       type: "string",
+      description: "For a cover, the “text flows around it” options sit left or right.",
       options: { list: MEDIA_ALIGNS },
       initialValue: "center",
-      hidden: ({ parent, path }) => !isFixedSize(parent?.size) || isCoverPath(path),
+      hidden: ({ parent, path }) => !isFixedSize(sizeOf(parent, path)) || isFeaturedPath(path),
+    }),
+    ...shapeFields({
+      description:
+        "The frame's proportions - the picture is cropped to fit (around its hotspot). Default (or empty): story cards follow their layout, the cover is 16:10 (4:3 on phones), pictures in a story keep their own shape.",
+      when: (parent, path) => isFeaturedPath(path) || shapeApplies(parent, path),
     }),
   ];
 }
@@ -132,6 +207,14 @@ export const gallery = defineType({
       options: { list: [2, 3, 4], layout: "radio", direction: "horizontal" },
       initialValue: 2,
     }),
+    defineField({
+      name: "size",
+      title: "Width",
+      type: "string",
+      options: { list: LAYOUT_WIDTHS, layout: "radio", direction: "horizontal" },
+      initialValue: "wide",
+    }),
+    ...shapeFields({ title: "Picture shape", description: "Every picture in the grid gets this shape. Default: square." }),
     defineField({ name: "caption", type: "string" }),
   ],
   preview: {

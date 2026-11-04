@@ -1,5 +1,5 @@
 import "server-only";
-import { mediaBox } from "./editorOptions";
+import { mediaBox, shapeRatio } from "./editorOptions";
 
 /**
  * Sanity Content Lake client for /explore - plain `fetch` against the GROQ HTTP API, so no
@@ -43,9 +43,10 @@ async function query(groq, params = {}) {
 // An image asset with its size; `mime` tells GIF/SVG apart (they skip Next's optimiser).
 const ASSET = `"src": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, "mime": asset->mimeType, hotspot`;
 // A "picture": the day image, its optional night version, fit, size and words
-const PICTURE = `{ ${ASSET}, alt, caption, credit, fit, size, customWidth, customHeight, align, "night": night{ ${ASSET} } }`;
+const SIZE = `size, coverSize, customWidth, customHeight, align, shape, customShape`;
+const PICTURE = `{ ${ASSET}, alt, caption, credit, fit, ${SIZE}, "night": night{ ${ASSET} } }`;
 const FILE = `{ "src": asset->url, "mime": asset->mimeType, "size": asset->size }`;
-const VIDEO = `{ "file": file${FILE}, "poster": poster{ ${ASSET} }, playback, title, caption, size, customWidth, customHeight, align }`;
+const VIDEO = `{ "file": file${FILE}, "poster": poster{ ${ASSET} }, playback, title, caption, ${SIZE} }`;
 
 const CARD = `
   _id, title, "slug": slug.current, dek, publishedAt, featured, editorsPick,
@@ -103,7 +104,16 @@ const sizing = (node, fallback) => {
   return { size: box ? "fixed" : ["column", "wide", "full"].includes(node.size) ? node.size : fallback, box, align: node.align ?? "center" };
 };
 
-/** A picture → { alt, fit, size, box, align, light, dark, caption, credit } (null without an image) */
+/** The picture's own proportions as a CSS aspect-ratio ("w / h"). */
+const naturalRatio = (image) => (image?.width && image?.height ? `${image.width} / ${image.height}` : undefined);
+
+/** A cover's size lives in coverSize (wide by default), not in the body pictures' size. */
+const coverSizing = (node) => sizing({ ...node, size: node.coverSize ?? "wide" }, "wide");
+
+/**
+ * A picture → { alt, fit, size, box, align, ratio, light, dark, caption, credit } (null without
+ * an image). `ratio` is the chosen shape as a CSS aspect-ratio (undefined = the spot's default).
+ */
 export function normalisePicture(picture, fallbackFit = "cover") {
   const light = variant(picture);
   if (!light) return null;
@@ -111,6 +121,7 @@ export function normalisePicture(picture, fallbackFit = "cover") {
     alt: picture.alt ?? "",
     fit: (picture.fit ?? fallbackFit) === "contain" ? "contain" : "cover",
     ...sizing(picture, "column"),
+    ratio: shapeRatio(picture, naturalRatio(light)),
     light,
     dark: variant(picture.night),
     caption: picture.caption ?? "",
@@ -128,8 +139,12 @@ function normaliseVideo(video) {
     title: video.title ?? "",
     caption: video.caption ?? "",
     ...sizing(video, "wide"),
+    ratio: shapeRatio(video, naturalRatio(video.poster)),
   };
 }
+
+/** A module-level shape applied to each of its pictures ("original" = each its own). */
+const withShape = (block, image) => (image ? { ...image, ratio: shapeRatio(block, naturalRatio(image.light)) } : image);
 
 function normaliseBlock(block) {
   switch (block._type) {
@@ -143,7 +158,8 @@ function normaliseBlock(block) {
         _key: block._key,
         columns: block.columns ?? 2,
         caption: block.caption ?? "",
-        images: (block.images ?? []).map((image) => ({ _key: image._key, ...normalisePicture(image) })).filter((i) => i.light),
+        size: ["column", "wide", "full"].includes(block.size) ? block.size : "wide",
+        images: (block.images ?? []).map((image) => withShape(block, { _key: image._key, ...normalisePicture(image) })).filter((i) => i.light),
       };
     case "video": {
       const video = normaliseVideo(block);
@@ -165,18 +181,19 @@ function normaliseBlock(block) {
     case "imageText":
       return {
         ...block,
-        image: block.image?.src ? normalisePicture({ ...block.image, night: block.night, fit: "cover" }) : null,
+        image: block.image?.src ? withShape(block, normalisePicture({ ...block.image, night: block.night, fit: "cover" })) : null,
       };
     case "gif": {
       const image = normalisePicture({ ...block, fit: "cover" });
       return image ? { _type: "picture", _key: block._key, ...image } : null;
     }
     case "embed":
-      return { ...block, ...sizing(block, "wide") };
+      return { ...block, ...sizing(block, "wide"), ratio: shapeRatio(block) };
     case "imagePair":
       return {
         ...block,
-        images: (block.images ?? []).map((image) => ({ _key: image._key, ...normalisePicture({ ...image, fit: "cover" }) })).filter((i) => i.light),
+        size: ["column", "wide", "full"].includes(block.size) ? block.size : "wide",
+        images: (block.images ?? []).map((image) => withShape(block, { _key: image._key, ...normalisePicture({ ...image, fit: "cover" }) })).filter((i) => i.light),
       };
     case "productLink":
       return { ...block, image: variant(block.image), alt: block.image?.alt ?? "" };
@@ -203,7 +220,7 @@ function normaliseSection(section) {
         }),
       };
     case "ctaSection":
-      return { ...section, image: variant(section.image), alt: section.image?.alt ?? "" };
+      return { ...section, image: variant(section.image), alt: section.image?.alt ?? "", ratio: shapeRatio(section, naturalRatio(section.image)) };
     case "embedSection":
       return { ...section, video: normaliseVideo(section.video) };
     default:
@@ -214,7 +231,10 @@ function normaliseSection(section) {
 function normalisePost(doc) {
   if (!doc) return null;
   const share = variant(doc.shareImage);
-  const cover = normalisePicture(doc.cover);
+  const coverPicture = normalisePicture(doc.cover);
+  // The cover's own size (coverSize) and shape; on cards it falls back without its shape
+  const cover = coverPicture ? { ...coverPicture, ...coverSizing(doc.cover) } : null;
+  const coverVideo = normaliseVideo(doc.coverVideo);
   return {
     id: doc._id,
     slug: doc.slug,
@@ -227,8 +247,8 @@ function normalisePost(doc) {
     pick: Boolean(doc.editorsPick),
     // The story's top picture (optional) and its thumbnail on cards (falls back to the cover)
     cover,
-    thumbnail: normalisePicture(doc.featuredImage) ?? cover,
-    coverVideo: normaliseVideo(doc.coverVideo),
+    thumbnail: normalisePicture(doc.featuredImage) ?? (coverPicture ? { ...coverPicture, ratio: undefined } : null),
+    coverVideo: coverVideo ? { ...coverVideo, ...coverSizing(doc.coverVideo) } : null,
     seo: { title: doc.seoTitle ?? "", description: doc.seoDescription ?? "", image: share },
     words: doc.words ?? 0,
     // Text modules are unpacked so the body reads as one flow (drop cap, end mark, lists)
@@ -292,7 +312,9 @@ export async function getExplorePage() {
   const sp = doc.smallPicture;
   return {
     ...doc,
-    smallPicture: sp ? { ...sp, image: sp.image?.src ? normalisePicture({ ...sp.image, night: sp.night, fit: sp.fit }, "contain") : null } : null,
+    smallPicture: sp
+      ? { ...sp, image: sp.image?.src ? normalisePicture({ ...sp.image, night: sp.night, fit: sp.fit, shape: sp.shape, customShape: sp.customShape }, "contain") : null }
+      : null,
     shareImage: variant(doc.shareImage),
     sections: (doc.sections ?? []).map(normaliseSection).filter(Boolean),
   };

@@ -61,7 +61,7 @@ export default defineType({
       title: "Featured image (thumbnail)",
       type: "picture",
       fieldset: "settings",
-      description: "The picture on story cards, in story rows and in link previews. Animated GIFs keep moving.",
+      description: "The picture on story cards, in story rows and in link previews. Animated GIFs keep moving. Use Shape to give its card frame a square, portrait, wide… shape.",
       validation: (r) =>
         r.custom((value, { document }) => {
           if (value?.asset) return true;
@@ -74,7 +74,7 @@ export default defineType({
       title: "Cover photo (optional)",
       type: "picture",
       fieldset: "settings",
-      description: "The large picture at the top of the story. Leave empty for a story without one - the cards still use the featured image.",
+      description: "The large picture at the top of the story - set its Cover size and Shape below. Leave empty for a story without one - the cards still use the featured image.",
     }),
     defineField({
       name: "coverVideo",

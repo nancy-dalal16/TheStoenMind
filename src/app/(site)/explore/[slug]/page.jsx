@@ -42,6 +42,29 @@ export async function generateMetadata({ params }) {
 }
 
 /**
+ * Where the cover (photo or video) sits, from the Studio's "Cover size" and "Shape":
+ * wide (1120 px, the standard), text width, full bleed, or a fixed / custom px frame placed
+ * left, centre or right. Returns the wrapper's className / style, the frame's aspect-ratio
+ * (undefined = the standard 16:10, 4:3 on phones) and the image `sizes`.
+ */
+function coverFrame(node) {
+  const gap = "mt-10 md:mt-14";
+  const natural = node.light?.width ? `${node.light.width} / ${node.light.height}` : undefined;
+  if (node.size === "fixed" && node.box?.w) {
+    const side = node.align === "left" || node.align === "wrapLeft" ? "mr-auto" : node.align === "right" || node.align === "wrapRight" ? "ml-auto" : "mx-auto";
+    return {
+      className: `${gap} ${side}`,
+      style: { width: `min(${node.box.w}px, 100%)` },
+      ratio: node.box.h ? `${node.box.w} / ${node.box.h}` : (node.ratio ?? natural),
+      sizes: `${node.box.w}px`,
+    };
+  }
+  if (node.size === "full") return { className: `${gap} ex-media-full`, ratio: node.ratio, sizes: "100vw" };
+  if (node.size === "column") return { className: `${gap} mx-auto max-w-[42rem]`, ratio: node.ratio, sizes: "(min-width: 768px) 672px, 100vw" };
+  return { className: `${gap} mx-auto max-w-[1120px]`, ratio: node.ratio, sizes: "(min-width: 1200px) 1120px, 100vw" };
+}
+
+/**
  * A story: rubric, large headline, dek and byline centred over the cover painting; the body in
  * a single reading column with a drop cap, pull quotes, prompts and cloud section breaks; then
  * the author's note, a share link and three stories to read next.
@@ -106,16 +129,36 @@ export default async function StoryPage({ params }) {
           </header>
 
           {post.coverVideo ? (
-            <div className="mx-auto mt-10 max-w-[1120px] md:mt-14">
-              <Video node={{ ...post.coverVideo, size: "column", poster: post.coverVideo.poster ?? post.cover?.light ?? post.thumbnail?.light }} className="ex-cover-video" />
+            <div className={coverFrame(post.coverVideo).className} style={coverFrame(post.coverVideo).style}>
+              <Video
+                node={{
+                  ...post.coverVideo,
+                  size: "column",
+                  box: null,
+                  ratio: coverFrame(post.coverVideo).ratio,
+                  poster: post.coverVideo.poster ?? post.cover?.light ?? post.thumbnail?.light,
+                }}
+                className="ex-cover-video"
+              />
             </div>
           ) : post.cover ? (
-            <figure data-reveal="fade" style={{ "--reveal-dur": "1.6s" }} className="mx-auto mt-10 max-w-[1120px] md:mt-14">
+            <figure
+              data-reveal="fade"
+              style={{ "--reveal-dur": "1.6s", ...coverFrame(post.cover).style }}
+              className={coverFrame(post.cover).className}
+            >
               <StoryImage
                 image={post.cover}
-                sizes="(min-width: 1200px) 1120px, 100vw"
+                sizes={coverFrame(post.cover).sizes}
                 important
-                className={post.cover.fit === "contain" ? "aspect-[4/3] md:aspect-[16/9]" : "aspect-[4/3] md:aspect-[16/10]"}
+                className={
+                  coverFrame(post.cover).ratio
+                    ? ""
+                    : post.cover.fit === "contain"
+                      ? "aspect-[4/3] md:aspect-[16/9]"
+                      : "aspect-[4/3] md:aspect-[16/10]"
+                }
+                style={coverFrame(post.cover).ratio ? { aspectRatio: coverFrame(post.cover).ratio } : undefined}
               />
               {post.cover.caption || post.cover.credit ? (
                 <figcaption className="ex-caption">

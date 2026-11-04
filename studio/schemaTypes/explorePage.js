@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 import ModuleArrayInput from "../components/modules/ModuleArrayInput";
 import ModuleItem from "../components/modules/ModuleItem";
 import TopicSelectInput from "../components/editor/TopicSelectInput";
-import { altField, FIT_OPTIONS } from "./objects/media";
+import { altField, FIT_OPTIONS, shapeFields } from "./objects/media";
 
 /**
  * Explore page settings (one document). Every heading, label and switch on /explore, the story
@@ -107,6 +107,7 @@ export default defineType({
         defineField({ name: "image", title: "Picture", type: "image", options: { hotspot: true }, fields: [altField] }),
         defineField({ name: "night", title: "Night version", type: "image", options: { hotspot: true } }),
         defineField({ name: "fit", type: "string", options: FIT_OPTIONS, initialValue: "contain" }),
+        ...shapeFields({ title: "Picture shape", description: "Default: portrait 4:5." }),
         defineField({ name: "caption", type: "text", rows: 2 }),
         text("credit", "Credit", ""),
       ],
