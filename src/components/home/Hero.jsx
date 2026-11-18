@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Artwork from "@/components/ui/Artwork";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
@@ -31,11 +32,12 @@ export default function Hero() {
         "@container hero-fit relative",
         "[--land-w:max(115.56cqw,560px)] [--hero-pb:clamp(88px,10.14cqw,146px)]",
         // Below lg: start just under the button (Figma: 120px above the hero's bottom at 1440).
-        "[--land-top:calc(100%-var(--land-w)*0.0721)]",
+        "[--land-top:calc(100%-var(--land-w)*0.0721-var(--land-nudge))]",
         // lg+: tuck the empty-sky top 36% of the painting (0.161 × width) up behind the copy.
-        "lg:[--land-top:calc(100%-var(--hero-pb)-var(--land-w)*0.161-var(--hero-shift)-var(--land-lift)+var(--hero-up))]",
+        "lg:[--land-top:calc(100%-var(--hero-pb)-var(--land-w)*0.161-var(--hero-shift)-var(--land-lift)-var(--land-nudge)+var(--hero-up))]",
         // --hero-up (globals.css, "Home hero fit") lifts only the copy: the section gets that much
         // shorter, so it is added back here to keep the landscape exactly where it was.
+        // --land-nudge (globals.css, Nov 18) raises the landscape a little at every size.
         // …and --land-lift (globals.css, "Home hero fit") raises it further on short screens so the
         // tree, carriage and the field under them stay on the first screen.
         // lg+ short screens (e.g. 1536×730 laptops): the top padding is squeezed so the carriage
@@ -116,9 +118,17 @@ export default function Hero() {
             Drift with me through <br className="hidden sm:block" />
             your inner skies.
           </h1>
-          <p className="max-w-[35.75rem] text-lead motion-safe:animate-rise-in motion-safe:[animation-delay:360ms]">
-            JOURNALS, WORKBOOKS and DIARIES for the mind that wants to wander
-            slowly. A space with no deadlines or checklists.
+          {/* Nancy (Nov 18): the product list links to Shop and the closing line to Explore,
+              both highlighted with a soft marker wash (.hero-link in globals.css). */}
+          <p className="hero-lead text-lead motion-safe:animate-rise-in motion-safe:[animation-delay:360ms]">
+            <Link href="/shop" className="hero-link">
+              JOURNALS, WORKBOOKS, DIARIES &amp; TOOLS
+            </Link>{" "}
+            for the mind that wants to wander slowly.
+            <br />
+            <Link href="/explore" className="hero-link">
+              A Storytelling Mindfulness Experience.
+            </Link>
           </p>
         </div>
 

@@ -253,6 +253,9 @@
  */
 .hero-fit {
   --land-lift: 0px;
+  /* Nancy (Nov 18): the hero landscape sits a little higher at every size. Hero subtracts it from
+     --land-top; Welcome from its top padding, so the card keeps the same gap to the painting. */
+  --land-nudge: 28px;
   /* Nancy (Oct 5): the hero copy sits a little higher. Lifts the copy only; Hero adds it back to
      --land-top and Welcome to its top padding, so the landscape and the card don't move. */
   --hero-up: 0px;
@@ -261,6 +264,7 @@
 @media (width >= 48rem) {
   .hero-fit {
     --hero-up: 36px;
+    --land-nudge: 48px;
   }
 }
 
@@ -1785,6 +1789,15 @@
 .timeline-stack > * {
   grid-area: 1 / 1;
 }
+/* Nancy (Nov 18): on phones the year blocks stack in a column, and their flex-1 made the
+   year/label stretch to fill the shared cell's spare height, leaving a big gap above the divider.
+   Below md they keep their natural height, so the text sits right under the divider and any
+   spare height falls at the bottom of the panel. */
+@media (width < 48rem) {
+  .timeline-stack > * > * {
+    flex: none;
+  }
+}
 
 /* ─────────────────────────────────────────────────────────────
  *  Explore (/explore, /explore/[slug], /explore/topic/[topic])
@@ -2682,3 +2695,71 @@ a.ex-rubric:hover { color: var(--fg); }
 }
 /* Both pictures share one height, whatever the balance */
 .ex-pair-frame { height: clamp(220px, 30vw, 440px); }
+
+/* ─────────────────────────────────────────────────────────────
+ *  Hero links (Nancy, Nov 18)
+ *  "JOURNALS, WORKBOOKS, DIARIES & TOOLS" → /shop and
+ *  "A Storytelling Mindfulness Experience." → /explore.
+ *  At rest the phrases are simply teal (--primary), no underline. On hover a soft teal wash
+ *  rises from the baseline to sit behind the whole phrase, and the text deepens slightly so it
+ *  stays readable on the wash. Night uses Vanilla Mist (9:1 on deep-sea); on hover the phrase
+ *  turns deep-sea on a solid Vanilla Mist wash. Teal was too low-contrast and frost too faint.
+ *  Nancy (Nov 18): only use colours already in the palette above. Plain classes (not Tailwind utilities) so the dev
+ *  server picks them up without a restart.
+ * ───────────────────────────────────────────────────────────── */
+/* Wide enough that the first sentence stays on one line on laptops (was 35.75rem), so the intro is
+   still two lines there and the landscape maths in "Home hero fit" holds. */
+.hero-lead {
+  max-width: 48rem;
+}
+
+/* Night: the rest of the intro steps back to Frost so the Vanilla Mist links are the brightest
+   words in the line (Nancy, Nov 18). */
+[data-theme="dark"] .hero-lead {
+  color: var(--palette-frost);
+}
+
+.hero-link {
+  --hero-link: var(--color-primary);
+  --hero-link-hover: var(--color-primary-hover);
+  --hero-mark: color-mix(in srgb, var(--palette-teal) 26%, transparent);
+  color: var(--hero-link);
+  text-decoration: none;
+  background-image: linear-gradient(var(--hero-mark), var(--hero-mark));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0;
+  padding-inline: 0.14em;
+  margin-inline: -0.14em;
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition:
+    background-size 0.5s var(--ease-soft),
+    color 0.3s ease;
+}
+
+[data-theme="dark"] .hero-link {
+  --hero-link: var(--palette-vanilla);
+  --hero-link-hover: var(--palette-deep-sea);
+  --hero-mark: var(--palette-vanilla);
+}
+
+/* Keyboard focus gets the same wash as hover */
+.hero-link:focus-visible {
+  color: var(--hero-link-hover);
+  background-size: 100% 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-link:hover {
+    color: var(--hero-link-hover);
+    background-size: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-link {
+    transition: none;
+  }
+}

@@ -14,13 +14,14 @@ export default function Welcome() {
     <section
       className={[
         "@container hero-fit relative [--land-w:max(115.56cqw,560px)]",
-        "pt-[calc(var(--land-w)*0.41-4rem-var(--card-lift))] md:pt-[calc(var(--land-w)*0.41-5rem-var(--card-lift))]",
-        "lg:pt-[calc(var(--land-w)*0.3211-clamp(88px,10.14cqw,146px)-5rem-var(--hero-shift)-var(--land-lift)+var(--hero-up)-var(--card-lift))]",
+        "pt-[calc(var(--land-w)*0.41-4rem-var(--card-lift)-var(--land-nudge))] md:pt-[calc(var(--land-w)*0.41-5rem-var(--card-lift)-var(--land-nudge))]",
+        "lg:pt-[calc(var(--land-w)*0.3211-clamp(88px,10.14cqw,146px)-5rem-var(--hero-shift)-var(--land-lift)-var(--land-nudge)+var(--hero-up)-var(--card-lift))]",
         // Nancy (Oct 6): --card-lift raises the About card up over the foot of the landscape so it
         // shows after a short scroll. Only the card moves; the landscape stays put.
         "[--card-lift:12px] md:[--card-lift:60px] lg:[--card-lift:calc(var(--land-w)*0.065)]",
         // Mirrors Hero's --hero-shift (the hero copy moved down on short screens, the landscape didn't)
         // and --land-lift (the landscape moved up to keep the carriage on the first screen).
+        // −--land-nudge (Nov 18): the landscape was raised a little, so the card follows it up.
         // +--hero-up: the hero is that much shorter (copy lifted), the landscape didn't move.
         "[--hero-pt:clamp(24px,calc(100svh-498px-var(--land-w)*0.1162),146px)]",
         "[--hero-shift:0px] lg:[--hero-shift:clamp(0px,calc(146px-var(--hero-pt)),64px)]",
