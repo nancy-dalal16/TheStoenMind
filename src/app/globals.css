@@ -1864,6 +1864,46 @@
 @media (min-width: 48rem) {
   .ex-topicbar { margin-inline: 0; padding-inline: 0; }
 }
+/* Sticky topic bar (Nancy, Nov 18). Pins just under the slim header (64px, 72px from md) and
+   glides to the top when the header hides on scroll down. Once pinned (data-stuck, set by
+   TopicNav) it takes the page background, and a band of the same colour reaches up behind the
+   header, so the two read as one bar and stories pass cleanly underneath. */
+.ex-sticky {
+  --ex-stick-top: 64px;
+  position: sticky;
+  top: var(--ex-stick-top);
+  z-index: 30;
+  transition:
+    top 0.6s var(--ease-soft),
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+@media (min-width: 48rem) {
+  .ex-sticky { --ex-stick-top: 72px; }
+}
+body:has(.site-header[data-hidden]) .ex-sticky { --ex-stick-top: 0px; }
+.ex-sticky::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 100%;
+  height: 120px;
+  background-color: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.ex-sticky[data-stuck] {
+  background-color: var(--bg);
+  box-shadow: 0 14px 24px -22px var(--hover-shadow);
+}
+.ex-sticky[data-stuck]::before { opacity: 1; }
+/* The header's soft fade would wash over the pinned tabs; the solid band replaces it. */
+body:has(.ex-sticky[data-stuck]) .header-fade { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .ex-sticky { transition: none; }
+}
+
 .ex-topics {
   display: flex;
   gap: clamp(1.5rem, 1rem + 1.6vw, 2.75rem);
@@ -1900,6 +1940,116 @@
 @media (hover: hover) and (pointer: fine) {
   .ex-tab:hover::after { transform: scaleX(0.35); }
   .ex-tab[aria-current="page"]:hover::after { transform: scaleX(1); }
+}
+
+/* Topic bar layouts (Nancy, Nov 18). TopicNav measures the topics and sets data-layout on
+   .ex-topicwrap, so the bar keeps working as topics are added in the Studio:
+   - "one"        (desktop) one centred line;
+   - "two"        (desktop) two balanced, centred lines, with .ex-topics-break at the split;
+   - "two-scroll" (desktop) two lines that scroll sideways together, with hints. Desktop never
+                  goes past two lines. --ex-rows-w is the longer line's width;
+   - "scroll"     (phones, below 48rem) one line that scrolls sideways, with hints.
+   Hints: a soft fade and a small ‹ › button on whichever edge has more topics (data-more-left /
+   -right, also set by TopicNav); tapping one slides the row along.
+   Before the first measurement (server HTML) the bar guesses by width: one line from 60rem,
+   two lines from 48rem, a scrolling line below. */
+.ex-topics-break { display: none; }
+.ex-topicwrap {
+  --ex-bleed: clamp(1.25rem, 5.56vw, 5rem); /* the bar runs out past the page gutter on phones */
+  position: relative;
+}
+@media (min-width: 48rem) {
+  .ex-topicwrap { --ex-bleed: 0px; }
+}
+
+/* Two lines, centred, nothing to scroll */
+@media (48rem <= width < 60rem) {
+  .ex-topicwrap:not([data-layout]) .ex-topicbar { overflow-x: visible; }
+  .ex-topicwrap:not([data-layout]) .ex-topics {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    row-gap: 0;
+  }
+  .ex-topicwrap:not([data-layout]) .ex-topics-break {
+    display: block;
+    flex-basis: 100%;
+    height: 0;
+  }
+}
+.ex-topicwrap[data-layout="two"] .ex-topicbar { overflow-x: visible; }
+.ex-topicwrap[data-layout="two"] .ex-topics {
+  flex-wrap: wrap;
+  justify-content: center;
+  width: auto;
+  row-gap: 0;
+}
+
+/* Two lines that scroll sideways together */
+.ex-topicwrap[data-layout="two-scroll"] .ex-topics {
+  flex-wrap: wrap;
+  justify-content: center;
+  width: var(--ex-rows-w, max-content);
+  row-gap: 0;
+}
+
+.ex-topicwrap:is([data-layout="two"], [data-layout="two-scroll"]) .ex-topics-break {
+  display: block;
+  flex-basis: 100%;
+  height: 0;
+}
+@media (min-width: 48rem) {
+  .ex-topicwrap:is([data-layout="two"], [data-layout="two-scroll"]) .ex-tab,
+  .ex-topicwrap:not([data-layout]) .ex-tab {
+    padding-block: 0.8rem 0.75rem;
+  }
+}
+@media (width >= 60rem) {
+  .ex-topicwrap:not([data-layout]) .ex-tab { padding-block: 1rem 0.95rem; }
+}
+
+/* Scroll hints */
+.ex-topicarrow {
+  position: absolute;
+  top: 3px; /* inside the double rule */
+  bottom: 1px; /* and the single one */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 3.25rem;
+  color: var(--fg);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.ex-topicarrow-prev {
+  left: calc(-1 * var(--ex-bleed));
+  justify-content: flex-start;
+  padding-left: 0.5rem;
+  background-image: linear-gradient(to right, var(--bg) 45%, color-mix(in srgb, var(--bg) 0%, transparent));
+}
+.ex-topicarrow-next {
+  right: calc(-1 * var(--ex-bleed));
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  background-image: linear-gradient(to left, var(--bg) 45%, color-mix(in srgb, var(--bg) 0%, transparent));
+}
+.ex-topicarrow-prev > * { rotate: 90deg; }
+.ex-topicarrow-next > * { rotate: -90deg; }
+.ex-topicwrap[data-more-left] .ex-topicarrow-prev,
+.ex-topicwrap[data-more-right] .ex-topicarrow-next {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Room at the ends of a scrolling row so the first and last topics can clear the hints */
+.ex-topicwrap:is([data-layout="scroll"], [data-layout="two-scroll"]) .ex-topics { padding-inline: 0.25rem; }
+@media (width < 48rem) {
+  .ex-topicwrap:not([data-layout]) .ex-topics { padding-inline: 0.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ex-topicarrow { transition: none; }
 }
 
 /* Rubric, byline, numerals */
